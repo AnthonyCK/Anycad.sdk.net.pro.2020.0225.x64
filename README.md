@@ -11,7 +11,3 @@ Document:
 API:
 
  http://anycad.net/api/chs2020/modules.html
-
-Weixin:
-
-![Weixin](weixin.jpg)
