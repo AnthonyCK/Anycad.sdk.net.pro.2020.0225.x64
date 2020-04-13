@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AnyCAD.Platform;
-using AnyCAD.Presentation;
 using System.IO;
 
 namespace AnyCADTest
@@ -16,7 +15,7 @@ namespace AnyCADTest
     public partial class Form1 : Form
     {
         // Render Control
-        private Presentation.RenderWindow3d renderView;
+        private AnyCAD.Presentation.RenderWindow3d renderView;
         private int shapeId = 100;
         public Form1()
         {
@@ -30,11 +29,7 @@ namespace AnyCADTest
             this.renderView.TabIndex = 1;
             this.panel1.Controls.Add(this.renderView);
 
-            this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
-
-            GlobalInstance.EventListener.OnChangeCursorEvent += OnChangeCursor;
-            GlobalInstance.EventListener.OnSelectElementEvent += OnSelectElement;
+            //this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
         }
-
     }
 }
