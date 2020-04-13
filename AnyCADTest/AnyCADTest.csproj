@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AnyCAD.Exchange.Net">
+      <HintPath>..\bin\x64\debug\AnyCAD.Exchange.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="AnyCAD.Foundation.Net">
+      <HintPath>..\bin\x64\debug\AnyCAD.Foundation.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="AnyCAD.Presentation.Net">
+      <HintPath>..\bin\x64\debug\AnyCAD.Presentation.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
