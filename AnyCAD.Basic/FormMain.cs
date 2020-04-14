@@ -2452,5 +2452,11 @@ namespace AnyCAD.Basic
             var node =  GlobalInstance.TopoShapeConvert.ToSceneNode(line, 1);
             renderView.ShowSceneNode(node);
         }
+
+        private void testFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestForm form = new TestForm();
+            form.ShowDialog();
+        }
     }
 }

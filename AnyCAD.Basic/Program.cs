@@ -16,7 +16,7 @@ namespace AnyCAD.Basic
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             AnyCAD.Platform.GlobalInstance.Application.SetLogFileName(new AnyCAD.Platform.Path("anycad.net.sdk.log"));
-            Application.Run(new FormMain());
+            Application.Run(new TestForm());
         }
     }
 }

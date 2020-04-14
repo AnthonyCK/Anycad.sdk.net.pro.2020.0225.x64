@@ -34,8 +34,6 @@
             this.sTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sTEPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sKPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importDXFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,6 +150,9 @@
             this.manySphereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importDXFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -166,10 +167,11 @@
             this.featureToolStripMenuItem,
             this.geometryToolStripMenuItem,
             this.testToolStripMenuItem,
-            this.clearToolStripMenuItem});
+            this.clearToolStripMenuItem,
+            this.testFormToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(801, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(801, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -191,13 +193,13 @@
             this.sTEPToolStripMenuItem,
             this.sKPToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(161, 26);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // sTLToolStripMenuItem
             // 
             this.sTLToolStripMenuItem.Name = "sTLToolStripMenuItem";
-            this.sTLToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
+            this.sTLToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.sTLToolStripMenuItem.Text = "STL";
             this.sTLToolStripMenuItem.Click += new System.EventHandler(this.sTLToolStripMenuItem_Click);
             // 
@@ -214,20 +216,6 @@
             this.sKPToolStripMenuItem.Size = new System.Drawing.Size(127, 26);
             this.sKPToolStripMenuItem.Text = "SKP";
             this.sKPToolStripMenuItem.Click += new System.EventHandler(this.sKPToolStripMenuItem_Click);
-            // 
-            // importDXFToolStripMenuItem
-            // 
-            this.importDXFToolStripMenuItem.Name = "importDXFToolStripMenuItem";
-            this.importDXFToolStripMenuItem.Size = new System.Drawing.Size(161, 26);
-            this.importDXFToolStripMenuItem.Text = "Load DXF";
-            this.importDXFToolStripMenuItem.Click += new System.EventHandler(this.importDXFToolStripMenuItem_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(161, 26);
-            this.exportToolStripMenuItem.Text = "Export";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -1114,11 +1102,32 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 30);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Location = new System.Drawing.Point(0, 28);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(801, 536);
+            this.panel1.Size = new System.Drawing.Size(801, 538);
             this.panel1.TabIndex = 1;
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // importDXFToolStripMenuItem
+            // 
+            this.importDXFToolStripMenuItem.Name = "importDXFToolStripMenuItem";
+            this.importDXFToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.importDXFToolStripMenuItem.Text = "Load DXF";
+            this.importDXFToolStripMenuItem.Click += new System.EventHandler(this.importDXFToolStripMenuItem_Click);
+            // 
+            // testFormToolStripMenuItem
+            // 
+            this.testFormToolStripMenuItem.Name = "testFormToolStripMenuItem";
+            this.testFormToolStripMenuItem.Size = new System.Drawing.Size(92, 24);
+            this.testFormToolStripMenuItem.Text = "TestForm";
+            this.testFormToolStripMenuItem.Click += new System.EventHandler(this.testFormToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -1128,7 +1137,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "AnyCAD .Net SDK Demo - 3D Graphics Component for C#";
             this.Load += new System.EventHandler(this.FormMain_Load);
@@ -1154,7 +1163,6 @@
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sTLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shadeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shadeWithEdgeToolStripMenuItem;
@@ -1167,7 +1175,6 @@
         private System.Windows.Forms.ToolStripMenuItem pickPointToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem projectionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importDXFToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem zoomAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geometryToolStripMenuItem;
@@ -1225,7 +1232,6 @@
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem singlePickToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiPickToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ecllipsArcToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem15;
@@ -1266,6 +1272,10 @@
         private System.Windows.Forms.ToolStripMenuItem manySphereToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sweep3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importDXFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testFormToolStripMenuItem;
     }
 }
 
