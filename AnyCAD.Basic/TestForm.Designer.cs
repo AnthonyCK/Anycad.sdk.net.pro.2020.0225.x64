@@ -47,7 +47,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 423);
+            this.panel1.Size = new System.Drawing.Size(800, 419);
             this.panel1.TabIndex = 0;
             // 
             // toolStrip1
@@ -61,7 +61,7 @@
             this.clearBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(129, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(129, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -71,7 +71,7 @@
             this.importBtn.Image = ((System.Drawing.Image)(resources.GetObject("importBtn.Image")));
             this.importBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.importBtn.Name = "importBtn";
-            this.importBtn.Size = new System.Drawing.Size(29, 24);
+            this.importBtn.Size = new System.Drawing.Size(29, 28);
             this.importBtn.Text = "Import";
             this.importBtn.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -111,7 +111,7 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 419);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
