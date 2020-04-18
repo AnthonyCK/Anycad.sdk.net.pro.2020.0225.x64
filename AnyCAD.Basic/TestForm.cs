@@ -145,5 +145,10 @@ namespace AnyCAD.Basic
         {
             renderView.ClearScene();
         }
+
+        private void moveNodeBtn_Click(object sender, EventArgs e)
+        {
+            renderView.ExecuteCommand("MoveNode");
+        }
     }
 }
