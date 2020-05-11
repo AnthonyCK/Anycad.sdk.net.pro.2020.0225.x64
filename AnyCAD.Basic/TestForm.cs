@@ -119,19 +119,45 @@ namespace AnyCAD.Basic
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openDlg = new OpenFileDialog();
-            openDlg.Filter = "STL (*.stl)|*.stl|3ds (*.3ds)|*.3ds|obj (*.obj)|*.obj|Skp (*.skp)|*.skp";
-            if (openDlg.ShowDialog() == DialogResult.OK)
+            //OpenFileDialog openDlg = new OpenFileDialog();
+            //openDlg.Filter = "STL (*.stl)|*.stl|3ds (*.3ds)|*.3ds|obj (*.obj)|*.obj|Skp (*.skp)|*.skp";
+            //if (openDlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    ModelReader reader = new ModelReader();
+            //    GroupSceneNode node = reader.LoadFile(new AnyCAD.Platform.Path(openDlg.FileName));
+            //    if (node != null)
+            //    {
+            //        node.SetName(openDlg.SafeFileName);
+            //        renderView.ShowSceneNode(node);
+            //        renderView.RequestDraw();
+            //    }
+            //}
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|STEP (*.stp;*.step)|*.stp;*.step|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
+
+            if (DialogResult.OK != dlg.ShowDialog())
+                return;
+
+
+            TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
+            renderView.RenderTimer.Enabled = false;
+            if (shape != null)
             {
-                ModelReader reader = new ModelReader();
-                GroupSceneNode node = reader.LoadFile(new AnyCAD.Platform.Path(openDlg.FileName));
-                if (node != null)
+                TopoShapeGroup group = new TopoShapeGroup();
+                group.Add(shape);
+                SceneManager sceneMgr = renderView.SceneManager;
+                SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
+                if (rootNode != null)
                 {
-                    node.SetName(openDlg.SafeFileName);
-                    renderView.ShowSceneNode(node);
-                    renderView.RequestDraw();
+                    sceneMgr.AddNode(rootNode);
                 }
             }
+            renderView.RenderTimer.Enabled = true;
+
+
+            renderView.FitAll();
+            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
         }
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
