@@ -145,6 +145,14 @@ namespace AnyCAD.Basic
 
             renderView.FitAll();
             renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            TopoExplor topo = new TopoExplor();
+            TopoShapeGroup group2 = topo.ExplorFaces(shape);
+            for (int i = 0; i < group2.Size(); i++)
+            {
+                TopoShape tempShape = group2.GetTopoShape(i);
+                Console.WriteLine(tempShape.GetOrientation());
+            }
         }
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
