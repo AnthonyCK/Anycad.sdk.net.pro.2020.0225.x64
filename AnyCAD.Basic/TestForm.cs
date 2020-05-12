@@ -119,19 +119,6 @@ namespace AnyCAD.Basic
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog openDlg = new OpenFileDialog();
-            //openDlg.Filter = "STL (*.stl)|*.stl|3ds (*.3ds)|*.3ds|obj (*.obj)|*.obj|Skp (*.skp)|*.skp";
-            //if (openDlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    ModelReader reader = new ModelReader();
-            //    GroupSceneNode node = reader.LoadFile(new AnyCAD.Platform.Path(openDlg.FileName));
-            //    if (node != null)
-            //    {
-            //        node.SetName(openDlg.SafeFileName);
-            //        renderView.ShowSceneNode(node);
-            //        renderView.RequestDraw();
-            //    }
-            //}
 
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|STEP (*.stp;*.step)|*.stp;*.step|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
