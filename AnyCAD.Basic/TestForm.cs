@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using AnyCAD.Platform;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace AnyCAD.Basic
 {
@@ -150,8 +151,34 @@ namespace AnyCAD.Basic
             TopoShapeGroup group2 = topo.ExplorFaces(shape);
             for (int i = 0; i < group2.Size(); i++)
             {
-                TopoShape tempShape = group2.GetTopoShape(i);
-                Console.WriteLine(tempShape.GetOrientation());
+                TopoShape face = group2.GetTopoShape(i);
+
+                #region 计算面积
+                TopoShapeProperty property = new TopoShapeProperty();
+                property.SetShape(face);
+                Console.WriteLine("Face {0}:\n\tArea {1}", i, property.SurfaceArea());
+                #endregion
+                #region 计算法向量
+                GeomSurface surface = new GeomSurface();
+                surface.Initialize(face);
+                //参数域UV范围
+                double ufirst = surface.FirstUParameter();
+                double uLast = surface.LastUParameter();
+                double vfirst = surface.FirstVParameter();
+                double vLast = surface.LastVParameter();
+                //取中点
+                double umid = ufirst + (uLast - ufirst) * 0.5f;
+                double vmid = vfirst + (vLast - vfirst) * 0.5f;
+                //计算法向量
+                var data = surface.D1(umid, vmid);
+                Vector3 pos = data[0];
+                Vector3 dirU = data[1];
+                Vector3 dirV = data[2];
+                Vector3 dir = dirV.CrossProduct(dirU);
+                dir.Normalize();
+                Console.WriteLine("\tDir {0}", dir);
+                
+                #endregion
             }
         }
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
