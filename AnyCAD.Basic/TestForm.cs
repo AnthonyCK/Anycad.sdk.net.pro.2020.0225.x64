@@ -20,13 +20,7 @@ namespace AnyCAD.Basic
         public TestForm()
         {
             InitializeComponent();
-            //MessageBox.Show("AnyCAD .Net SDK PRO");
-            // 
-            // Create renderView
-            // 
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
-
-            //this.renderView.Location = new System.Drawing.Point(0, 27);
             System.Drawing.Size size = this.panel1.ClientSize;
             this.renderView.Size = size;
 
@@ -58,67 +52,6 @@ namespace AnyCAD.Basic
                 }
             }
         }
-        private void OnChangeCursor(String commandId, String cursorHint)
-        {
-
-            if (cursorHint == "Pan")
-            {
-                this.renderView.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            }
-            else if (cursorHint == "Orbit")
-            {
-                this.renderView.Cursor = System.Windows.Forms.Cursors.Hand;
-            }
-            else if (cursorHint == "Cross")
-            {
-                this.renderView.Cursor = System.Windows.Forms.Cursors.Cross;
-            }
-            else
-            {
-                if (commandId == "Pick")
-                {
-                    this.renderView.Cursor = System.Windows.Forms.Cursors.Arrow;
-                }
-                else
-                {
-                    this.renderView.Cursor = System.Windows.Forms.Cursors.Default;
-                }
-            }
-
-        }
-
-        private bool m_PickPoint = false;
-        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (!m_PickPoint)
-                return;
-
-            Platform.PickHelper pickHelper = renderView.PickShape(e.X, e.Y);
-            Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
-            if (pickHelper != null)
-            {
-                // add a ball
-                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                renderView.ShowGeometry(shape, 100);
-            }
-            // Try the grid
-            
-            if (pt != null)
-            {
-                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                renderView.ShowGeometry(shape, 100);
-            }
-        }
-        private void FormMain_SizeChanged(object sender, EventArgs e)
-        {
-            if (renderView != null)
-            {
-
-                System.Drawing.Size size = this.panel1.ClientSize;
-                renderView.Size = size;
-            }
-        }
-
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -178,8 +111,46 @@ namespace AnyCAD.Basic
                 Vector3 dir = dirV.CrossProduct(dirU);
                 dir.Normalize();
                 Console.WriteLine("\tDir {0}", dir);
-                
+
                 #endregion
+            }
+        }
+
+        private void OnChangeCursor(String commandId, String cursorHint)
+        {
+
+            if (cursorHint == "Pan")
+            {
+                this.renderView.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            }
+            else if (cursorHint == "Orbit")
+            {
+                this.renderView.Cursor = System.Windows.Forms.Cursors.Hand;
+            }
+            else if (cursorHint == "Cross")
+            {
+                this.renderView.Cursor = System.Windows.Forms.Cursors.Cross;
+            }
+            else
+            {
+                if (commandId == "Pick")
+                {
+                    this.renderView.Cursor = System.Windows.Forms.Cursors.Arrow;
+                }
+                else
+                {
+                    this.renderView.Cursor = System.Windows.Forms.Cursors.Default;
+                }
+            }
+
+        }
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (renderView != null)
+            {
+
+                System.Drawing.Size size = this.panel1.ClientSize;
+                renderView.Size = size;
             }
         }
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,6 +161,19 @@ namespace AnyCAD.Basic
         {
             renderView.ExecuteCommand("Pan");
         }
+        private void singlePickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            renderView.ExecuteCommand("PickClearMode", "SinglePick");
+        }
+        private void multiPickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            renderView.ExecuteCommand("PickClearMode", "MultiPick");
+        }
+        private void mouseBtn_Click(object sender, EventArgs e)
+        {
+            renderView.ExecuteCommand("Pick");
+        }
+
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ClearScene();
@@ -199,5 +183,35 @@ namespace AnyCAD.Basic
         {
             renderView.ExecuteCommand("MoveNode");
         }
+
+        #region Hit Test
+        private bool m_PickPoint = false;
+        private void hitTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_PickPoint = !m_PickPoint;
+        }
+        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!m_PickPoint)
+                return;
+
+            Platform.PickHelper pickHelper = renderView.PickShape(e.X, e.Y);
+
+            if (pickHelper != null)
+            {
+                // add a ball
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pickHelper.GetPointOnShape(), 2);
+                renderView.ShowGeometry(shape, 100);
+            }
+            // Try the grid
+            Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
+            if (pt != null)
+            {
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
+                renderView.ShowGeometry(shape, 100);
+            }
+        }
+
+        #endregion
     }
 }
