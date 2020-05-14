@@ -96,13 +96,13 @@ namespace AnyCAD.Basic
                 GeomSurface surface = new GeomSurface();
                 surface.Initialize(face);
                 //参数域UV范围
-                double ufirst = surface.FirstUParameter();
+                double uFirst = surface.FirstUParameter();
                 double uLast = surface.LastUParameter();
-                double vfirst = surface.FirstVParameter();
+                double vFirst = surface.FirstVParameter();
                 double vLast = surface.LastVParameter();
                 //取中点
-                double umid = ufirst + (uLast - ufirst) * 0.5f;
-                double vmid = vfirst + (vLast - vfirst) * 0.5f;
+                double umid = uFirst + (uLast - uFirst) * 0.5f;
+                double vmid = vFirst + (vLast - vFirst) * 0.5f;
                 //计算法向量
                 var data = surface.D1(umid, vmid);
                 Vector3 pos = data[0];
