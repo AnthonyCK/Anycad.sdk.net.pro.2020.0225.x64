@@ -94,18 +94,19 @@ namespace AnyCAD.Basic
                 return;
 
             Platform.PickHelper pickHelper = renderView.PickShape(e.X, e.Y);
+            Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
             if (pickHelper != null)
             {
                 // add a ball
-                //Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                //renderView.ShowGeometry(shape, 100);
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
+                renderView.ShowGeometry(shape, 100);
             }
             // Try the grid
-            Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
+            
             if (pt != null)
             {
-                //Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                //renderView.ShowGeometry(shape, 100);
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
+                renderView.ShowGeometry(shape, 100);
             }
         }
         private void FormMain_SizeChanged(object sender, EventArgs e)
@@ -122,7 +123,7 @@ namespace AnyCAD.Basic
         {
 
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|STEP (*.stp;*.step)|*.stp;*.step|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
+            dlg.Filter = "STEP (*.stp;*.step)|*.stp;*.step|STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
 
             if (DialogResult.OK != dlg.ShowDialog())
                 return;

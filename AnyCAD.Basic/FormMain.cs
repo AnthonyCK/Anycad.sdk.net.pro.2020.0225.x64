@@ -375,15 +375,15 @@ namespace AnyCAD.Basic
             if (pickHelper != null)
             {
                 // add a ball
-                //Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                //renderView.ShowGeometry(shape, 100);
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pickHelper.GetPointOnShape(), 2);
+                renderView.ShowGeometry(shape, 100);
             }
             // Try the grid
             Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
             if (pt != null)
             {
-                //Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                //renderView.ShowGeometry(shape, 100);
+                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
+                renderView.ShowGeometry(shape, 100);
             }
         }
 
