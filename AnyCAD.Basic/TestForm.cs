@@ -61,8 +61,95 @@ namespace AnyCAD.Basic
             if (DialogResult.OK != dlg.ShowDialog())
                 return;
 
-
             TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
+            //renderView.RenderTimer.Enabled = false;
+            //if (shape != null)
+            //{
+            //    TopoShapeGroup group = new TopoShapeGroup();
+            //    group.Add(shape);
+            //    SceneManager sceneMgr = renderView.SceneManager;
+            //    SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
+            //    if (rootNode != null)
+            //    {
+            //        sceneMgr.AddNode(rootNode);
+            //    }
+            //}
+            //renderView.RenderTimer.Enabled = true;
+
+
+            //renderView.FitAll();
+            //renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            double areaM=0;
+            Vector3 dirN = new Vector3();
+            int id = new int();
+            TopoExplor topo = new TopoExplor();
+            TopoShapeGroup group2 = topo.ExplorFaces(shape);
+            for (int i = 0; i < group2.Size(); i++)
+            {
+                TopoShape face = group2.GetTopoShape(i);
+                
+                #region 计算面积
+                TopoShapeProperty property = new TopoShapeProperty();
+                property.SetShape(face);
+                Console.WriteLine("Face {0}:\n\tArea {1}\n\tOrientation {2}", i, property.SurfaceArea(), face.GetOrientation());
+                #endregion
+                #region 计算法向量
+                GeomSurface surface = new GeomSurface();
+                surface.Initialize(face);
+                //参数域UV范围
+                double uFirst = surface.FirstUParameter();
+                double uLast = surface.LastUParameter();
+                double vFirst = surface.FirstVParameter();
+                double vLast = surface.LastVParameter();
+                //取中点
+                double umid = uFirst + (uLast - uFirst) * 0.5f;
+                double vmid = vFirst + (vLast - vFirst) * 0.5f;
+                //计算法向量
+                var data = surface.D1(umid, vmid);
+                Vector3 dirU = data[1];
+                Vector3 dirV = data[2];
+                Vector3 dir = dirV.CrossProduct(dirU);
+                dir.Normalize();
+                Console.WriteLine("\tDir {0}", dir);
+                #endregion
+
+                #region 取最大的面
+                if (property.SurfaceArea() > areaM)
+                {
+                    areaM = property.SurfaceArea();
+                    id = i;
+                    if (face.GetOrientation() == EnumShapeOrientation.ShapeOrientation_REVERSED)
+                    {
+                        dirN = dir * -1;
+                    }
+                    else
+                    {
+                        dirN = dir;
+                    }
+                }
+                #endregion
+            }
+
+            #region 坐标变换
+            //Rotation
+            Vector3 dirZ = new Vector3(0, 0, -1);
+            shape = GlobalInstance.BrepTools.Rotation(shape, dirN.CrossProduct(dirZ), dirN.AngleBetween(dirZ));
+            //Translation
+            //求旋转后的中点坐标
+            //GeomSurface surfRotated = new GeomSurface();
+            //surfRotated.Initialize(shape.GetSubShape(id, 4));
+            //shape = shape.GetSubShape(id, 4);
+            //double u1 = surfRotated.FirstUParameter();
+            //double u2 = surfRotated.LastUParameter();
+            //double v1 = surfRotated.FirstVParameter();
+            //double v2 = surfRotated.LastVParameter();
+            //var pos = surfRotated.D0(u1 + (u2 - u1) * 0.5f, v1 + (v2 - v1) * 0.5f);
+
+            //shape = GlobalInstance.BrepTools.Translate(shape, -pos);
+            #endregion
+
+            #region Render Shape
             renderView.RenderTimer.Enabled = false;
             if (shape != null)
             {
@@ -81,39 +168,7 @@ namespace AnyCAD.Basic
             renderView.FitAll();
             renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
 
-            TopoExplor topo = new TopoExplor();
-            TopoShapeGroup group2 = topo.ExplorFaces(shape);
-            for (int i = 0; i < group2.Size(); i++)
-            {
-                TopoShape face = group2.GetTopoShape(i);
-
-                #region 计算面积
-                TopoShapeProperty property = new TopoShapeProperty();
-                property.SetShape(face);
-                Console.WriteLine("Face {0}:\n\tArea {1}", i, property.SurfaceArea());
-                #endregion
-                #region 计算法向量
-                GeomSurface surface = new GeomSurface();
-                surface.Initialize(face);
-                //参数域UV范围
-                double uFirst = surface.FirstUParameter();
-                double uLast = surface.LastUParameter();
-                double vFirst = surface.FirstVParameter();
-                double vLast = surface.LastVParameter();
-                //取中点
-                double umid = uFirst + (uLast - uFirst) * 0.5f;
-                double vmid = vFirst + (vLast - vFirst) * 0.5f;
-                //计算法向量
-                var data = surface.D1(umid, vmid);
-                Vector3 pos = data[0];
-                Vector3 dirU = data[1];
-                Vector3 dirV = data[2];
-                Vector3 dir = dirV.CrossProduct(dirU);
-                dir.Normalize();
-                Console.WriteLine("\tDir {0}", dir);
-
-                #endregion
-            }
+            #endregion 
         }
 
         private void OnChangeCursor(String commandId, String cursorHint)
