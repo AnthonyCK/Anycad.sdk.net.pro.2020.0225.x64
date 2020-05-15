@@ -62,27 +62,10 @@ namespace AnyCAD.Basic
                 return;
 
             TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
-            //renderView.RenderTimer.Enabled = false;
-            //if (shape != null)
-            //{
-            //    TopoShapeGroup group = new TopoShapeGroup();
-            //    group.Add(shape);
-            //    SceneManager sceneMgr = renderView.SceneManager;
-            //    SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
-            //    if (rootNode != null)
-            //    {
-            //        sceneMgr.AddNode(rootNode);
-            //    }
-            //}
-            //renderView.RenderTimer.Enabled = true;
-
-
-            //renderView.FitAll();
-            //renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
 
             double areaM=0;
             Vector3 dirN = new Vector3();
-            int id = new int();
+            Vector3 pos = new Vector3();
             TopoExplor topo = new TopoExplor();
             TopoShapeGroup group2 = topo.ExplorFaces(shape);
             for (int i = 0; i < group2.Size(); i++)
@@ -118,7 +101,8 @@ namespace AnyCAD.Basic
                 if (property.SurfaceArea() > areaM)
                 {
                     areaM = property.SurfaceArea();
-                    id = i;
+                    pos = data[0];
+                    Console.WriteLine(data[0]);
                     if (face.GetOrientation() == EnumShapeOrientation.ShapeOrientation_REVERSED)
                     {
                         dirN = dir * -1;
@@ -132,21 +116,11 @@ namespace AnyCAD.Basic
             }
 
             #region 坐标变换
+            //Translation
+            shape = GlobalInstance.BrepTools.Translate(shape, -pos);
             //Rotation
             Vector3 dirZ = new Vector3(0, 0, -1);
             shape = GlobalInstance.BrepTools.Rotation(shape, dirN.CrossProduct(dirZ), dirN.AngleBetween(dirZ));
-            //Translation
-            //求旋转后的中点坐标
-            //GeomSurface surfRotated = new GeomSurface();
-            //surfRotated.Initialize(shape.GetSubShape(id, 4));
-            //shape = shape.GetSubShape(id, 4);
-            //double u1 = surfRotated.FirstUParameter();
-            //double u2 = surfRotated.LastUParameter();
-            //double v1 = surfRotated.FirstVParameter();
-            //double v2 = surfRotated.LastVParameter();
-            //var pos = surfRotated.D0(u1 + (u2 - u1) * 0.5f, v1 + (v2 - v1) * 0.5f);
-
-            //shape = GlobalInstance.BrepTools.Translate(shape, -pos);
             #endregion
 
             #region Render Shape
