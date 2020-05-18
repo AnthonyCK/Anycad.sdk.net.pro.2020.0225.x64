@@ -242,5 +242,13 @@ namespace AnyCAD.Basic
         }
 
         #endregion
+
+        private void testBtn_Click(object sender, EventArgs e)
+        {
+            SkeletonFromStep skeleton = new SkeletonFromStep();
+            skeleton.Test(renderView);
+        }
     }
 }
+
+

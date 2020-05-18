@@ -32,17 +32,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.importBtn = new System.Windows.Forms.ToolStripButton();
+            this.mouseBtn = new System.Windows.Forms.ToolStripButton();
             this.moveBtn = new System.Windows.Forms.ToolStripButton();
             this.rotateBtn = new System.Windows.Forms.ToolStripButton();
             this.clearBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.moveNodeBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.singlePickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiPickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mouseBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.testBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -69,10 +70,11 @@
             this.clearBtn,
             this.toolStripSeparator1,
             this.moveNodeBtn,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.testBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(310, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(339, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -85,6 +87,16 @@
             this.importBtn.Size = new System.Drawing.Size(29, 24);
             this.importBtn.Text = "Import";
             this.importBtn.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // mouseBtn
+            // 
+            this.mouseBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
+            this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mouseBtn.Name = "mouseBtn";
+            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
+            this.mouseBtn.Text = "toolStripButton1";
+            this.mouseBtn.Click += new System.EventHandler(this.mouseBtn_Click);
             // 
             // moveBtn
             // 
@@ -131,24 +143,6 @@
             this.moveNodeBtn.Text = "Move";
             this.moveNodeBtn.Click += new System.EventHandler(this.moveNodeBtn_Click);
             // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(800, 450);
-            this.toolStripContainer1.TabIndex = 3;
-            this.toolStripContainer1.Text = "toolStripContainer1";
-            // 
-            // toolStripContainer1.TopToolStripPanel
-            // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -183,15 +177,33 @@
             this.hitTestToolStripMenuItem.Text = "Hit Test";
             this.hitTestToolStripMenuItem.Click += new System.EventHandler(this.hitTestToolStripMenuItem_Click);
             // 
-            // mouseBtn
+            // toolStripContainer1
             // 
-            this.mouseBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
-            this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mouseBtn.Name = "mouseBtn";
-            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
-            this.mouseBtn.Text = "toolStripButton1";
-            this.mouseBtn.Click += new System.EventHandler(this.mouseBtn_Click);
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(800, 450);
+            this.toolStripContainer1.TabIndex = 3;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // testBtn
+            // 
+            this.testBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
+            this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.testBtn.Name = "testBtn";
+            this.testBtn.Size = new System.Drawing.Size(29, 24);
+            this.testBtn.Text = "toolStripButton1";
+            this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
             // 
             // TestForm
             // 
@@ -229,5 +241,6 @@
         private System.Windows.Forms.ToolStripMenuItem multiPickToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hitTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton mouseBtn;
+        private System.Windows.Forms.ToolStripButton testBtn;
     }
 }
