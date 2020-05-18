@@ -127,14 +127,15 @@ namespace AnyCAD.Basic
             renderView.RenderTimer.Enabled = false;
             if (shape != null)
             {
-                TopoShapeGroup group = new TopoShapeGroup();
-                group.Add(shape);
-                SceneManager sceneMgr = renderView.SceneManager;
-                SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
-                if (rootNode != null)
-                {
-                    sceneMgr.AddNode(rootNode);
-                }
+                renderView.ShowGeometry(shape, shapeId);
+                //TopoShapeGroup group = new TopoShapeGroup();
+                //group.Add(shape);
+                //SceneManager sceneMgr = renderView.SceneManager;
+                //SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
+                //if (rootNode != null)
+                //{
+                //    sceneMgr.AddNode(rootNode);
+                //}
             }
             renderView.RenderTimer.Enabled = true;
 
@@ -247,6 +248,12 @@ namespace AnyCAD.Basic
         {
             SkeletonFromStep skeleton = new SkeletonFromStep();
             skeleton.Test(renderView);
+        }
+
+        private void mkSecBtn_Click(object sender, EventArgs e)
+        {
+            //SelectedIdSetQuery setQuery = new SelectedIdSetQuery();
+            
         }
     }
 }

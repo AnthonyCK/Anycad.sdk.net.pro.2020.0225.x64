@@ -44,6 +44,7 @@
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.testBtn = new System.Windows.Forms.ToolStripButton();
+            this.mkSecBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -71,10 +72,11 @@
             this.toolStripSeparator1,
             this.moveNodeBtn,
             this.toolStripDropDownButton1,
-            this.testBtn});
+            this.testBtn,
+            this.mkSecBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(339, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(415, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -197,13 +199,23 @@
             // 
             // testBtn
             // 
-            this.testBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.testBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
             this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(29, 24);
-            this.testBtn.Text = "toolStripButton1";
+            this.testBtn.Size = new System.Drawing.Size(44, 24);
+            this.testBtn.Text = "Test";
             this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
+            // 
+            // mkSecBtn
+            // 
+            this.mkSecBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.mkSecBtn.Image = ((System.Drawing.Image)(resources.GetObject("mkSecBtn.Image")));
+            this.mkSecBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mkSecBtn.Name = "mkSecBtn";
+            this.mkSecBtn.Size = new System.Drawing.Size(61, 24);
+            this.mkSecBtn.Text = "mkSec";
+            this.mkSecBtn.Click += new System.EventHandler(this.mkSecBtn_Click);
             // 
             // TestForm
             // 
@@ -242,5 +254,6 @@
         private System.Windows.Forms.ToolStripMenuItem hitTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton mouseBtn;
         private System.Windows.Forms.ToolStripButton testBtn;
+        private System.Windows.Forms.ToolStripButton mkSecBtn;
     }
 }
