@@ -63,83 +63,13 @@ namespace AnyCAD.Basic
 
             TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
 
-            double areaM=0;
-            Vector3 dirN = new Vector3();
-            Vector3 pos = new Vector3();
-            TopoExplor topo = new TopoExplor();
-            TopoShapeGroup group2 = topo.ExplorFaces(shape);
-            for (int i = 0; i < group2.Size(); i++)
-            {
-                TopoShape face = group2.GetTopoShape(i);
-                
-                #region 计算面积
-                TopoShapeProperty property = new TopoShapeProperty();
-                property.SetShape(face);
-                Console.WriteLine("Face {0}:\n\tArea {1}\n\tOrientation {2}", i, property.SurfaceArea(), face.GetOrientation());
-                #endregion
-                #region 计算法向量
-                GeomSurface surface = new GeomSurface();
-                surface.Initialize(face);
-                //参数域UV范围
-                double uFirst = surface.FirstUParameter();
-                double uLast = surface.LastUParameter();
-                double vFirst = surface.FirstVParameter();
-                double vLast = surface.LastVParameter();
-                //取中点
-                double umid = uFirst + (uLast - uFirst) * 0.5f;
-                double vmid = vFirst + (vLast - vFirst) * 0.5f;
-                //计算法向量
-                var data = surface.D1(umid, vmid);
-                Vector3 dirU = data[1];
-                Vector3 dirV = data[2];
-                Vector3 dir = dirV.CrossProduct(dirU);
-                dir.Normalize();
-                Console.WriteLine("\tDir {0}", dir);
-                #endregion
-
-                #region 取最大的面
-                if (property.SurfaceArea() > areaM)
-                {
-                    areaM = property.SurfaceArea();
-                    pos = data[0];
-                    Console.WriteLine(data[0]);
-                    if (face.GetOrientation() == EnumShapeOrientation.ShapeOrientation_REVERSED)
-                    {
-                        dirN = dir * -1;
-                    }
-                    else
-                    {
-                        dirN = dir;
-                    }
-                }
-                #endregion
-            }
-
-            #region 坐标变换
-            //Translation
-            shape = GlobalInstance.BrepTools.Translate(shape, -pos);
-            //Rotation
-            Vector3 dirZ = new Vector3(0, 0, -1);
-            shape = GlobalInstance.BrepTools.Rotation(shape, dirN.CrossProduct(dirZ), dirN.AngleBetween(dirZ));
-            #endregion
-
             #region Render Shape
             renderView.RenderTimer.Enabled = false;
             if (shape != null)
             {
                 renderView.ShowGeometry(shape, shapeId);
-                //TopoShapeGroup group = new TopoShapeGroup();
-                //group.Add(shape);
-                //SceneManager sceneMgr = renderView.SceneManager;
-                //SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
-                //if (rootNode != null)
-                //{
-                //    sceneMgr.AddNode(rootNode);
-                //}
             }
             renderView.RenderTimer.Enabled = true;
-
-
             renderView.FitAll();
             renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
 
@@ -252,8 +182,82 @@ namespace AnyCAD.Basic
 
         private void mkSecBtn_Click(object sender, EventArgs e)
         {
-            //SelectedIdSetQuery setQuery = new SelectedIdSetQuery();
-            
+            SelectedShapeQuery context = new SelectedShapeQuery();
+            renderView.QuerySelection(context);
+            var shape = context.GetGeometry();
+            translation(shape);
+        }
+
+        private void translation(TopoShape shape)
+        {
+            double areaM = 0;
+            Vector3 dirN = new Vector3();
+            Vector3 pos = new Vector3();
+            TopoExplor topo = new TopoExplor();
+            TopoShapeGroup group2 = topo.ExplorFaces(shape);
+            for (int i = 0; i < group2.Size(); i++)
+            {
+                TopoShape face = group2.GetTopoShape(i);
+
+                #region 计算面积
+                TopoShapeProperty property = new TopoShapeProperty();
+                property.SetShape(face);
+                Console.WriteLine("Face {0}:\n\tArea {1}\n\tOrientation {2}", i, property.SurfaceArea(), face.GetOrientation());
+                #endregion
+                #region 计算法向量
+                GeomSurface surface = new GeomSurface();
+                surface.Initialize(face);
+                //参数域UV范围
+                double uFirst = surface.FirstUParameter();
+                double uLast = surface.LastUParameter();
+                double vFirst = surface.FirstVParameter();
+                double vLast = surface.LastVParameter();
+                //取中点
+                double umid = uFirst + (uLast - uFirst) * 0.5f;
+                double vmid = vFirst + (vLast - vFirst) * 0.5f;
+                //计算法向量
+                var data = surface.D1(umid, vmid);
+                Vector3 dirU = data[1];
+                Vector3 dirV = data[2];
+                Vector3 dir = dirV.CrossProduct(dirU);
+                dir.Normalize();
+                Console.WriteLine("\tDir {0}", dir);
+                #endregion
+
+                #region 取最大的面
+                if (property.SurfaceArea() > areaM)
+                {
+                    areaM = property.SurfaceArea();
+                    pos = data[0];
+                    Console.WriteLine(data[0]);
+                    if (face.GetOrientation() == EnumShapeOrientation.ShapeOrientation_REVERSED)
+                    {
+                        dirN = dir * -1;
+                    }
+                    else
+                    {
+                        dirN = dir;
+                    }
+                }
+                #endregion
+            }
+
+            #region 坐标变换
+            //Translation
+            shape = GlobalInstance.BrepTools.Translate(shape, -pos);
+            //Rotation
+            Vector3 dirZ = new Vector3(0, 0, -1);
+            shape = GlobalInstance.BrepTools.Rotation(shape, dirN.CrossProduct(dirZ), dirN.AngleBetween(dirZ));
+            #endregion
+
+            if (shape != null)
+            {
+                renderView.ClearScene();
+                renderView.ShowGeometry(shape, shapeId);
+            }
+            renderView.FitAll();
+            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
         }
     }
 }

@@ -42,9 +42,9 @@
             this.singlePickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiPickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.testBtn = new System.Windows.Forms.ToolStripButton();
             this.mkSecBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -76,7 +76,7 @@
             this.mkSecBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(415, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(376, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -161,41 +161,23 @@
             // singlePickToolStripMenuItem
             // 
             this.singlePickToolStripMenuItem.Name = "singlePickToolStripMenuItem";
-            this.singlePickToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.singlePickToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.singlePickToolStripMenuItem.Text = "SinglePick";
             this.singlePickToolStripMenuItem.Click += new System.EventHandler(this.singlePickToolStripMenuItem_Click);
             // 
             // multiPickToolStripMenuItem
             // 
             this.multiPickToolStripMenuItem.Name = "multiPickToolStripMenuItem";
-            this.multiPickToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.multiPickToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.multiPickToolStripMenuItem.Text = "MultiPick";
             this.multiPickToolStripMenuItem.Click += new System.EventHandler(this.multiPickToolStripMenuItem_Click);
             // 
             // hitTestToolStripMenuItem
             // 
             this.hitTestToolStripMenuItem.Name = "hitTestToolStripMenuItem";
-            this.hitTestToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.hitTestToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.hitTestToolStripMenuItem.Text = "Hit Test";
             this.hitTestToolStripMenuItem.Click += new System.EventHandler(this.hitTestToolStripMenuItem_Click);
-            // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(800, 450);
-            this.toolStripContainer1.TabIndex = 3;
-            this.toolStripContainer1.Text = "toolStripContainer1";
-            // 
-            // toolStripContainer1.TopToolStripPanel
-            // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
             // testBtn
             // 
@@ -216,6 +198,24 @@
             this.mkSecBtn.Size = new System.Drawing.Size(61, 24);
             this.mkSecBtn.Text = "mkSec";
             this.mkSecBtn.Click += new System.EventHandler(this.mkSecBtn_Click);
+            // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(800, 450);
+            this.toolStripContainer1.TabIndex = 3;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
             // TestForm
             // 
