@@ -259,10 +259,6 @@ namespace AnyCAD.Basic
             renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
 
         }
-        private void transOnSelection(TopoShape shape)
-        {
-
-        }
 
         private void transOnSelectBtn_Click(object sender, EventArgs e)
         {
