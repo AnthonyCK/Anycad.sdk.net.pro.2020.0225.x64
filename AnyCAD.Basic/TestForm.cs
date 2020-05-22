@@ -181,7 +181,10 @@ namespace AnyCAD.Basic
             SelectedShapeQuery context = new SelectedShapeQuery();
             renderView.QuerySelection(context);
             var shape = context.GetGeometry();
-            shape = section(shape);
+            if (shape != null)
+            {
+                shape = section(shape); 
+            }
             #region Render
             if (shape != null)
             {
@@ -282,7 +285,10 @@ namespace AnyCAD.Basic
             renderView.QuerySelection(context);
             var shape = context.GetGeometry();
             var face = context.GetSubGeometry();
-
+            if (shape == null)
+            {
+                return;
+            }
             var center = shape.GetBBox().GetCenter();
 
             #region 计算法向量
