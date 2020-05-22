@@ -266,6 +266,62 @@ namespace AnyCAD.Basic
 
         private void transOnSelectBtn_Click(object sender, EventArgs e)
         {
+            //Get selected shape
+            SelectedShapeQuery context = new SelectedShapeQuery();
+            renderView.QuerySelection(context);
+            var shape = context.GetGeometry();
+            var face = context.GetSubGeometry();
+
+            var center = shape.GetBBox().GetCenter();
+
+            #region 计算法向量
+            GeomSurface surface = new GeomSurface();
+            surface.Initialize(face);
+            //参数域UV范围
+            double uFirst = surface.FirstUParameter();
+            double uLast = surface.LastUParameter();
+            double vFirst = surface.FirstVParameter();
+            double vLast = surface.LastVParameter();
+            //取中点
+            double umid = uFirst + (uLast - uFirst) * 0.5f;
+            double vmid = vFirst + (vLast - vFirst) * 0.5f;
+            //计算法向量
+            var data = surface.D1(umid, vmid);
+            Vector3 dirU = data[1];
+            Vector3 dirV = data[2];
+            Vector3 dir = dirV.CrossProduct(dirU);
+            dir.Normalize();
+            Console.WriteLine("\tDir {0}", dir);
+            #endregion
+
+            #region 坐标变换
+            Vector3 dirN = new Vector3();
+            if (face.GetOrientation() == EnumShapeOrientation.ShapeOrientation_REVERSED)
+            {
+                dirN = dir * -1;
+            }
+            else
+            {
+                dirN = dir;
+            }
+
+            //Translation
+            shape = GlobalInstance.BrepTools.Translate(shape, -center);
+            //Rotation
+            Vector3 dirZ = new Vector3(0, 0, -1);
+            shape = GlobalInstance.BrepTools.Rotation(shape, dirN.CrossProduct(dirZ), dirN.AngleBetween(dirZ));
+            #endregion
+
+            #region Render
+            if (shape != null)
+            {
+                renderView.ClearScene();
+                renderView.ShowGeometry(shape, shapeId);
+            }
+            renderView.FitAll();
+            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            #endregion
 
         }
     }
