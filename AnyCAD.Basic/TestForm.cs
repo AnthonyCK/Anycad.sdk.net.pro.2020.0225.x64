@@ -180,15 +180,15 @@ namespace AnyCAD.Basic
             skeleton.Test(renderView);
         }
 
-        private void mkSecBtn_Click(object sender, EventArgs e)
+        private void transOnMaxBtn_Click(object sender, EventArgs e)
         {
             SelectedShapeQuery context = new SelectedShapeQuery();
             renderView.QuerySelection(context);
             var shape = context.GetGeometry();
-            translation(shape);
+            transOnMax(shape);
         }
 
-        private void translation(TopoShape shape)
+        private void transOnMax(TopoShape shape)
         {
             double areaM = 0;
             Vector3 dirN = new Vector3();
@@ -257,6 +257,15 @@ namespace AnyCAD.Basic
             }
             renderView.FitAll();
             renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+        }
+        private void transOnSelection(TopoShape shape)
+        {
+
+        }
+
+        private void transOnSelectBtn_Click(object sender, EventArgs e)
+        {
 
         }
     }
