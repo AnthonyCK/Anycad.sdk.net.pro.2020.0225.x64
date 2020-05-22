@@ -44,8 +44,8 @@
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testBtn = new System.Windows.Forms.ToolStripButton();
             this.transOnMaxBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.transOnSelectBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -57,7 +57,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 419);
+            this.panel1.Size = new System.Drawing.Size(800, 423);
             this.panel1.TabIndex = 0;
             // 
             // toolStrip1
@@ -201,13 +201,23 @@
             this.transOnMaxBtn.Text = "transOnMax";
             this.transOnMaxBtn.Click += new System.EventHandler(this.transOnMaxBtn_Click);
             // 
+            // transOnSelectBtn
+            // 
+            this.transOnSelectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
+            this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.transOnSelectBtn.Name = "transOnSelectBtn";
+            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
+            this.transOnSelectBtn.Text = "transOnSelect";
+            this.transOnSelectBtn.Click += new System.EventHandler(this.transOnSelectBtn_Click);
+            // 
             // toolStripContainer1
             // 
             // 
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 419);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
@@ -218,16 +228,6 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
-            // transOnSelectBtn
-            // 
-            this.transOnSelectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
-            this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.transOnSelectBtn.Name = "transOnSelectBtn";
-            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
-            this.transOnSelectBtn.Text = "transOnSelect";
-            this.transOnSelectBtn.Click += new System.EventHandler(this.transOnSelectBtn_Click);
             // 
             // TestForm
             // 
