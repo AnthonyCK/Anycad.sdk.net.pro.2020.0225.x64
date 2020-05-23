@@ -183,7 +183,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 26);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // loadToolStripMenuItem
@@ -261,7 +261,7 @@
             this.stdViewToolStripMenuItem,
             this.iteratorToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(58, 26);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // shadeToolStripMenuItem
@@ -422,7 +422,7 @@
             this.toolStripMenuItem10,
             this.querySelectionToolStripMenuItem});
             this.pickToolStripMenuItem.Name = "pickToolStripMenuItem";
-            this.pickToolStripMenuItem.Size = new System.Drawing.Size(52, 24);
+            this.pickToolStripMenuItem.Size = new System.Drawing.Size(52, 26);
             this.pickToolStripMenuItem.Text = "Pick";
             // 
             // pickByClickToolStripMenuItem
@@ -527,7 +527,7 @@
             this.lineEditorToolStripMenuItem,
             this.arrowToolStripMenuItem});
             this.primitiveToolStripMenuItem.Name = "primitiveToolStripMenuItem";
-            this.primitiveToolStripMenuItem.Size = new System.Drawing.Size(87, 24);
+            this.primitiveToolStripMenuItem.Size = new System.Drawing.Size(87, 26);
             this.primitiveToolStripMenuItem.Text = "Primitive";
             // 
             // sphereToolStripMenuItem
@@ -727,7 +727,7 @@
             this.evolvedToolStripMenuItem,
             this.glueToolStripMenuItem});
             this.featureToolStripMenuItem.Name = "featureToolStripMenuItem";
-            this.featureToolStripMenuItem.Size = new System.Drawing.Size(78, 24);
+            this.featureToolStripMenuItem.Size = new System.Drawing.Size(78, 26);
             this.featureToolStripMenuItem.Text = "Feature";
             // 
             // extrudeToolStripMenuItem
@@ -909,7 +909,7 @@
             this.intersectionToolStripMenuItem,
             this.hLRToolStripMenuItem});
             this.geometryToolStripMenuItem.Name = "geometryToolStripMenuItem";
-            this.geometryToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.geometryToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
             this.geometryToolStripMenuItem.Text = "Geometry";
             // 
             // curveToolStripMenuItem
@@ -1014,7 +1014,7 @@
             this.loadDHermiteRToolStripMenuItem,
             this.manySphereToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(54, 24);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(54, 26);
             this.testToolStripMenuItem.Text = "Test";
             // 
             // animationToolStripMenuItem
@@ -1109,14 +1109,14 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(60, 26);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // testFormToolStripMenuItem
             // 
             this.testFormToolStripMenuItem.Name = "testFormToolStripMenuItem";
-            this.testFormToolStripMenuItem.Size = new System.Drawing.Size(92, 24);
+            this.testFormToolStripMenuItem.Size = new System.Drawing.Size(92, 26);
             this.testFormToolStripMenuItem.Text = "TestForm";
             this.testFormToolStripMenuItem.Click += new System.EventHandler(this.testFormToolStripMenuItem_Click);
             // 

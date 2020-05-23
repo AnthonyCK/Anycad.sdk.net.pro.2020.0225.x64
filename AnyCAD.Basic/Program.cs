@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace AnyCAD.Basic
@@ -13,9 +14,9 @@ namespace AnyCAD.Basic
         [STAThread]
         static void Main()
         {
-            string email = "3336982070@qq.com";
-            string uuid = "91310120MA1HKMQE30-20200508";
-            string sn = "d951f4b172825d9b02b46d5bef07323d";
+            string email = ConfigurationManager.AppSettings["Email"];
+            string uuid = ConfigurationManager.AppSettings["uuid"];
+            string sn = ConfigurationManager.AppSettings["sn"];
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             AnyCAD.Platform.GlobalInstance.Application.SetLogFileName(new AnyCAD.Platform.Path("anycad.net.sdk.log"));
