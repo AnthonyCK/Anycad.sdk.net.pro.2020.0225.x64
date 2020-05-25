@@ -19,7 +19,7 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
         private int shapeId = 100;
-
+        private TopoShape topoShape = new TopoShape();
         public TestForm()
         {
             InitializeComponent();
@@ -145,6 +145,8 @@ namespace AnyCAD.Basic
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ClearScene();
+            renderViewXZ.ClearScene();
+            renderViewYZ.ClearScene();
         }
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -156,7 +158,7 @@ namespace AnyCAD.Basic
                 return;
 
             TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
-
+            topoShape = shape;
             #region Render Shape
             renderView.RenderTimer.Enabled = false;
             if (shape != null)
@@ -207,24 +209,28 @@ namespace AnyCAD.Basic
 
         private void testBtn_Click(object sender, EventArgs e)
         {
-            //SkeletonFromStep skeleton = new SkeletonFromStep();
-            //skeleton.Test(renderView);
-            SelectedShapeQuery context = new SelectedShapeQuery();
-            renderView.QuerySelection(context);
-            var shape = context.GetGeometry();
-            if (shape != null)
+            //SelectedShapeQuery context = new SelectedShapeQuery();
+            //renderView.QuerySelection(context);
+            //var shape = context.GetGeometry();
+            TopoShape shapeXZ = new TopoShape();
+            TopoShape shapeYZ = new TopoShape();
+            if (topoShape != null)
             {
-                shape = section(shape); 
+                shapeXZ = section(topoShape, new Vector3(0, 1, 0));
+                shapeYZ = section(topoShape, new Vector3(1, 0, 0));
             }
             #region Render
-            if (shape != null)
+            if (topoShape != null)
             {
-                renderView.ClearScene();
-                renderView.ShowGeometry(shape, shapeId);
+                renderViewXZ.ClearScene();
+                renderViewXZ.ShowGeometry(shapeXZ, shapeId);
+                renderViewYZ.ClearScene();
+                renderViewYZ.ShowGeometry(shapeYZ, shapeId);
             }
-            renderView.FitAll();
-            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
-
+            renderViewXZ.FitAll();
+            renderViewYZ.FitAll();
+            renderViewXZ.RequestDraw(EnumRenderHint.RH_LoadScene);
+            renderViewYZ.RequestDraw(EnumRenderHint.RH_LoadScene);
             #endregion
 
         }
@@ -301,6 +307,7 @@ namespace AnyCAD.Basic
 
             if (shape != null)
             {
+                topoShape = shape;
                 renderView.ClearScene();
                 renderView.ShowGeometry(shape, shapeId);
             }
@@ -363,6 +370,7 @@ namespace AnyCAD.Basic
             #region Render
             if (shape != null)
             {
+                topoShape = shape;
                 renderView.ClearScene();
                 renderView.ShowGeometry(shape, shapeId);
             }
@@ -372,12 +380,11 @@ namespace AnyCAD.Basic
             #endregion
 
         }
-        private TopoShape section(TopoShape shape)
+        private TopoShape section(TopoShape shape, Vector3 dir)
         {
             Vector3 origion = new Vector3(0, 0, 0);
-            Vector3 dirX = new Vector3(1, 0, 0);
-            TopoShape yz = GlobalInstance.BrepTools.MakePlaneFace(origion,dirX,-100,100,-100,100);
-            shape = GlobalInstance.BrepTools.BooleanCommon(shape, yz);
+            TopoShape plane = GlobalInstance.BrepTools.MakePlaneFace(origion,dir,-100,100,-100,100);
+            shape = GlobalInstance.BrepTools.BooleanCommon(shape, plane);
             return shape;
         }
 
