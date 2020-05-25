@@ -104,7 +104,7 @@ namespace AnyCAD.Basic
             }
 
         }
-        private void FormMain_SizeChanged(object sender, EventArgs e)
+        private void Panel1_SizeChanged(object sender, EventArgs e)
         {
             if (renderView != null)
             {
@@ -349,6 +349,7 @@ namespace AnyCAD.Basic
             shape = GlobalInstance.BrepTools.BooleanCommon(shape, yz);
             return shape;
         }
+
     }
 }
 
