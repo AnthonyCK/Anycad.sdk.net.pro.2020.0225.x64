@@ -87,7 +87,7 @@
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(531, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(570, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -323,7 +323,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(528, 174);
-            this.panel2.TabIndex = 2;
+            this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
             // 
             // panel3

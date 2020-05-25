@@ -19,12 +19,14 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
         private int shapeId = 100;
+
         public TestForm()
         {
             InitializeComponent();
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
             this.renderViewXZ = new Presentation.RenderWindow3d();
             this.renderViewYZ = new Presentation.RenderWindow3d();
+            //初始化视窗大小
             System.Drawing.Size size = this.panel1.ClientSize;
             Size sizeXZ = panel2.ClientSize;
             Size sizeYZ = panel3.ClientSize;
@@ -33,6 +35,8 @@ namespace AnyCAD.Basic
             renderViewYZ.Size = sizeYZ;
 
             this.renderView.TabIndex = 1;
+            renderViewXZ.TabIndex = 2;
+            renderViewYZ.TabIndex = 3;
             this.panel1.Controls.Add(this.renderView);
             panel2.Controls.Add(renderViewXZ);
             panel3.Controls.Add(renderViewYZ);
@@ -103,6 +107,9 @@ namespace AnyCAD.Basic
             if (renderViewXZ != null)
             {
                 renderViewXZ.Size = panel2.ClientSize;
+                renderViewXZ.Renderer.SetStandardView(EnumStandardView.SV_Back);
+                renderViewXZ.ExecuteCommand("Pan");
+                renderViewXZ.RequestDraw();
             }
         }
         private void panel3_SizeChanged(object sender, EventArgs e)
@@ -110,9 +117,11 @@ namespace AnyCAD.Basic
             if (renderViewYZ != null)
             {
                 renderViewYZ.Size = panel3.ClientSize;
+                renderViewYZ.Renderer.SetStandardView(EnumStandardView.SV_Right);
+                renderViewYZ.ExecuteCommand("Pan");
+                renderViewYZ.RequestDraw();
             }
         }
-
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Orbit");

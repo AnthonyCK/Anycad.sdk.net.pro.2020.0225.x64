@@ -1250,7 +1250,7 @@ namespace AnyCAD.Basic
 
         private void topToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            renderView.Renderer.SetStandardView( EnumStandardView.SV_Top);
+            renderView.Renderer.SetStandardView(EnumStandardView.SV_Top);
             renderView.RequestDraw();
         }
 
