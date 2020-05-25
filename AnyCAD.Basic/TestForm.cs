@@ -16,16 +16,26 @@ namespace AnyCAD.Basic
     {
         // Render Control
         private Presentation.RenderWindow3d renderView;
+        private Presentation.RenderWindow3d renderViewXZ;
+        private Presentation.RenderWindow3d renderViewYZ;
         private int shapeId = 100;
         public TestForm()
         {
             InitializeComponent();
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
+            this.renderViewXZ = new Presentation.RenderWindow3d();
+            this.renderViewYZ = new Presentation.RenderWindow3d();
             System.Drawing.Size size = this.panel1.ClientSize;
+            Size sizeXZ = panel2.ClientSize;
+            Size sizeYZ = panel3.ClientSize;
             this.renderView.Size = size;
+            renderViewXZ.Size = sizeXZ;
+            renderViewYZ.Size = sizeYZ;
 
             this.renderView.TabIndex = 1;
             this.panel1.Controls.Add(this.renderView);
+            panel2.Controls.Add(renderViewXZ);
+            panel3.Controls.Add(renderViewYZ);
 
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
 
@@ -52,30 +62,6 @@ namespace AnyCAD.Basic
                 }
             }
         }
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "STEP (*.stp;*.step)|*.stp;*.step|STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
-
-            if (DialogResult.OK != dlg.ShowDialog())
-                return;
-
-            TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
-
-            #region Render Shape
-            renderView.RenderTimer.Enabled = false;
-            if (shape != null)
-            {
-                renderView.ShowGeometry(shape, shapeId);
-            }
-            renderView.RenderTimer.Enabled = true;
-            renderView.FitAll();
-            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
-
-            #endregion 
-        }
-
         private void OnChangeCursor(String commandId, String cursorHint)
         {
 
@@ -108,11 +94,25 @@ namespace AnyCAD.Basic
         {
             if (renderView != null)
             {
-
                 System.Drawing.Size size = this.panel1.ClientSize;
                 renderView.Size = size;
             }
         }
+        private void panel2_SizeChanged(object sender, EventArgs e)
+        {
+            if (renderViewXZ != null)
+            {
+                renderViewXZ.Size = panel2.ClientSize;
+            }
+        }
+        private void panel3_SizeChanged(object sender, EventArgs e)
+        {
+            if (renderViewYZ != null)
+            {
+                renderViewYZ.Size = panel3.ClientSize;
+            }
+        }
+
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Orbit");
@@ -133,10 +133,32 @@ namespace AnyCAD.Basic
         {
             renderView.ExecuteCommand("Pick");
         }
-
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ClearScene();
+        }
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "STEP (*.stp;*.step)|*.stp;*.step|STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
+
+            if (DialogResult.OK != dlg.ShowDialog())
+                return;
+
+            TopoShape shape = GlobalInstance.BrepTools.LoadFile(new AnyCAD.Platform.Path(dlg.FileName));
+
+            #region Render Shape
+            renderView.RenderTimer.Enabled = false;
+            if (shape != null)
+            {
+                renderView.ShowGeometry(shape, shapeId);
+            }
+            renderView.RenderTimer.Enabled = true;
+            renderView.FitAll();
+            renderView.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            #endregion 
         }
 
         private void moveNodeBtn_Click(object sender, EventArgs e)
