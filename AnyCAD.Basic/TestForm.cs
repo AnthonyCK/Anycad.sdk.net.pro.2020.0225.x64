@@ -18,6 +18,7 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderView;
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
+        private Presentation.RenderWindow3d renderViewDraw;
         private int shapeId = 100;
         private TopoShape topoShape = new TopoShape();
         public TestForm()
@@ -26,13 +27,16 @@ namespace AnyCAD.Basic
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
             this.renderViewXZ = new Presentation.RenderWindow3d();
             this.renderViewYZ = new Presentation.RenderWindow3d();
+            this.renderViewDraw = new Presentation.RenderWindow3d();
             //初始化视窗大小
             System.Drawing.Size size = this.panel1.ClientSize;
             Size sizeXZ = panel2.ClientSize;
             Size sizeYZ = panel3.ClientSize;
+            Size sizeDraw = panel4.ClientSize;
             this.renderView.Size = size;
             renderViewXZ.Size = sizeXZ;
             renderViewYZ.Size = sizeYZ;
+            renderViewDraw.Size = sizeDraw;
 
             this.renderView.TabIndex = 1;
             renderViewXZ.TabIndex = 2;
@@ -40,6 +44,7 @@ namespace AnyCAD.Basic
             this.panel1.Controls.Add(this.renderView);
             panel2.Controls.Add(renderViewXZ);
             panel3.Controls.Add(renderViewYZ);
+            panel4.Controls.Add(renderViewDraw);
 
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
 
@@ -94,7 +99,7 @@ namespace AnyCAD.Basic
             }
 
         }
-        private void Panel1_SizeChanged(object sender, EventArgs e)
+        private void panel1_SizeChanged(object sender, EventArgs e)
         {
             if (renderView != null)
             {
@@ -122,6 +127,15 @@ namespace AnyCAD.Basic
                 renderViewYZ.RequestDraw();
             }
         }
+        private void panel4_SizeChanged(object sender, EventArgs e)
+        {
+            if (renderView != null)
+            {
+                System.Drawing.Size size = this.panel4.ClientSize;
+                renderViewDraw.Size = size;
+            }
+        }
+
         private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Orbit");
@@ -388,6 +402,167 @@ namespace AnyCAD.Basic
             return shape;
         }
 
+        TopoShapeGroup group = new TopoShapeGroup();
+        private void btnDraw_Click(object sender, EventArgs e)
+        {
+            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(Convert.ToDouble(txtL.Text), Convert.ToDouble(txtW.Text), 0, Coordinate3.UNIT_XYZ);
+            TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
+
+            renderViewDraw.ClearScene();
+            group.Add(face);
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
+            if (rootNode != null)
+            {
+                sceneMgr.AddNode(rootNode);
+            }
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+        }
+
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            //Get selected shape
+            SelectedShapeQuery context = new SelectedShapeQuery();
+            renderViewDraw.QuerySelection(context);
+            var face = context.GetGeometry();
+            var line = context.GetSubGeometry();
+            if (face == null)
+            {
+                return;
+            }
+            #region 计算平面法向量
+            GeomSurface surface = new GeomSurface();
+            surface.Initialize(face);
+            //参数域UV范围
+            double uFirst = surface.FirstUParameter();
+            double uLast = surface.LastUParameter();
+            double vFirst = surface.FirstVParameter();
+            double vLast = surface.LastVParameter();
+            //取中点
+            double umid = uFirst + (uLast - uFirst) * 0.5f;
+            double vmid = vFirst + (vLast - vFirst) * 0.5f;
+            //计算法向量
+            var data = surface.D1(umid, vmid);
+            Vector3 dirU = data[1];
+            Vector3 dirV = data[2];
+            Vector3 dirF = dirV.CrossProduct(dirU);
+            dirF.Normalize();
+            #endregion
+
+            #region 计算边线参数
+            GeomCurve curve = new GeomCurve();
+            curve.Initialize(line);
+            Vector3 dirL = -curve.DN(curve.FirstParameter(), 1);
+            Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
+            Vector3 edPt = curve.Value(curve.LastParameter());  //终点
+            #endregion
+
+            #region 绘制草图
+            TopoShapeGroup lineGroup = new TopoShapeGroup();
+
+            Vector3 center = stPt - dirF * Convert.ToDouble(txtRadius.Text); //圆心
+            Vector3 radius = stPt - center;    //半径
+            double theta = Convert.ToDouble(txtAngle.Text) * (Math.PI / 180.0);
+            Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
+            Vector3 edArc = center + radius2;  //圆弧终点
+            TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
+            lineGroup.Add(arc);
+            Vector3 edLine = dirL.CrossProduct(radius2) * (Convert.ToDouble(txtLength.Text) / Convert.ToDouble(txtRadius.Text)) + edArc;
+            arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
+            lineGroup.Add(arc);
+            //扫描生成折弯
+            TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
+            TopoShape path = GlobalInstance.BrepTools.MakeLine(stPt, edPt);
+            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
+            #endregion
+
+            #region 渲染
+            group.Add(sweep);
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
+            if (rootNode != null)
+            {
+                sceneMgr.AddNode(rootNode);
+            }
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            #endregion
+
+        }
+
+        private void btnDown_Click(object sender, EventArgs e)
+        {
+            //Get selected shape
+            SelectedShapeQuery context = new SelectedShapeQuery();
+            renderViewDraw.QuerySelection(context);
+            var face = context.GetGeometry();
+            var line = context.GetSubGeometry();
+            if (face == null)
+            {
+                return;
+            }
+            #region 计算平面法向量
+            GeomSurface surface = new GeomSurface();
+            surface.Initialize(face);
+            //参数域UV范围
+            double uFirst = surface.FirstUParameter();
+            double uLast = surface.LastUParameter();
+            double vFirst = surface.FirstVParameter();
+            double vLast = surface.LastVParameter();
+            //取中点
+            double umid = uFirst + (uLast - uFirst) * 0.5f;
+            double vmid = vFirst + (vLast - vFirst) * 0.5f;
+            //计算法向量
+            var data = surface.D1(umid, vmid);
+            Vector3 dirU = data[1];
+            Vector3 dirV = data[2];
+            Vector3 dirF = dirV.CrossProduct(dirU);
+            dirF.Normalize();
+            #endregion
+
+            #region 计算边线参数
+            GeomCurve curve = new GeomCurve();
+            curve.Initialize(line);
+            Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
+            Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
+            Vector3 edPt = curve.Value(curve.LastParameter());  //终点
+            #endregion
+
+            #region 绘制草图
+            TopoShapeGroup lineGroup = new TopoShapeGroup();
+
+            Vector3 center = stPt + dirF * Convert.ToDouble(txtRadius.Text); //圆心
+            Vector3 radius = stPt - center;    //半径
+            double theta = Convert.ToDouble(txtAngle.Text) * (Math.PI / 180.0);
+            Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
+            Vector3 edArc = center + radius2;  //圆弧终点
+            TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
+            lineGroup.Add(arc);
+            Vector3 edLine = dirL.CrossProduct(radius2) * (Convert.ToDouble(txtLength.Text) / Convert.ToDouble(txtRadius.Text)) + edArc;
+            arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
+            lineGroup.Add(arc);
+            //扫描生成折弯
+            TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
+            TopoShape path = GlobalInstance.BrepTools.MakeLine(stPt, edPt);
+            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
+            #endregion
+
+            #region 渲染
+            group.Add(sweep);
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
+            if (rootNode != null)
+            {
+                sceneMgr.AddNode(rootNode);
+            }
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            #endregion
+
+        }
     }
 }
 
