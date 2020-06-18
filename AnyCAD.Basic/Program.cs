@@ -21,8 +21,8 @@ namespace AnyCAD.Basic
             Application.SetCompatibleTextRenderingDefault(false);
             AnyCAD.Platform.GlobalInstance.Application.SetLogFileName(new AnyCAD.Platform.Path("anycad.net.sdk.log"));
             AnyCAD.Platform.GlobalInstance.RegisterSDK(email, uuid, sn);
-            Application.Run(new FormMain());
-            //Application.Run(new TestForm());
+            //Application.Run(new FormMain());
+            Application.Run(new TestForm());
         }
     }
 }

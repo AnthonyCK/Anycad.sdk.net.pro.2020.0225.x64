@@ -403,6 +403,8 @@ namespace AnyCAD.Basic
         }
 
         TopoShapeGroup group = new TopoShapeGroup();
+        IEnumerable<Bending> Bendings;
+        int counter = 0;
         private void btnDraw_Click(object sender, EventArgs e)
         {
             TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(Convert.ToDouble(txtL.Text), Convert.ToDouble(txtW.Text), 0, Coordinate3.UNIT_XYZ);
@@ -431,6 +433,16 @@ namespace AnyCAD.Basic
             {
                 return;
             }
+
+            //记录输入参数
+            Bending bending = new Bending(EnumEdge.Edge_1,
+                counter++,
+                EnumDir.Edge_UP,
+                Convert.ToDouble(txtAngle.Text),
+                Convert.ToDouble(txtRadius.Text),
+                Convert.ToDouble(txtLength.Text)
+                );
+
             #region 计算平面法向量
             GeomSurface surface = new GeomSurface();
             surface.Initialize(face);
@@ -461,14 +473,14 @@ namespace AnyCAD.Basic
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
 
-            Vector3 center = stPt - dirF * Convert.ToDouble(txtRadius.Text); //圆心
+            Vector3 center = stPt - dirF * bending.Radius; //圆心
             Vector3 radius = stPt - center;    //半径
-            double theta = Convert.ToDouble(txtAngle.Text) * (Math.PI / 180.0);
+            double theta = bending.Angle * (Math.PI / 180.0);
             Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
             Vector3 edArc = center + radius2;  //圆弧终点
             TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
             lineGroup.Add(arc);
-            Vector3 edLine = dirL.CrossProduct(radius2) * (Convert.ToDouble(txtLength.Text) / Convert.ToDouble(txtRadius.Text)) + edArc;
+            Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
             arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
             lineGroup.Add(arc);
             //扫描生成折弯
@@ -503,6 +515,16 @@ namespace AnyCAD.Basic
             {
                 return;
             }
+
+            //记录输入参数
+            Bending bending = new Bending(EnumEdge.Edge_1,
+                counter++,
+                EnumDir.Edge_DOWN,
+                Convert.ToDouble(txtAngle.Text),
+                Convert.ToDouble(txtRadius.Text),
+                Convert.ToDouble(txtLength.Text)
+                );
+
             #region 计算平面法向量
             GeomSurface surface = new GeomSurface();
             surface.Initialize(face);
@@ -533,14 +555,14 @@ namespace AnyCAD.Basic
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
 
-            Vector3 center = stPt + dirF * Convert.ToDouble(txtRadius.Text); //圆心
+            Vector3 center = stPt + dirF * bending.Radius; //圆心
             Vector3 radius = stPt - center;    //半径
-            double theta = Convert.ToDouble(txtAngle.Text) * (Math.PI / 180.0);
+            double theta = bending.Angle * (Math.PI / 180.0);
             Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
             Vector3 edArc = center + radius2;  //圆弧终点
             TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
             lineGroup.Add(arc);
-            Vector3 edLine = dirL.CrossProduct(radius2) * (Convert.ToDouble(txtLength.Text) / Convert.ToDouble(txtRadius.Text)) + edArc;
+            Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
             arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
             lineGroup.Add(arc);
             //扫描生成折弯
