@@ -52,20 +52,22 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.txtLength = new System.Windows.Forms.TextBox();
+            this.txtRadius = new System.Windows.Forms.TextBox();
+            this.txtAngle = new System.Windows.Forms.TextBox();
             this.btnDraw = new System.Windows.Forms.Button();
             this.txtW = new System.Windows.Forms.TextBox();
             this.txtL = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.txtAngle = new System.Windows.Forms.TextBox();
-            this.txtRadius = new System.Windows.Forms.TextBox();
-            this.txtLength = new System.Windows.Forms.TextBox();
-            this.btnUp = new System.Windows.Forms.Button();
-            this.btnDown = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnExportXml = new System.Windows.Forms.Button();
+            this.btnReadXml = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -125,7 +127,7 @@
             this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
             this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mouseBtn.Name = "mouseBtn";
-            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
+            this.mouseBtn.Size = new System.Drawing.Size(29, 28);
             this.mouseBtn.Text = "toolStripButton1";
             this.mouseBtn.Click += new System.EventHandler(this.mouseBtn_Click);
             // 
@@ -135,7 +137,7 @@
             this.moveBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveBtn.Image")));
             this.moveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveBtn.Name = "moveBtn";
-            this.moveBtn.Size = new System.Drawing.Size(29, 24);
+            this.moveBtn.Size = new System.Drawing.Size(29, 28);
             this.moveBtn.Text = "Move";
             this.moveBtn.Click += new System.EventHandler(this.panToolStripMenuItem_Click);
             // 
@@ -145,7 +147,7 @@
             this.rotateBtn.Image = ((System.Drawing.Image)(resources.GetObject("rotateBtn.Image")));
             this.rotateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rotateBtn.Name = "rotateBtn";
-            this.rotateBtn.Size = new System.Drawing.Size(29, 24);
+            this.rotateBtn.Size = new System.Drawing.Size(29, 28);
             this.rotateBtn.Text = "Rotate";
             this.rotateBtn.Click += new System.EventHandler(this.orbitToolStripMenuItem_Click);
             // 
@@ -155,14 +157,14 @@
             this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
             this.clearBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(29, 24);
+            this.clearBtn.Size = new System.Drawing.Size(29, 28);
             this.clearBtn.Text = "Clear";
             this.clearBtn.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // moveNodeBtn
             // 
@@ -170,7 +172,7 @@
             this.moveNodeBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveNodeBtn.Image")));
             this.moveNodeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveNodeBtn.Name = "moveNodeBtn";
-            this.moveNodeBtn.Size = new System.Drawing.Size(55, 24);
+            this.moveNodeBtn.Size = new System.Drawing.Size(55, 28);
             this.moveNodeBtn.Text = "Move";
             this.moveNodeBtn.Click += new System.EventHandler(this.moveNodeBtn_Click);
             // 
@@ -184,7 +186,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 24);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 28);
             this.toolStripDropDownButton1.Text = "Pick";
             // 
             // singlePickToolStripMenuItem
@@ -214,7 +216,7 @@
             this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
             this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(44, 24);
+            this.testBtn.Size = new System.Drawing.Size(44, 28);
             this.testBtn.Text = "Test";
             this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
             // 
@@ -224,7 +226,7 @@
             this.transOnMaxBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnMaxBtn.Image")));
             this.transOnMaxBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnMaxBtn.Name = "transOnMaxBtn";
-            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 24);
+            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 28);
             this.transOnMaxBtn.Text = "transOnMax";
             this.transOnMaxBtn.Click += new System.EventHandler(this.transOnMaxBtn_Click);
             // 
@@ -234,7 +236,7 @@
             this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
             this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnSelectBtn.Name = "transOnSelectBtn";
-            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
+            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 28);
             this.transOnSelectBtn.Text = "transOnSelect";
             this.transOnSelectBtn.Click += new System.EventHandler(this.transOnSelectBtn_Click);
             // 
@@ -291,7 +293,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(421, 392);
+            this.tabPage1.Size = new System.Drawing.Size(421, 388);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "3D";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -302,7 +304,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 386);
+            this.panel1.Size = new System.Drawing.Size(415, 382);
             this.panel1.TabIndex = 0;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             // 
@@ -329,6 +331,8 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.btnReadXml);
+            this.splitContainer3.Panel2.Controls.Add(this.btnExportXml);
             this.splitContainer3.Panel2.Controls.Add(this.label3);
             this.splitContainer3.Panel2.Controls.Add(this.label2);
             this.splitContainer3.Panel2.Controls.Add(this.label1);
@@ -352,6 +356,74 @@
             this.panel4.Size = new System.Drawing.Size(137, 382);
             this.panel4.TabIndex = 0;
             this.panel4.SizeChanged += new System.EventHandler(this.panel4_SizeChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 214);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 15);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "L";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 183);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 15);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "R";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 152);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Angle";
+            // 
+            // btnDown
+            // 
+            this.btnDown.Location = new System.Drawing.Point(195, 191);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(75, 23);
+            this.btnDown.TabIndex = 7;
+            this.btnDown.Text = "-";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            // 
+            // btnUp
+            // 
+            this.btnUp.Location = new System.Drawing.Point(195, 162);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(75, 23);
+            this.btnUp.TabIndex = 6;
+            this.btnUp.Text = "+";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            // 
+            // txtLength
+            // 
+            this.txtLength.Location = new System.Drawing.Point(61, 211);
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(100, 25);
+            this.txtLength.TabIndex = 5;
+            // 
+            // txtRadius
+            // 
+            this.txtRadius.Location = new System.Drawing.Point(61, 180);
+            this.txtRadius.Name = "txtRadius";
+            this.txtRadius.Size = new System.Drawing.Size(100, 25);
+            this.txtRadius.TabIndex = 4;
+            // 
+            // txtAngle
+            // 
+            this.txtAngle.Location = new System.Drawing.Point(61, 149);
+            this.txtAngle.Name = "txtAngle";
+            this.txtAngle.Size = new System.Drawing.Size(100, 25);
+            this.txtAngle.TabIndex = 3;
             // 
             // btnDraw
             // 
@@ -392,7 +464,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel3);
             this.splitContainer2.Size = new System.Drawing.Size(363, 417);
-            this.splitContainer2.SplitterDistance = 172;
+            this.splitContainer2.SplitterDistance = 171;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel2
@@ -401,7 +473,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(363, 172);
+            this.panel2.Size = new System.Drawing.Size(363, 171);
             this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
             // 
@@ -411,77 +483,29 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(363, 241);
+            this.panel3.Size = new System.Drawing.Size(363, 242);
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.panel3_SizeChanged);
             // 
-            // txtAngle
+            // btnExportXml
             // 
-            this.txtAngle.Location = new System.Drawing.Point(61, 149);
-            this.txtAngle.Name = "txtAngle";
-            this.txtAngle.Size = new System.Drawing.Size(100, 25);
-            this.txtAngle.TabIndex = 3;
+            this.btnExportXml.Location = new System.Drawing.Point(98, 278);
+            this.btnExportXml.Name = "btnExportXml";
+            this.btnExportXml.Size = new System.Drawing.Size(75, 23);
+            this.btnExportXml.TabIndex = 11;
+            this.btnExportXml.Text = "Export";
+            this.btnExportXml.UseVisualStyleBackColor = true;
+            this.btnExportXml.Click += new System.EventHandler(this.btnExportXml_Click);
             // 
-            // txtRadius
+            // btnReadXml
             // 
-            this.txtRadius.Location = new System.Drawing.Point(61, 180);
-            this.txtRadius.Name = "txtRadius";
-            this.txtRadius.Size = new System.Drawing.Size(100, 25);
-            this.txtRadius.TabIndex = 4;
-            // 
-            // txtLength
-            // 
-            this.txtLength.Location = new System.Drawing.Point(61, 211);
-            this.txtLength.Name = "txtLength";
-            this.txtLength.Size = new System.Drawing.Size(100, 25);
-            this.txtLength.TabIndex = 5;
-            // 
-            // btnUp
-            // 
-            this.btnUp.Location = new System.Drawing.Point(195, 162);
-            this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(75, 23);
-            this.btnUp.TabIndex = 6;
-            this.btnUp.Text = "+";
-            this.btnUp.UseVisualStyleBackColor = true;
-            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
-            // 
-            // btnDown
-            // 
-            this.btnDown.Location = new System.Drawing.Point(195, 191);
-            this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(75, 23);
-            this.btnDown.TabIndex = 7;
-            this.btnDown.Text = "-";
-            this.btnDown.UseVisualStyleBackColor = true;
-            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 152);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 15);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Angle";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 183);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(15, 15);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "R";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 214);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(15, 15);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "L";
+            this.btnReadXml.Location = new System.Drawing.Point(98, 307);
+            this.btnReadXml.Name = "btnReadXml";
+            this.btnReadXml.Size = new System.Drawing.Size(75, 23);
+            this.btnReadXml.TabIndex = 12;
+            this.btnReadXml.Text = "Read";
+            this.btnReadXml.UseVisualStyleBackColor = true;
+            this.btnReadXml.Click += new System.EventHandler(this.btnReadXml_Click);
             // 
             // TestForm
             // 
@@ -556,5 +580,7 @@
         private System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.TextBox txtRadius;
         private System.Windows.Forms.TextBox txtAngle;
+        private System.Windows.Forms.Button btnReadXml;
+        private System.Windows.Forms.Button btnExportXml;
     }
 }

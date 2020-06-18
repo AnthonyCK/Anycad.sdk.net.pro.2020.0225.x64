@@ -403,7 +403,7 @@ namespace AnyCAD.Basic
         }
 
         TopoShapeGroup group = new TopoShapeGroup();
-        IEnumerable<Bending> Bendings;
+        List<Bending> bendings = new List<Bending>();
         int counter = 0;
         private void btnDraw_Click(object sender, EventArgs e)
         {
@@ -502,6 +502,7 @@ namespace AnyCAD.Basic
 
             #endregion
 
+            bendings.Add(bending);
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -584,6 +585,17 @@ namespace AnyCAD.Basic
 
             #endregion
 
+            bendings.Add(bending);
+        }
+
+        private void btnExportXml_Click(object sender, EventArgs e)
+        {
+            ExportXml.GenerateXml(bendings);
+        }
+
+        private void btnReadXml_Click(object sender, EventArgs e)
+        {
+            ExportXml.ReadXml();
         }
     }
 }
