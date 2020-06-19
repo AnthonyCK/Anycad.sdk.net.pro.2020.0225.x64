@@ -52,6 +52,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnReadXml = new System.Windows.Forms.Button();
+            this.btnExportXml = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -66,8 +68,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnExportXml = new System.Windows.Forms.Button();
-            this.btnReadXml = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -127,7 +129,7 @@
             this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
             this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mouseBtn.Name = "mouseBtn";
-            this.mouseBtn.Size = new System.Drawing.Size(29, 28);
+            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
             this.mouseBtn.Text = "toolStripButton1";
             this.mouseBtn.Click += new System.EventHandler(this.mouseBtn_Click);
             // 
@@ -137,7 +139,7 @@
             this.moveBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveBtn.Image")));
             this.moveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveBtn.Name = "moveBtn";
-            this.moveBtn.Size = new System.Drawing.Size(29, 28);
+            this.moveBtn.Size = new System.Drawing.Size(29, 24);
             this.moveBtn.Text = "Move";
             this.moveBtn.Click += new System.EventHandler(this.panToolStripMenuItem_Click);
             // 
@@ -147,7 +149,7 @@
             this.rotateBtn.Image = ((System.Drawing.Image)(resources.GetObject("rotateBtn.Image")));
             this.rotateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rotateBtn.Name = "rotateBtn";
-            this.rotateBtn.Size = new System.Drawing.Size(29, 28);
+            this.rotateBtn.Size = new System.Drawing.Size(29, 24);
             this.rotateBtn.Text = "Rotate";
             this.rotateBtn.Click += new System.EventHandler(this.orbitToolStripMenuItem_Click);
             // 
@@ -157,14 +159,14 @@
             this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
             this.clearBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(29, 28);
+            this.clearBtn.Size = new System.Drawing.Size(29, 24);
             this.clearBtn.Text = "Clear";
             this.clearBtn.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // moveNodeBtn
             // 
@@ -172,7 +174,7 @@
             this.moveNodeBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveNodeBtn.Image")));
             this.moveNodeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveNodeBtn.Name = "moveNodeBtn";
-            this.moveNodeBtn.Size = new System.Drawing.Size(55, 28);
+            this.moveNodeBtn.Size = new System.Drawing.Size(55, 24);
             this.moveNodeBtn.Text = "Move";
             this.moveNodeBtn.Click += new System.EventHandler(this.moveNodeBtn_Click);
             // 
@@ -186,7 +188,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 24);
             this.toolStripDropDownButton1.Text = "Pick";
             // 
             // singlePickToolStripMenuItem
@@ -216,7 +218,7 @@
             this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
             this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(44, 28);
+            this.testBtn.Size = new System.Drawing.Size(44, 24);
             this.testBtn.Text = "Test";
             this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
             // 
@@ -226,7 +228,7 @@
             this.transOnMaxBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnMaxBtn.Image")));
             this.transOnMaxBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnMaxBtn.Name = "transOnMaxBtn";
-            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 28);
+            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 24);
             this.transOnMaxBtn.Text = "transOnMax";
             this.transOnMaxBtn.Click += new System.EventHandler(this.transOnMaxBtn_Click);
             // 
@@ -236,7 +238,7 @@
             this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
             this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnSelectBtn.Name = "transOnSelectBtn";
-            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 28);
+            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
             this.transOnSelectBtn.Text = "transOnSelect";
             this.transOnSelectBtn.Click += new System.EventHandler(this.transOnSelectBtn_Click);
             // 
@@ -293,7 +295,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(421, 388);
+            this.tabPage1.Size = new System.Drawing.Size(421, 392);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "3D";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -304,7 +306,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 382);
+            this.panel1.Size = new System.Drawing.Size(415, 386);
             this.panel1.TabIndex = 0;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             // 
@@ -356,6 +358,26 @@
             this.panel4.Size = new System.Drawing.Size(137, 382);
             this.panel4.TabIndex = 0;
             this.panel4.SizeChanged += new System.EventHandler(this.panel4_SizeChanged);
+            // 
+            // btnReadXml
+            // 
+            this.btnReadXml.Location = new System.Drawing.Point(98, 307);
+            this.btnReadXml.Name = "btnReadXml";
+            this.btnReadXml.Size = new System.Drawing.Size(75, 23);
+            this.btnReadXml.TabIndex = 12;
+            this.btnReadXml.Text = "Read";
+            this.btnReadXml.UseVisualStyleBackColor = true;
+            this.btnReadXml.Click += new System.EventHandler(this.btnReadXml_Click);
+            // 
+            // btnExportXml
+            // 
+            this.btnExportXml.Location = new System.Drawing.Point(98, 278);
+            this.btnExportXml.Name = "btnExportXml";
+            this.btnExportXml.Size = new System.Drawing.Size(75, 23);
+            this.btnExportXml.TabIndex = 11;
+            this.btnExportXml.Text = "Export";
+            this.btnExportXml.UseVisualStyleBackColor = true;
+            this.btnExportXml.Click += new System.EventHandler(this.btnExportXml_Click);
             // 
             // label3
             // 
@@ -487,25 +509,14 @@
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.panel3_SizeChanged);
             // 
-            // btnExportXml
+            // saveFileDialog1
             // 
-            this.btnExportXml.Location = new System.Drawing.Point(98, 278);
-            this.btnExportXml.Name = "btnExportXml";
-            this.btnExportXml.Size = new System.Drawing.Size(75, 23);
-            this.btnExportXml.TabIndex = 11;
-            this.btnExportXml.Text = "Export";
-            this.btnExportXml.UseVisualStyleBackColor = true;
-            this.btnExportXml.Click += new System.EventHandler(this.btnExportXml_Click);
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // btnReadXml
+            // openFileDialog1
             // 
-            this.btnReadXml.Location = new System.Drawing.Point(98, 307);
-            this.btnReadXml.Name = "btnReadXml";
-            this.btnReadXml.Size = new System.Drawing.Size(75, 23);
-            this.btnReadXml.TabIndex = 12;
-            this.btnReadXml.Text = "Read";
-            this.btnReadXml.UseVisualStyleBackColor = true;
-            this.btnReadXml.Click += new System.EventHandler(this.btnReadXml_Click);
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // TestForm
             // 
@@ -582,5 +593,7 @@
         private System.Windows.Forms.TextBox txtAngle;
         private System.Windows.Forms.Button btnReadXml;
         private System.Windows.Forms.Button btnExportXml;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

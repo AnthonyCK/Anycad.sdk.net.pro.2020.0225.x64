@@ -404,11 +404,13 @@ namespace AnyCAD.Basic
         }
 
         TopoShapeGroup group = new TopoShapeGroup();
-        BengdingGroup bendings = new BengdingGroup();
-        int counter = 0;
+        BendingGroup bendings = new BendingGroup();
         private void btnDraw_Click(object sender, EventArgs e)
         {
-            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(Convert.ToDouble(txtL.Text), Convert.ToDouble(txtW.Text), 0, Coordinate3.UNIT_XYZ);
+            bendings.Length = Convert.ToDouble(txtL.Text);
+            bendings.Width = Convert.ToDouble(txtW.Text);
+
+            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(bendings.Length, bendings.Width, 0, Coordinate3.UNIT_XYZ);
             TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
 
             renderViewDraw.ClearScene();
@@ -439,7 +441,6 @@ namespace AnyCAD.Basic
             Bending bending = new Bending()
             {
                 Orientation = EnumEdge.Edge_1,
-                Index = counter++,
                 Direction = EnumDir.Edge_UP,
                 Angle = Convert.ToDouble(txtAngle.Text),
                 Radius = Convert.ToDouble(txtRadius.Text),
@@ -523,8 +524,7 @@ namespace AnyCAD.Basic
             //记录输入参数
             Bending bending = new Bending()
             {
-                Orientation = EnumEdge.Edge_1,
-                Index = counter++,
+                Orientation = EnumEdge.Edge_2,
                 Direction = EnumDir.Edge_DOWN,
                 Angle = Convert.ToDouble(txtAngle.Text),
                 Radius = Convert.ToDouble(txtRadius.Text),
@@ -596,12 +596,22 @@ namespace AnyCAD.Basic
 
         private void btnExportXml_Click(object sender, EventArgs e)
         {
-            ExportXml.GenerateXml(bendings);
+            saveFileDialog1.ShowDialog();
         }
 
         private void btnReadXml_Click(object sender, EventArgs e)
         {
-            ExportXml.ReadXml();
+            openFileDialog1.ShowDialog();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            ExportXml.GenerateXml(bendings,saveFileDialog1.FileName);
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            ExportXml.ReadXml(openFileDialog1.FileName);
         }
     }
 }

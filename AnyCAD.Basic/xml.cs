@@ -24,23 +24,30 @@ namespace AnyCAD.Basic
 
     public class Bending
     {
+        [XmlAttribute]
         public EnumEdge Orientation;
+
         public int Index;
         public EnumDir Direction;
         public double Angle;
         public double Radius;
         public double Length;
     }
-    public class BengdingGroup
+    [XmlRoot("BendingGroup", IsNullable = false)]
+    public class BendingGroup
     {
-        public List<Bending> bendings = new List<Bending>();
+        public double Length;
+        public double Width;
+
+        [XmlArray("Bendings")]
+        public List<Bending> Bendings = new List<Bending>();
 
         public void Add (Bending bending)
         {
             switch (bending.Orientation)
             {
                 case EnumEdge.Edge_1:
-                    var group1 = from bend in bendings
+                    var group1 = from bend in Bendings
                                 where bend.Orientation == EnumEdge.Edge_1
                                 select bend;
                     if (group1.Count() == 0)
@@ -51,10 +58,10 @@ namespace AnyCAD.Basic
                     {
                         bending.Index = group1.Last().Index + 1;
                     }
-                    bendings.Add(bending);
+                    Bendings.Add(bending);
                     break;
                 case EnumEdge.Edge_2:
-                    var group2 = from bend in bendings
+                    var group2 = from bend in Bendings
                                 where bend.Orientation == EnumEdge.Edge_2
                                 select bend;
                     if (group2.Count() == 0)
@@ -65,10 +72,10 @@ namespace AnyCAD.Basic
                     {
                         bending.Index = group2.Last().Index + 1;
                     }
-                    bendings.Add(bending);
+                    Bendings.Add(bending);
                     break;
                 case EnumEdge.Edge_3:
-                    var group3 = from bend in bendings
+                    var group3 = from bend in Bendings
                                  where bend.Orientation == EnumEdge.Edge_3
                                  select bend;
                     if (group3.Count() == 0)
@@ -79,10 +86,10 @@ namespace AnyCAD.Basic
                     {
                         bending.Index = group3.Last().Index + 1;
                     }
-                    bendings.Add(bending);
+                    Bendings.Add(bending);
                     break;
                 case EnumEdge.Edge_4:
-                    var group4 = from bend in bendings
+                    var group4 = from bend in Bendings
                                  where bend.Orientation == EnumEdge.Edge_4
                                  select bend;
                     if (group4.Count() == 0)
@@ -93,7 +100,7 @@ namespace AnyCAD.Basic
                     {
                         bending.Index = group4.Last().Index + 1;
                     }
-                    bendings.Add(bending);
+                    Bendings.Add(bending);
                     break;
                 default:
                     break;
@@ -102,21 +109,22 @@ namespace AnyCAD.Basic
     }
     class ExportXml
     {
-        public static void GenerateXml (BengdingGroup bendings)
+        public static void GenerateXml (BendingGroup bendings,string file)
         {
-            XmlSerializer writer = new XmlSerializer(typeof(BengdingGroup));
-            var path = new System.IO.StreamWriter(@"c:\batch\Serialization.xml");
+            XmlSerializer writer = new XmlSerializer(typeof(BendingGroup));
+            var path = new System.IO.StreamWriter(file);
             writer.Serialize(path, bendings);
             path.Close();
             MessageBox.Show("输出成功！", "输出提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public static void ReadXml()
+        public static BendingGroup ReadXml(string file)
         {
-            XmlSerializer reader = new XmlSerializer(typeof(BengdingGroup));
-            var path = new System.IO.StreamReader(@"c:\batch\Serialization.xml");
-            BengdingGroup bendings = reader.Deserialize(path) as BengdingGroup;
+            XmlSerializer reader = new XmlSerializer(typeof(BendingGroup));
+            var path = new System.IO.StreamReader(file);
+            BendingGroup bendings = reader.Deserialize(path) as BendingGroup;
             path.Close();
-            MessageBox.Show("Last id: " + bendings.bendings.Last().Index.ToString(), "输入提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Last id: " + bendings.Bendings.Last().Index.ToString(), "输入提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return bendings;
         }
     }
 }
