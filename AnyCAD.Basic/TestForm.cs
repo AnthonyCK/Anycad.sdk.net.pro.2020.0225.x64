@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using AnyCAD.Platform;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace AnyCAD.Basic
 {
@@ -403,7 +404,7 @@ namespace AnyCAD.Basic
         }
 
         TopoShapeGroup group = new TopoShapeGroup();
-        List<Bending> bendings = new List<Bending>();
+        BengdingGroup bendings = new BengdingGroup();
         int counter = 0;
         private void btnDraw_Click(object sender, EventArgs e)
         {
@@ -435,13 +436,15 @@ namespace AnyCAD.Basic
             }
 
             //记录输入参数
-            Bending bending = new Bending(EnumEdge.Edge_1,
-                counter++,
-                EnumDir.Edge_UP,
-                Convert.ToDouble(txtAngle.Text),
-                Convert.ToDouble(txtRadius.Text),
-                Convert.ToDouble(txtLength.Text)
-                );
+            Bending bending = new Bending()
+            {
+                Orientation = EnumEdge.Edge_1,
+                Index = counter++,
+                Direction = EnumDir.Edge_UP,
+                Angle = Convert.ToDouble(txtAngle.Text),
+                Radius = Convert.ToDouble(txtRadius.Text),
+                Length = Convert.ToDouble(txtLength.Text)
+            };
 
             #region 计算平面法向量
             GeomSurface surface = new GeomSurface();
@@ -518,13 +521,16 @@ namespace AnyCAD.Basic
             }
 
             //记录输入参数
-            Bending bending = new Bending(EnumEdge.Edge_1,
-                counter++,
-                EnumDir.Edge_DOWN,
-                Convert.ToDouble(txtAngle.Text),
-                Convert.ToDouble(txtRadius.Text),
-                Convert.ToDouble(txtLength.Text)
-                );
+            Bending bending = new Bending()
+            {
+                Orientation = EnumEdge.Edge_1,
+                Index = counter++,
+                Direction = EnumDir.Edge_DOWN,
+                Angle = Convert.ToDouble(txtAngle.Text),
+                Radius = Convert.ToDouble(txtRadius.Text),
+                Length = Convert.ToDouble(txtLength.Text)
+            };
+                
 
             #region 计算平面法向量
             GeomSurface surface = new GeomSurface();
