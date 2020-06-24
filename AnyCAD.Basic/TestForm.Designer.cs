@@ -121,7 +121,7 @@
             this.importBtn.Name = "importBtn";
             this.importBtn.Size = new System.Drawing.Size(29, 28);
             this.importBtn.Text = "Import";
-            this.importBtn.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            this.importBtn.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
             // 
             // mouseBtn
             // 
@@ -129,9 +129,9 @@
             this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
             this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mouseBtn.Name = "mouseBtn";
-            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
+            this.mouseBtn.Size = new System.Drawing.Size(29, 28);
             this.mouseBtn.Text = "toolStripButton1";
-            this.mouseBtn.Click += new System.EventHandler(this.mouseBtn_Click);
+            this.mouseBtn.Click += new System.EventHandler(this.MouseBtn_Click);
             // 
             // moveBtn
             // 
@@ -139,9 +139,9 @@
             this.moveBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveBtn.Image")));
             this.moveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveBtn.Name = "moveBtn";
-            this.moveBtn.Size = new System.Drawing.Size(29, 24);
+            this.moveBtn.Size = new System.Drawing.Size(29, 28);
             this.moveBtn.Text = "Move";
-            this.moveBtn.Click += new System.EventHandler(this.panToolStripMenuItem_Click);
+            this.moveBtn.Click += new System.EventHandler(this.PanToolStripMenuItem_Click);
             // 
             // rotateBtn
             // 
@@ -149,9 +149,9 @@
             this.rotateBtn.Image = ((System.Drawing.Image)(resources.GetObject("rotateBtn.Image")));
             this.rotateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rotateBtn.Name = "rotateBtn";
-            this.rotateBtn.Size = new System.Drawing.Size(29, 24);
+            this.rotateBtn.Size = new System.Drawing.Size(29, 28);
             this.rotateBtn.Text = "Rotate";
-            this.rotateBtn.Click += new System.EventHandler(this.orbitToolStripMenuItem_Click);
+            this.rotateBtn.Click += new System.EventHandler(this.OrbitToolStripMenuItem_Click);
             // 
             // clearBtn
             // 
@@ -159,14 +159,14 @@
             this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
             this.clearBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(29, 24);
+            this.clearBtn.Size = new System.Drawing.Size(29, 28);
             this.clearBtn.Text = "Clear";
-            this.clearBtn.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            this.clearBtn.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // moveNodeBtn
             // 
@@ -174,9 +174,9 @@
             this.moveNodeBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveNodeBtn.Image")));
             this.moveNodeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveNodeBtn.Name = "moveNodeBtn";
-            this.moveNodeBtn.Size = new System.Drawing.Size(55, 24);
+            this.moveNodeBtn.Size = new System.Drawing.Size(55, 28);
             this.moveNodeBtn.Text = "Move";
-            this.moveNodeBtn.Click += new System.EventHandler(this.moveNodeBtn_Click);
+            this.moveNodeBtn.Click += new System.EventHandler(this.MoveNodeBtn_Click);
             // 
             // toolStripDropDownButton1
             // 
@@ -188,7 +188,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 24);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 28);
             this.toolStripDropDownButton1.Text = "Pick";
             // 
             // singlePickToolStripMenuItem
@@ -196,21 +196,21 @@
             this.singlePickToolStripMenuItem.Name = "singlePickToolStripMenuItem";
             this.singlePickToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.singlePickToolStripMenuItem.Text = "SinglePick";
-            this.singlePickToolStripMenuItem.Click += new System.EventHandler(this.singlePickToolStripMenuItem_Click);
+            this.singlePickToolStripMenuItem.Click += new System.EventHandler(this.SinglePickToolStripMenuItem_Click);
             // 
             // multiPickToolStripMenuItem
             // 
             this.multiPickToolStripMenuItem.Name = "multiPickToolStripMenuItem";
             this.multiPickToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.multiPickToolStripMenuItem.Text = "MultiPick";
-            this.multiPickToolStripMenuItem.Click += new System.EventHandler(this.multiPickToolStripMenuItem_Click);
+            this.multiPickToolStripMenuItem.Click += new System.EventHandler(this.MultiPickToolStripMenuItem_Click);
             // 
             // hitTestToolStripMenuItem
             // 
             this.hitTestToolStripMenuItem.Name = "hitTestToolStripMenuItem";
             this.hitTestToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.hitTestToolStripMenuItem.Text = "Hit Test";
-            this.hitTestToolStripMenuItem.Click += new System.EventHandler(this.hitTestToolStripMenuItem_Click);
+            this.hitTestToolStripMenuItem.Click += new System.EventHandler(this.HitTestToolStripMenuItem_Click);
             // 
             // testBtn
             // 
@@ -218,9 +218,9 @@
             this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
             this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(44, 24);
+            this.testBtn.Size = new System.Drawing.Size(44, 28);
             this.testBtn.Text = "Test";
-            this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
+            this.testBtn.Click += new System.EventHandler(this.TestBtn_Click);
             // 
             // transOnMaxBtn
             // 
@@ -228,9 +228,9 @@
             this.transOnMaxBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnMaxBtn.Image")));
             this.transOnMaxBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnMaxBtn.Name = "transOnMaxBtn";
-            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 24);
+            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 28);
             this.transOnMaxBtn.Text = "transOnMax";
-            this.transOnMaxBtn.Click += new System.EventHandler(this.transOnMaxBtn_Click);
+            this.transOnMaxBtn.Click += new System.EventHandler(this.TransOnMaxBtn_Click);
             // 
             // transOnSelectBtn
             // 
@@ -238,9 +238,9 @@
             this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
             this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnSelectBtn.Name = "transOnSelectBtn";
-            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
+            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 28);
             this.transOnSelectBtn.Text = "transOnSelect";
-            this.transOnSelectBtn.Click += new System.EventHandler(this.transOnSelectBtn_Click);
+            this.transOnSelectBtn.Click += new System.EventHandler(this.TransOnSelectBtn_Click);
             // 
             // toolStripContainer1
             // 
@@ -308,7 +308,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(415, 386);
             this.panel1.TabIndex = 0;
-            this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
+            this.panel1.SizeChanged += new System.EventHandler(this.Panel1_SizeChanged);
             // 
             // tabPage2
             // 
@@ -357,7 +357,7 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(137, 382);
             this.panel4.TabIndex = 0;
-            this.panel4.SizeChanged += new System.EventHandler(this.panel4_SizeChanged);
+            this.panel4.SizeChanged += new System.EventHandler(this.Panel4_SizeChanged);
             // 
             // btnReadXml
             // 
@@ -367,7 +367,7 @@
             this.btnReadXml.TabIndex = 12;
             this.btnReadXml.Text = "Read";
             this.btnReadXml.UseVisualStyleBackColor = true;
-            this.btnReadXml.Click += new System.EventHandler(this.btnReadXml_Click);
+            this.btnReadXml.Click += new System.EventHandler(this.BtnReadXml_Click);
             // 
             // btnExportXml
             // 
@@ -377,7 +377,7 @@
             this.btnExportXml.TabIndex = 11;
             this.btnExportXml.Text = "Export";
             this.btnExportXml.UseVisualStyleBackColor = true;
-            this.btnExportXml.Click += new System.EventHandler(this.btnExportXml_Click);
+            this.btnExportXml.Click += new System.EventHandler(this.BtnExportXml_Click);
             // 
             // label3
             // 
@@ -414,7 +414,7 @@
             this.btnDown.TabIndex = 7;
             this.btnDown.Text = "-";
             this.btnDown.UseVisualStyleBackColor = true;
-            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            this.btnDown.Click += new System.EventHandler(this.BtnDown_Click);
             // 
             // btnUp
             // 
@@ -424,7 +424,7 @@
             this.btnUp.TabIndex = 6;
             this.btnUp.Text = "+";
             this.btnUp.UseVisualStyleBackColor = true;
-            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            this.btnUp.Click += new System.EventHandler(this.BtnUp_Click);
             // 
             // txtLength
             // 
@@ -455,7 +455,7 @@
             this.btnDraw.TabIndex = 2;
             this.btnDraw.Text = "Draw";
             this.btnDraw.UseVisualStyleBackColor = true;
-            this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
+            this.btnDraw.Click += new System.EventHandler(this.BtnDraw_Click);
             // 
             // txtW
             // 
@@ -497,7 +497,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(363, 171);
             this.panel2.TabIndex = 0;
-            this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
+            this.panel2.SizeChanged += new System.EventHandler(this.Panel2_SizeChanged);
             // 
             // panel3
             // 
@@ -507,16 +507,16 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(363, 242);
             this.panel3.TabIndex = 0;
-            this.panel3.SizeChanged += new System.EventHandler(this.panel3_SizeChanged);
+            this.panel3.SizeChanged += new System.EventHandler(this.Panel3_SizeChanged);
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog1_FileOk);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1_FileOk);
             // 
             // TestForm
             // 

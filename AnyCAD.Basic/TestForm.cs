@@ -20,7 +20,7 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
         private Presentation.RenderWindow3d renderViewDraw;
-        private int shapeId = 100;
+        private int shapeId = 1000;
         private TopoShape topoShape = new TopoShape();
         public TestForm()
         {
@@ -100,7 +100,7 @@ namespace AnyCAD.Basic
             }
 
         }
-        private void panel1_SizeChanged(object sender, EventArgs e)
+        private void Panel1_SizeChanged(object sender, EventArgs e)
         {
             if (renderView != null)
             {
@@ -108,7 +108,7 @@ namespace AnyCAD.Basic
                 renderView.Size = size;
             }
         }
-        private void panel2_SizeChanged(object sender, EventArgs e)
+        private void Panel2_SizeChanged(object sender, EventArgs e)
         {
             if (renderViewXZ != null)
             {
@@ -118,7 +118,7 @@ namespace AnyCAD.Basic
                 renderViewXZ.RequestDraw();
             }
         }
-        private void panel3_SizeChanged(object sender, EventArgs e)
+        private void Panel3_SizeChanged(object sender, EventArgs e)
         {
             if (renderViewYZ != null)
             {
@@ -128,7 +128,7 @@ namespace AnyCAD.Basic
                 renderViewYZ.RequestDraw();
             }
         }
-        private void panel4_SizeChanged(object sender, EventArgs e)
+        private void Panel4_SizeChanged(object sender, EventArgs e)
         {
             if (renderView != null)
             {
@@ -137,33 +137,33 @@ namespace AnyCAD.Basic
             }
         }
 
-        private void orbitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrbitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Orbit");
         }
-        private void panToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PanToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Pan");
         }
-        private void singlePickToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SinglePickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("PickClearMode", "SinglePick");
         }
-        private void multiPickToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MultiPickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("PickClearMode", "MultiPick");
         }
-        private void mouseBtn_Click(object sender, EventArgs e)
+        private void MouseBtn_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Pick");
         }
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ClearScene();
             renderViewXZ.ClearScene();
             renderViewYZ.ClearScene();
         }
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             OpenFileDialog dlg = new OpenFileDialog();
@@ -187,14 +187,14 @@ namespace AnyCAD.Basic
             #endregion 
         }
 
-        private void moveNodeBtn_Click(object sender, EventArgs e)
+        private void MoveNodeBtn_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("MoveNode");
         }
 
         #region Hit Test
         private bool m_PickPoint = false;
-        private void hitTestToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HitTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_PickPoint = !m_PickPoint;
         }
@@ -222,7 +222,7 @@ namespace AnyCAD.Basic
 
         #endregion
 
-        private void testBtn_Click(object sender, EventArgs e)
+        private void TestBtn_Click(object sender, EventArgs e)
         {
             //SelectedShapeQuery context = new SelectedShapeQuery();
             //renderView.QuerySelection(context);
@@ -231,8 +231,8 @@ namespace AnyCAD.Basic
             TopoShape shapeYZ = new TopoShape();
             if (topoShape != null)
             {
-                shapeXZ = section(topoShape, new Vector3(0, 1, 0));
-                shapeYZ = section(topoShape, new Vector3(1, 0, 0));
+                shapeXZ = Section(topoShape, new Vector3(0, 1, 0));
+                shapeYZ = Section(topoShape, new Vector3(1, 0, 0));
             }
             #region Render
             if (topoShape != null)
@@ -250,15 +250,15 @@ namespace AnyCAD.Basic
 
         }
 
-        private void transOnMaxBtn_Click(object sender, EventArgs e)
+        private void TransOnMaxBtn_Click(object sender, EventArgs e)
         {
             SelectedShapeQuery context = new SelectedShapeQuery();
             renderView.QuerySelection(context);
             var shape = context.GetGeometry();
-            transOnMax(shape);
+            TransOnMax(shape);
         }
 
-        private void transOnMax(TopoShape shape)
+        private void TransOnMax(TopoShape shape)
         {
             double areaM = 0;
             Vector3 dirN = new Vector3();
@@ -331,7 +331,7 @@ namespace AnyCAD.Basic
 
         }
 
-        private void transOnSelectBtn_Click(object sender, EventArgs e)
+        private void TransOnSelectBtn_Click(object sender, EventArgs e)
         {
             //Get selected shape
             SelectedShapeQuery context = new SelectedShapeQuery();
@@ -395,7 +395,7 @@ namespace AnyCAD.Basic
             #endregion
 
         }
-        private TopoShape section(TopoShape shape, Vector3 dir)
+        private TopoShape Section(TopoShape shape, Vector3 dir)
         {
             Vector3 origion = new Vector3(0, 0, 0);
             TopoShape plane = GlobalInstance.BrepTools.MakePlaneFace(origion,dir,-100,100,-100,100);
@@ -405,7 +405,7 @@ namespace AnyCAD.Basic
 
         TopoShapeGroup group = new TopoShapeGroup();
         BendingGroup bendings = new BendingGroup();
-        private void btnDraw_Click(object sender, EventArgs e)
+        private void BtnDraw_Click(object sender, EventArgs e)
         {
             bendings.Length = Convert.ToDouble(txtL.Text);
             bendings.Width = Convert.ToDouble(txtW.Text);
@@ -425,7 +425,7 @@ namespace AnyCAD.Basic
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        private void BtnUp_Click(object sender, EventArgs e)
         {
             //Get selected shape
             SelectedShapeQuery context = new SelectedShapeQuery();
@@ -440,7 +440,6 @@ namespace AnyCAD.Basic
             //记录输入参数
             Bending bending = new Bending()
             {
-                Orientation = EnumEdge.Edge_1,
                 Direction = EnumDir.Edge_UP,
                 Angle = Convert.ToDouble(txtAngle.Text),
                 Radius = Convert.ToDouble(txtRadius.Text),
@@ -472,7 +471,24 @@ namespace AnyCAD.Basic
             Vector3 dirL = -curve.DN(curve.FirstParameter(), 1);
             Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
             Vector3 edPt = curve.Value(curve.LastParameter());  //终点
+            if (dirL.X == 1)
+            {
+                bending.Orientation = EnumEdge.Edge_1;
+            }
+            else if(dirL.Y == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_2;
+            }
+            else if(dirL.X == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_3;
+            }
+            else
+            {
+                bending.Orientation = EnumEdge.Edge_4;
+            }
             #endregion
+            bendings.Add(bending);
 
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
@@ -489,21 +505,27 @@ namespace AnyCAD.Basic
             lineGroup.Add(arc);
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
-            TopoShape path = GlobalInstance.BrepTools.MakeLine(stPt, edPt);
-            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
+            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
             #endregion
 
-            bendings.Add(bending);
 
             #region 渲染
             group.Add(sweep);
-            ElementId id = new ElementId(bending.Index); 
+            ElementId faceId = new ElementId(bending.Index);
+            ElementId edgeId = new ElementId(bending.Index + shapeId);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
-            rootNode.SetId(id);
+            SceneNode faceNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
+            SceneNode edgeNode = GlobalInstance.TopoShapeConvert.ToSceneNode(line, 0.1f);
+            faceNode.SetId(faceId);
+            faceNode.SetVisible(false);
+            edgeNode.SetId(edgeId);
+            edgeNode.SetVisible(false);
             if (rootNode != null)
             {
                 sceneMgr.AddNode(rootNode);
+                sceneMgr.AddNode(faceNode);
+                sceneMgr.AddNode(edgeNode);
             }
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
@@ -512,7 +534,7 @@ namespace AnyCAD.Basic
 
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        private void BtnDown_Click(object sender, EventArgs e)
         {
             //Get selected shape
             SelectedShapeQuery context = new SelectedShapeQuery();
@@ -527,7 +549,6 @@ namespace AnyCAD.Basic
             //记录输入参数
             Bending bending = new Bending()
             {
-                Orientation = EnumEdge.Edge_2,
                 Direction = EnumDir.Edge_DOWN,
                 Angle = Convert.ToDouble(txtAngle.Text),
                 Radius = Convert.ToDouble(txtRadius.Text),
@@ -560,7 +581,24 @@ namespace AnyCAD.Basic
             Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
             Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
             Vector3 edPt = curve.Value(curve.LastParameter());  //终点
+            if (dirL.X == 1)
+            {
+                bending.Orientation = EnumEdge.Edge_1;
+            }
+            else if (dirL.Y == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_2;
+            }
+            else if (dirL.X == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_3;
+            }
+            else
+            {
+                bending.Orientation = EnumEdge.Edge_4;
+            }
             #endregion
+            bendings.Add(bending);
 
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
@@ -577,21 +615,27 @@ namespace AnyCAD.Basic
             lineGroup.Add(arc);
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
-            TopoShape path = GlobalInstance.BrepTools.MakeLine(stPt, edPt);
-            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
+            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
             #endregion
 
-            bendings.Add(bending);
 
             #region 渲染
             group.Add(sweep);
-            ElementId id = new ElementId(bending.Index);
+            ElementId faceId = new ElementId(bending.Index);
+            ElementId edgeId = new ElementId(bending.Index + shapeId);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
-            rootNode.SetId(id);
+            SceneNode faceNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
+            SceneNode edgeNode = GlobalInstance.TopoShapeConvert.ToSceneNode(line, 0.1f);
+            faceNode.SetId(faceId);
+            faceNode.SetVisible(false);
+            edgeNode.SetId(edgeId);
+            edgeNode.SetVisible(false);
             if (rootNode != null)
             {
                 sceneMgr.AddNode(rootNode);
+                sceneMgr.AddNode(faceNode);
+                sceneMgr.AddNode(edgeNode);
             }
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
@@ -600,22 +644,19 @@ namespace AnyCAD.Basic
 
         }
 
-        private void btnExportXml_Click(object sender, EventArgs e)
+        private void BtnExportXml_Click(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
         }
-
-        private void btnReadXml_Click(object sender, EventArgs e)
+        private void BtnReadXml_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
         }
-
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void SaveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             ExportXml.GenerateXml(bendings,saveFileDialog1.FileName);
         }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             ExportXml.ReadXml(openFileDialog1.FileName);
         }
