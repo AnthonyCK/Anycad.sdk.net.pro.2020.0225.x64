@@ -44,67 +44,81 @@ namespace AnyCAD.Basic
 
         public void Add (Bending bending)
         {
-            switch (bending.Orientation)
+            #region 总体编号
+            if (Bendings.Count() == 0)
             {
-                case EnumEdge.Edge_1:
-                    var group1 = from bend in Bendings
-                                where bend.Orientation == EnumEdge.Edge_1
-                                select bend;
-                    if (group1.Count() == 0)
-                    {
-                        bending.Index = 0;
-                    }
-                    else
-                    {
-                        bending.Index = group1.Last().Index + 1;
-                    }
-                    Bendings.Add(bending);
-                    break;
-                case EnumEdge.Edge_2:
-                    var group2 = from bend in Bendings
-                                where bend.Orientation == EnumEdge.Edge_2
-                                select bend;
-                    if (group2.Count() == 0)
-                    {
-                        bending.Index = 0;
-                    }
-                    else
-                    {
-                        bending.Index = group2.Last().Index + 1;
-                    }
-                    Bendings.Add(bending);
-                    break;
-                case EnumEdge.Edge_3:
-                    var group3 = from bend in Bendings
-                                 where bend.Orientation == EnumEdge.Edge_3
-                                 select bend;
-                    if (group3.Count() == 0)
-                    {
-                        bending.Index = 0;
-                    }
-                    else
-                    {
-                        bending.Index = group3.Last().Index + 1;
-                    }
-                    Bendings.Add(bending);
-                    break;
-                case EnumEdge.Edge_4:
-                    var group4 = from bend in Bendings
-                                 where bend.Orientation == EnumEdge.Edge_4
-                                 select bend;
-                    if (group4.Count() == 0)
-                    {
-                        bending.Index = 0;
-                    }
-                    else
-                    {
-                        bending.Index = group4.Last().Index + 1;
-                    }
-                    Bendings.Add(bending);
-                    break;
-                default:
-                    break;
+                bending.Index = 0;
             }
+            else
+            {
+                bending.Index = Bendings.Last().Index + 1;
+            }
+            Bendings.Add(bending);
+            #endregion
+            #region 按方向分别编号
+            //switch (bending.Orientation)
+            //{
+            //    case EnumEdge.Edge_1:
+            //        var group1 = from bend in Bendings
+            //                     where bend.Orientation == EnumEdge.Edge_1
+            //                     select bend;
+            //        if (group1.Count() == 0)
+            //        {
+            //            bending.Index = 0;
+            //        }
+            //        else
+            //        {
+            //            bending.Index = group1.Last().Index + 1;
+            //        }
+            //        Bendings.Add(bending);
+            //        break;
+            //    case EnumEdge.Edge_2:
+            //        var group2 = from bend in Bendings
+            //                     where bend.Orientation == EnumEdge.Edge_2
+            //                     select bend;
+            //        if (group2.Count() == 0)
+            //        {
+            //            bending.Index = 0;
+            //        }
+            //        else
+            //        {
+            //            bending.Index = group2.Last().Index + 1;
+            //        }
+            //        Bendings.Add(bending);
+            //        break;
+            //    case EnumEdge.Edge_3:
+            //        var group3 = from bend in Bendings
+            //                     where bend.Orientation == EnumEdge.Edge_3
+            //                     select bend;
+            //        if (group3.Count() == 0)
+            //        {
+            //            bending.Index = 0;
+            //        }
+            //        else
+            //        {
+            //            bending.Index = group3.Last().Index + 1;
+            //        }
+            //        Bendings.Add(bending);
+            //        break;
+            //    case EnumEdge.Edge_4:
+            //        var group4 = from bend in Bendings
+            //                     where bend.Orientation == EnumEdge.Edge_4
+            //                     select bend;
+            //        if (group4.Count() == 0)
+            //        {
+            //            bending.Index = 0;
+            //        }
+            //        else
+            //        {
+            //            bending.Index = group4.Last().Index + 1;
+            //        }
+            //        Bendings.Add(bending);
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            #endregion
         }
     }
     class ExportXml

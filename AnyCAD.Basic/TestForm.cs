@@ -493,10 +493,14 @@ namespace AnyCAD.Basic
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
             #endregion
 
+            bendings.Add(bending);
+
             #region 渲染
             group.Add(sweep);
+            ElementId id = new ElementId(bending.Index); 
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
+            rootNode.SetId(id);
             if (rootNode != null)
             {
                 sceneMgr.AddNode(rootNode);
@@ -506,7 +510,6 @@ namespace AnyCAD.Basic
 
             #endregion
 
-            bendings.Add(bending);
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -578,10 +581,14 @@ namespace AnyCAD.Basic
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, path, true);
             #endregion
 
+            bendings.Add(bending);
+
             #region 渲染
             group.Add(sweep);
+            ElementId id = new ElementId(bending.Index);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
+            rootNode.SetId(id);
             if (rootNode != null)
             {
                 sceneMgr.AddNode(rootNode);
@@ -591,7 +598,6 @@ namespace AnyCAD.Basic
 
             #endregion
 
-            bendings.Add(bending);
         }
 
         private void btnExportXml_Click(object sender, EventArgs e)
