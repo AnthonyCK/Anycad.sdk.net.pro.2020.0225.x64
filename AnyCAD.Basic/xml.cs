@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnyCAD.Platform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,12 +33,14 @@ namespace AnyCAD.Basic
         public double Angle;
         public double Radius;
         public double Length;
+        public byte[] Buffer;
     }
     [XmlRoot("BendingGroup", IsNullable = false)]
     public class BendingGroup
     {
         public double Length;
         public double Width;
+        public byte[] Buffer;
 
         [XmlArray("Bendings")]
         public List<Bending> Bendings = new List<Bending>();
@@ -137,7 +140,7 @@ namespace AnyCAD.Basic
             var path = new System.IO.StreamReader(file);
             BendingGroup bendings = reader.Deserialize(path) as BendingGroup;
             path.Close();
-            MessageBox.Show("Last id: " + bendings.Bendings.Last().Index.ToString(), "输入提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Last id: " + bendings.Bendings.Last().Index.ToString(), "输入提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return bendings;
         }
     }

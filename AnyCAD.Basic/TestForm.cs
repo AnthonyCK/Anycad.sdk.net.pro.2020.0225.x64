@@ -19,7 +19,7 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderView;
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
-        private Presentation.RenderWindow3d renderViewDraw;
+        public Presentation.RenderWindow3d renderViewDraw;
         private int shapeId = 1000;
         private TopoShape topoShape = new TopoShape();
         public TestForm()
@@ -162,6 +162,7 @@ namespace AnyCAD.Basic
             renderView.ClearScene();
             renderViewXZ.ClearScene();
             renderViewYZ.ClearScene();
+            renderViewDraw.ClearScene();
         }
         private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -409,10 +410,14 @@ namespace AnyCAD.Basic
         {
             bendings.Length = Convert.ToDouble(txtL.Text);
             bendings.Width = Convert.ToDouble(txtW.Text);
-
-            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(bendings.Length, bendings.Width, 0, Coordinate3.UNIT_XYZ);
+            var face = DrawRect(bendings.Length, bendings.Width);
+            bendings.Buffer = GlobalInstance.BrepTools.SaveBuffer(face);
+        }
+        private TopoShape DrawRect(double length, double width)
+        {
+            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(length, width, 0, Coordinate3.UNIT_XYZ);
             TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
-
+            
             renderViewDraw.ClearScene();
             group.Add(face);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
@@ -423,8 +428,8 @@ namespace AnyCAD.Basic
             }
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+            return face;
         }
-
         private void BtnUp_Click(object sender, EventArgs e)
         {
             //Get selected shape
@@ -488,7 +493,6 @@ namespace AnyCAD.Basic
                 bending.Orientation = EnumEdge.Edge_4;
             }
             #endregion
-            bendings.Add(bending);
 
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
@@ -508,6 +512,8 @@ namespace AnyCAD.Basic
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
             #endregion
 
+            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
+            bendings.Add(bending);
 
             #region 渲染
             group.Add(sweep);
@@ -598,7 +604,6 @@ namespace AnyCAD.Basic
                 bending.Orientation = EnumEdge.Edge_4;
             }
             #endregion
-            bendings.Add(bending);
 
             #region 绘制草图
             TopoShapeGroup lineGroup = new TopoShapeGroup();
@@ -618,6 +623,8 @@ namespace AnyCAD.Basic
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
             #endregion
 
+            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
+            bendings.Add(bending);
 
             #region 渲染
             group.Add(sweep);
@@ -658,7 +665,32 @@ namespace AnyCAD.Basic
         }
         private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            ExportXml.ReadXml(openFileDialog1.FileName);
+            bendings = ExportXml.ReadXml(openFileDialog1.FileName);
+            TopoShape face = GlobalInstance.BrepTools.LoadBuffer(bendings.Buffer);
+
+            renderViewDraw.ClearScene();
+            //group.Add(face);
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
+            if (rootNode != null)
+            {
+                sceneMgr.AddNode(rootNode);
+            }
+
+            foreach (Bending bending in bendings.Bendings)
+            {
+                TopoShape shape = GlobalInstance.BrepTools.LoadBuffer(bending.Buffer);
+                ElementId id = new ElementId(bending.Index);
+                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
+                node.SetId(id);
+                if (node != null)
+                {
+                    sceneMgr.AddNode(node);
+                }
+            }
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+
         }
     }
 }
