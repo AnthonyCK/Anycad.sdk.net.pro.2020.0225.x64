@@ -451,74 +451,15 @@ namespace AnyCAD.Basic
                 Length = Convert.ToDouble(txtLength.Text)
             };
 
-            #region 计算平面法向量
-            GeomSurface surface = new GeomSurface();
-            surface.Initialize(face);
-            //参数域UV范围
-            double uFirst = surface.FirstUParameter();
-            double uLast = surface.LastUParameter();
-            double vFirst = surface.FirstVParameter();
-            double vLast = surface.LastVParameter();
-            //取中点
-            double umid = uFirst + (uLast - uFirst) * 0.5f;
-            double vmid = vFirst + (vLast - vFirst) * 0.5f;
-            //计算法向量
-            var data = surface.D1(umid, vmid);
-            Vector3 dirU = data[1];
-            Vector3 dirV = data[2];
-            Vector3 dirF = dirV.CrossProduct(dirU);
-            dirF.Normalize();
-            #endregion
-
-            #region 计算边线参数
-            GeomCurve curve = new GeomCurve();
-            curve.Initialize(line);
-            Vector3 dirL = -curve.DN(curve.FirstParameter(), 1);
-            Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
-            Vector3 edPt = curve.Value(curve.LastParameter());  //终点
-            if (dirL.X == 1)
-            {
-                bending.Orientation = EnumEdge.Edge_1;
-            }
-            else if(dirL.Y == -1)
-            {
-                bending.Orientation = EnumEdge.Edge_2;
-            }
-            else if(dirL.X == -1)
-            {
-                bending.Orientation = EnumEdge.Edge_3;
-            }
-            else
-            {
-                bending.Orientation = EnumEdge.Edge_4;
-            }
-            #endregion
-
-            #region 绘制草图
-            TopoShapeGroup lineGroup = new TopoShapeGroup();
-
-            Vector3 center = stPt - dirF * bending.Radius; //圆心
-            Vector3 radius = stPt - center;    //半径
-            double theta = bending.Angle * (Math.PI / 180.0);
-            Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
-            Vector3 edArc = center + radius2;  //圆弧终点
-            TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
-            lineGroup.Add(arc);
-            Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
-            arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
-            lineGroup.Add(arc);
-            //扫描生成折弯
-            TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
-            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
-            #endregion
+            TopoShape sweep = BendUp(face, line, bending);
 
             bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
             bendings.Add(bending);
 
             #region 渲染
             group.Add(sweep);
-            ElementId faceId = new ElementId(bending.Index);
-            ElementId edgeId = new ElementId(bending.Index + shapeId);
+            ElementId faceId = new ElementId(bending.Index + shapeId);
+            ElementId edgeId = new ElementId(bending.Index);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
             SceneNode faceNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
@@ -560,8 +501,103 @@ namespace AnyCAD.Basic
                 Radius = Convert.ToDouble(txtRadius.Text),
                 Length = Convert.ToDouble(txtLength.Text)
             };
-                
 
+            TopoShape sweep = BendDown(face, line, bending);
+
+            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
+            bendings.Add(bending);
+
+            #region 渲染
+            group.Add(sweep);
+            ElementId faceId = new ElementId(bending.Index + shapeId);
+            ElementId edgeId = new ElementId(bending.Index);
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
+            SceneNode faceNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
+            SceneNode edgeNode = GlobalInstance.TopoShapeConvert.ToSceneNode(line, 0.1f);
+            faceNode.SetId(faceId);
+            faceNode.SetVisible(false);
+            edgeNode.SetId(edgeId);
+            edgeNode.SetVisible(false);
+            if (rootNode != null)
+            {
+                sceneMgr.AddNode(rootNode);
+                sceneMgr.AddNode(faceNode);
+                sceneMgr.AddNode(edgeNode);
+            }
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+            #endregion
+
+        }
+        private TopoShape BendUp(TopoShape face, TopoShape line, Bending bending)
+        {
+            #region 计算平面法向量
+            GeomSurface surface = new GeomSurface();
+            surface.Initialize(face);
+            //参数域UV范围
+            double uFirst = surface.FirstUParameter();
+            double uLast = surface.LastUParameter();
+            double vFirst = surface.FirstVParameter();
+            double vLast = surface.LastVParameter();
+            //取中点
+            double umid = uFirst + (uLast - uFirst) * 0.5f;
+            double vmid = vFirst + (vLast - vFirst) * 0.5f;
+            //计算法向量
+            var data = surface.D1(umid, vmid);
+            Vector3 dirU = data[1];
+            Vector3 dirV = data[2];
+            Vector3 dirF = dirV.CrossProduct(dirU);
+            dirF.Normalize();
+            #endregion
+
+            #region 计算边线参数
+            GeomCurve curve = new GeomCurve();
+            curve.Initialize(line);
+            Vector3 dirL = -curve.DN(curve.FirstParameter(), 1);
+            Vector3 stPt = curve.Value(curve.FirstParameter()); //起点
+            Vector3 edPt = curve.Value(curve.LastParameter());  //终点
+            if (dirL.X == 1)
+            {
+                bending.Orientation = EnumEdge.Edge_1;
+            }
+            else if (dirL.Y == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_2;
+            }
+            else if (dirL.X == -1)
+            {
+                bending.Orientation = EnumEdge.Edge_3;
+            }
+            else
+            {
+                bending.Orientation = EnumEdge.Edge_4;
+            }
+            #endregion
+
+            #region 绘制草图
+            TopoShapeGroup lineGroup = new TopoShapeGroup();
+
+            Vector3 center = stPt - dirF * bending.Radius; //圆心
+            Vector3 radius = stPt - center;    //半径
+            double theta = bending.Angle * (Math.PI / 180.0);
+            Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
+            Vector3 edArc = center + radius2;  //圆弧终点
+            TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
+            lineGroup.Add(arc);
+            Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
+            arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
+            lineGroup.Add(arc);
+            //扫描生成折弯
+            TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
+            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            #endregion
+
+            return sweep;
+        }
+        private TopoShape BendDown (TopoShape face, TopoShape line, Bending bending)
+        {
             #region 计算平面法向量
             GeomSurface surface = new GeomSurface();
             surface.Initialize(face);
@@ -623,32 +659,7 @@ namespace AnyCAD.Basic
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
             #endregion
 
-            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
-            bendings.Add(bending);
-
-            #region 渲染
-            group.Add(sweep);
-            ElementId faceId = new ElementId(bending.Index);
-            ElementId edgeId = new ElementId(bending.Index + shapeId);
-            SceneManager sceneMgr = renderViewDraw.SceneManager;
-            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(sweep, 0.1f);
-            SceneNode faceNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
-            SceneNode edgeNode = GlobalInstance.TopoShapeConvert.ToSceneNode(line, 0.1f);
-            faceNode.SetId(faceId);
-            faceNode.SetVisible(false);
-            edgeNode.SetId(edgeId);
-            edgeNode.SetVisible(false);
-            if (rootNode != null)
-            {
-                sceneMgr.AddNode(rootNode);
-                sceneMgr.AddNode(faceNode);
-                sceneMgr.AddNode(edgeNode);
-            }
-            renderViewDraw.FitAll();
-            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
-
-            #endregion
-
+            return sweep;
         }
 
         private void BtnExportXml_Click(object sender, EventArgs e)
@@ -666,6 +677,10 @@ namespace AnyCAD.Basic
         private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             bendings = ExportXml.ReadXml(openFileDialog1.FileName);
+            DrawBendingGroup(bendings);
+        }
+        private void DrawBendingGroup(BendingGroup bendings)
+        {
             TopoShape face = GlobalInstance.BrepTools.LoadBuffer(bendings.Buffer);
 
             renderViewDraw.ClearScene();
@@ -690,7 +705,64 @@ namespace AnyCAD.Basic
             }
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+        }
+        private void DrawBendingGroup2(BendingGroup bendings)
+        {
+            var pt0 = new Vector3(0, bendings.Width, 0);
+            var pt1 = new Vector3(bendings.Length, bendings.Width, 0);
+            var pt2 = new Vector3(bendings.Length, 0, 0);
+            var pt3 = new Vector3(0, 0, 0);
+            TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt0, pt1);
+            TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt1, pt2);
+            TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt2, pt3);
+            TopoShape baseEdge4 = GlobalInstance.BrepTools.MakeLine(pt3, pt0);
+            TopoShapeGroup group = new TopoShapeGroup();
+            group.Add(baseEdge1);
+            group.Add(baseEdge2);
+            group.Add(baseEdge3);
+            group.Add(baseEdge4);
+            TopoShape rect = GlobalInstance.BrepTools.MakeSpline(group);
+            TopoShape baseShape = GlobalInstance.BrepTools.MakeFace(rect);
 
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode rootNode1 = GlobalInstance.TopoShapeConvert.ToSceneNode(baseEdge1, 0.1f);
+            SceneNode rootNode2 = GlobalInstance.TopoShapeConvert.ToSceneNode(baseEdge2, 0.1f);
+            SceneNode rootNode3 = GlobalInstance.TopoShapeConvert.ToSceneNode(baseEdge3, 0.1f);
+            SceneNode rootNode4 = GlobalInstance.TopoShapeConvert.ToSceneNode(baseEdge4, 0.1f);
+            rootNode1.SetName("Edge_1");
+            rootNode2.SetName("Edge_2");
+            rootNode3.SetName("Edge_3");
+            rootNode4.SetName("Edge_4");
+            sceneMgr.AddNode(rootNode1);
+            sceneMgr.AddNode(rootNode2);
+            sceneMgr.AddNode(rootNode3);
+            sceneMgr.AddNode(rootNode4);
+
+            foreach(var bending in bendings.Bendings)
+            {
+                switch (bending.Orientation)
+                {
+                    case EnumEdge.Edge_1:
+                        sceneMgr.SelectNode(rootNode1);
+                        SelectedShapeQuery context = new SelectedShapeQuery();
+                        renderViewDraw.QuerySelection(context);
+                        var face = context.GetGeometry();
+                        var line = context.GetSubGeometry();
+                        if (face == null)
+                        {
+                            return;
+                        }
+                        break;
+                    case EnumEdge.Edge_2:
+                        break;
+                    case EnumEdge.Edge_3:
+                        break;
+                    case EnumEdge.Edge_4:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
