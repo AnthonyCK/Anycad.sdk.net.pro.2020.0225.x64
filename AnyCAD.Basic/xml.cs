@@ -22,7 +22,11 @@ namespace AnyCAD.Basic
         Edge_UP = 0,
         Edge_DOWN =1
     }
-
+    public class BendHelper
+    {
+        public TopoShape Sweep;
+        public TopoShape EdLine;
+    }
     public class Bending
     {
         [XmlAttribute]
