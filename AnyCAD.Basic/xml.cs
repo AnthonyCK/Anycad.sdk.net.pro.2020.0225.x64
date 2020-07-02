@@ -25,6 +25,7 @@ namespace AnyCAD.Basic
     public class BendHelper
     {
         public TopoShape Sweep;
+        public TopoShape EdFace;
         public TopoShape EdLine;
     }
     public class Bending

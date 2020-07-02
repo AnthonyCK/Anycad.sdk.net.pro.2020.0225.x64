@@ -621,12 +621,14 @@ namespace AnyCAD.Basic
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
-            TopoShape endEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
+            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true);
+            TopoShape oEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
             BendHelper bend = new BendHelper()
             {
                 Sweep = sweep,
-                EdLine = endEdge
+                EdFace = oFace,
+                EdLine = oEdge
             };
             return bend;
         }
@@ -675,11 +677,13 @@ namespace AnyCAD.Basic
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true);
             TopoShape endEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
             BendHelper bend = new BendHelper()
             {
                 Sweep = sweep,
+                EdFace = oFace,
                 EdLine = endEdge
             };
             return bend;
