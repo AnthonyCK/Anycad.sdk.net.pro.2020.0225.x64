@@ -408,8 +408,11 @@ namespace AnyCAD.Basic
         BendingGroup bendings = new BendingGroup();
         private void BtnDraw_Click(object sender, EventArgs e)
         {
-            bendings.Length = Convert.ToDouble(txtL.Text);
-            bendings.Width = Convert.ToDouble(txtW.Text);
+            bendings = new BendingGroup
+            {
+                Length = Convert.ToDouble(txtL.Text),
+                Width = Convert.ToDouble(txtW.Text)
+            };
             var face = DrawRect(bendings.Length, bendings.Width);
             bendings.Buffer = GlobalInstance.BrepTools.SaveBuffer(face);
         }
@@ -621,7 +624,7 @@ namespace AnyCAD.Basic
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
-            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true);
+            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true).GetSubShape(0, 1);
             TopoShape oEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
             BendHelper bend = new BendHelper()
@@ -677,14 +680,14 @@ namespace AnyCAD.Basic
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
             TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
-            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true);
-            TopoShape endEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
+            TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true).GetSubShape(0, 1);
+            TopoShape oEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
             BendHelper bend = new BendHelper()
             {
                 Sweep = sweep,
                 EdFace = oFace,
-                EdLine = endEdge
+                EdLine = oEdge
             };
             return bend;
         }
@@ -706,9 +709,9 @@ namespace AnyCAD.Basic
             bendings = ExportXml.ReadXml(openFileDialog1.FileName);
             DrawBendingGroup2(bendings);
         }
-        private void DrawBendingGroup(BendingGroup bendings)
+        private void DrawBendingGroup(BendingGroup bends)
         {
-            TopoShape face = GlobalInstance.BrepTools.LoadBuffer(bendings.Buffer);
+            TopoShape face = GlobalInstance.BrepTools.LoadBuffer(bends.Buffer);
 
             renderViewDraw.ClearScene();
             //group.Add(face);
@@ -719,7 +722,7 @@ namespace AnyCAD.Basic
                 sceneMgr.AddNode(rootNode);
             }
 
-            foreach (Bending bending in bendings.Bendings)
+            foreach (Bending bending in bends.Bendings)
             {
                 TopoShape shape = GlobalInstance.BrepTools.LoadBuffer(bending.Buffer);
                 ElementId id = new ElementId(bending.Index);
@@ -733,13 +736,15 @@ namespace AnyCAD.Basic
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
         }
-        private void DrawBendingGroup2(BendingGroup bendings)
+        private void DrawBendingGroup2(BendingGroup bends)
         {
+            renderViewDraw.ClearScene();
+
             #region 绘制矩形并标记四条边
-            var pt0 = new Vector3(bendings.Length, 0, 0);
+            var pt0 = new Vector3(bends.Length, 0, 0);
             var pt1 = new Vector3(0, 0, 0);
-            var pt2 = new Vector3(0, bendings.Width, 0);
-            var pt3 = new Vector3(bendings.Length, bendings.Width, 0);
+            var pt2 = new Vector3(0, bends.Width, 0);
+            var pt3 = new Vector3(bends.Length, bends.Width, 0);
             TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt0, pt1);
             TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt1, pt2);
             TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt2, pt3);
@@ -770,28 +775,30 @@ namespace AnyCAD.Basic
             #endregion
 
             #region 按四个方向分别折弯
-            var groupEdge1 = from m in bendings.Bendings
+            var groupEdge1 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_1
                              select m;
-            var groupEdge2 = from m in bendings.Bendings
+            var groupEdge2 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_2
                              select m;
-            var groupEdge3 = from m in bendings.Bendings
+            var groupEdge3 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_3
                              select m;
-            var groupEdge4 = from m in bendings.Bendings
+            var groupEdge4 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_4
                              select m;
-            
+
+            TopoShape line = baseEdge1;
+            TopoShape face = baseShape;
             SceneNode stNode = rootNode1;
             foreach (var bending in groupEdge1)
             {
-                sceneMgr.ClearSelection();
-                sceneMgr.SelectNode(stNode);
-                SelectedShapeQuery context = new SelectedShapeQuery();
-                renderViewDraw.QuerySelection(context);
-                var face = context.GetGeometry();
-                var line = context.GetSubGeometry();
+                //sceneMgr.ClearSelection();
+                //sceneMgr.SelectNode(stNode);
+                //SelectedShapeQuery context = new SelectedShapeQuery();
+                //renderViewDraw.QuerySelection(context);
+                //var face = context.GetGeometry();
+                //var line = context.GetSubGeometry();
                 if (face == null || line == null)
                 {
                     return;
@@ -812,20 +819,26 @@ namespace AnyCAD.Basic
                 ElementId id = new ElementId(bending.Index);
                 SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
                 node.SetId(id);
-                stNode = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.EdLine, 0.1f);
-                stNode.SetVisible(false);
+                //stNode = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.EdLine, 0.1f);
+                //stNode.SetVisible(false);
                 sceneMgr.AddNode(node);
-                sceneMgr.AddNode(stNode);
+                //sceneMgr.AddNode(stNode);
+                face = helper.EdFace;
+                line = helper.EdLine;
+                var a = face.GetShapeType();
+                var b = line.GetShapeType();
             }
+            face = baseShape;
+            line = baseEdge2;
             stNode = rootNode2;
             foreach (var bending in groupEdge2)
             {
-                sceneMgr.ClearSelection();
-                sceneMgr.SelectNode(stNode);
-                SelectedShapeQuery context = new SelectedShapeQuery();
-                renderViewDraw.QuerySelection(context);
-                var face = context.GetGeometry();
-                var line = context.GetSubGeometry();
+                //sceneMgr.ClearSelection();
+                //sceneMgr.SelectNode(stNode);
+                //SelectedShapeQuery context = new SelectedShapeQuery();
+                //renderViewDraw.QuerySelection(context);
+                //var face = context.GetGeometry();
+                //var line = context.GetSubGeometry();
                 if (face == null)
                 {
                     break;
@@ -843,20 +856,21 @@ namespace AnyCAD.Basic
                 ElementId id = new ElementId(bending.Index);
                 SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
                 node.SetId(id);
-                stNode = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.EdLine, 0.1f);
-                stNode.SetVisible(false);
                 sceneMgr.AddNode(node);
-                sceneMgr.AddNode(stNode);
+                face = helper.EdFace;
+                line = helper.EdLine;
             }
+            face = baseShape;
+            line = baseEdge3;
             stNode = rootNode3;
             foreach (var bending in groupEdge3)
             {
-                sceneMgr.ClearSelection();
-                sceneMgr.SelectNode(stNode);
-                SelectedShapeQuery context = new SelectedShapeQuery();
-                renderViewDraw.QuerySelection(context);
-                var face = context.GetGeometry();
-                var line = context.GetSubGeometry();
+                //sceneMgr.ClearSelection();
+                //sceneMgr.SelectNode(stNode);
+                //SelectedShapeQuery context = new SelectedShapeQuery();
+                //renderViewDraw.QuerySelection(context);
+                //var face = context.GetGeometry();
+                //var line = context.GetSubGeometry();
                 if (face == null)
                 {
                     break;
@@ -874,20 +888,21 @@ namespace AnyCAD.Basic
                 ElementId id = new ElementId(bending.Index);
                 SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
                 node.SetId(id);
-                stNode = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.EdLine, 0.1f);
-                stNode.SetVisible(false);
                 sceneMgr.AddNode(node);
-                sceneMgr.AddNode(stNode);
+                face = helper.EdFace;
+                line = helper.EdLine;
             }
+            face = baseShape;
+            line = baseEdge4;
             stNode = rootNode4;
             foreach (var bending in groupEdge4)
             {
-                sceneMgr.ClearSelection();
-                sceneMgr.SelectNode(stNode);
-                SelectedShapeQuery context = new SelectedShapeQuery();
-                renderViewDraw.QuerySelection(context);
-                var face = context.GetGeometry();
-                var line = context.GetSubGeometry();
+                //sceneMgr.ClearSelection();
+                //sceneMgr.SelectNode(stNode);
+                //SelectedShapeQuery context = new SelectedShapeQuery();
+                //renderViewDraw.QuerySelection(context);
+                //var face = context.GetGeometry();
+                //var line = context.GetSubGeometry();
                 if (face == null)
                 {
                     break;
@@ -905,17 +920,26 @@ namespace AnyCAD.Basic
                 ElementId id = new ElementId(bending.Index);
                 SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
                 node.SetId(id);
-                stNode = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.EdLine, 0.1f);
-                stNode.SetVisible(false);
                 sceneMgr.AddNode(node);
-                sceneMgr.AddNode(stNode);
+                face = helper.EdFace;
+                line = helper.EdLine;
             }
             #endregion
 
-            renderViewDraw.ClearScene();
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
 
+        }
+
+        private void BtnReadXml1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
+
+        private void OpenFileDialog2_FileOk(object sender, CancelEventArgs e)
+        {
+            bendings = ExportXml.ReadXml(openFileDialog1.FileName);
+            DrawBendingGroup(bendings);
         }
     }
 }
