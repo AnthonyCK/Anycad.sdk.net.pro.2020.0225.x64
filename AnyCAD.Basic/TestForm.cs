@@ -696,9 +696,13 @@ namespace AnyCAD.Basic
         {
             saveFileDialog1.ShowDialog();
         }
-        private void BtnReadXml_Click(object sender, EventArgs e)
+        private void BtnReadXml1_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
+        }
+        private void BtnReadXml2_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.ShowDialog();
         }
         private void SaveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -707,6 +711,11 @@ namespace AnyCAD.Basic
         private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             bendings = ExportXml.ReadXml(openFileDialog1.FileName);
+            DrawBendingGroup(bendings);
+        }
+        private void OpenFileDialog2_FileOk(object sender, CancelEventArgs e)
+        {
+            bendings = ExportXml.ReadXml(openFileDialog2.FileName);
             DrawBendingGroup2(bendings);
         }
         private void DrawBendingGroup(BendingGroup bends)
@@ -810,11 +819,11 @@ namespace AnyCAD.Basic
                 BendHelper helper = new BendHelper();
                 if (bending.Direction.Equals(EnumDir.Edge_UP))
                 {
-                    helper = BendUp(face, line, bending);
+                    helper = BendDown(face, line, bending);
                 }
                 else
                 {
-                    helper = BendDown(face, line, bending);
+                    helper = BendUp(face, line, bending);
                 }
                 ElementId id = new ElementId(bending.Index);
                 SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
@@ -846,11 +855,11 @@ namespace AnyCAD.Basic
                 BendHelper helper = new BendHelper();
                 if (bending.Direction.Equals(EnumDir.Edge_UP))
                 {
-                    helper = BendUp(face, line, bending);
+                    helper = BendDown(face, line, bending);
                 }
                 else
                 {
-                    helper = BendDown(face, line, bending);
+                    helper = BendUp(face, line, bending);
                 }
 
                 ElementId id = new ElementId(bending.Index);
@@ -878,11 +887,11 @@ namespace AnyCAD.Basic
                 BendHelper helper = new BendHelper();
                 if (bending.Direction.Equals(EnumDir.Edge_UP))
                 {
-                    helper = BendUp(face, line, bending);
+                    helper = BendDown(face, line, bending);
                 }
                 else
                 {
-                    helper = BendDown(face, line, bending);
+                    helper = BendUp(face, line, bending);
                 }
 
                 ElementId id = new ElementId(bending.Index);
@@ -910,11 +919,11 @@ namespace AnyCAD.Basic
                 BendHelper helper = new BendHelper();
                 if (bending.Direction.Equals(EnumDir.Edge_UP))
                 {
-                    helper = BendUp(face, line, bending);
+                    helper = BendDown(face, line, bending);
                 }
                 else
                 {
-                    helper = BendDown(face, line, bending);
+                    helper = BendUp(face, line, bending);
                 }
 
                 ElementId id = new ElementId(bending.Index);
@@ -931,16 +940,7 @@ namespace AnyCAD.Basic
 
         }
 
-        private void BtnReadXml1_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.ShowDialog();
-        }
 
-        private void OpenFileDialog2_FileOk(object sender, CancelEventArgs e)
-        {
-            bendings = ExportXml.ReadXml(openFileDialog1.FileName);
-            DrawBendingGroup(bendings);
-        }
     }
 }
 

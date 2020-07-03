@@ -380,7 +380,7 @@
             this.btnReadXml2.TabIndex = 12;
             this.btnReadXml2.Text = "Read";
             this.btnReadXml2.UseVisualStyleBackColor = true;
-            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml_Click);
+            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml2_Click);
             // 
             // btnExportXml
             // 
