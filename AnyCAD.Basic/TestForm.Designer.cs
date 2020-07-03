@@ -33,7 +33,6 @@
             this.importBtn = new System.Windows.Forms.ToolStripButton();
             this.mouseBtn = new System.Windows.Forms.ToolStripButton();
             this.moveBtn = new System.Windows.Forms.ToolStripButton();
-            this.rotateBtn = new System.Windows.Forms.ToolStripButton();
             this.clearBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.moveNodeBtn = new System.Windows.Forms.ToolStripButton();
@@ -41,7 +40,7 @@
             this.singlePickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiPickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testBtn = new System.Windows.Forms.ToolStripButton();
+            this.sectionBtn = new System.Windows.Forms.ToolStripButton();
             this.transOnMaxBtn = new System.Windows.Forms.ToolStripButton();
             this.transOnSelectBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -101,17 +100,16 @@
             this.importBtn,
             this.mouseBtn,
             this.moveBtn,
-            this.rotateBtn,
             this.clearBtn,
             this.toolStripSeparator1,
             this.moveNodeBtn,
             this.toolStripDropDownButton1,
-            this.testBtn,
+            this.sectionBtn,
             this.transOnMaxBtn,
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(531, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(565, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -144,16 +142,6 @@
             this.moveBtn.Size = new System.Drawing.Size(29, 24);
             this.moveBtn.Text = "Move";
             this.moveBtn.Click += new System.EventHandler(this.PanToolStripMenuItem_Click);
-            // 
-            // rotateBtn
-            // 
-            this.rotateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.rotateBtn.Image = ((System.Drawing.Image)(resources.GetObject("rotateBtn.Image")));
-            this.rotateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.rotateBtn.Name = "rotateBtn";
-            this.rotateBtn.Size = new System.Drawing.Size(29, 24);
-            this.rotateBtn.Text = "Rotate";
-            this.rotateBtn.Click += new System.EventHandler(this.OrbitToolStripMenuItem_Click);
             // 
             // clearBtn
             // 
@@ -214,15 +202,15 @@
             this.hitTestToolStripMenuItem.Text = "Hit Test";
             this.hitTestToolStripMenuItem.Click += new System.EventHandler(this.HitTestToolStripMenuItem_Click);
             // 
-            // testBtn
+            // sectionBtn
             // 
-            this.testBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.testBtn.Image = ((System.Drawing.Image)(resources.GetObject("testBtn.Image")));
-            this.testBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(44, 24);
-            this.testBtn.Text = "Test";
-            this.testBtn.Click += new System.EventHandler(this.TestBtn_Click);
+            this.sectionBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.sectionBtn.Image = ((System.Drawing.Image)(resources.GetObject("sectionBtn.Image")));
+            this.sectionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.sectionBtn.Name = "sectionBtn";
+            this.sectionBtn.Size = new System.Drawing.Size(68, 24);
+            this.sectionBtn.Text = "Section";
+            this.sectionBtn.Click += new System.EventHandler(this.SectionBtn_Click);
             // 
             // transOnMaxBtn
             // 
@@ -499,7 +487,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel3);
             this.splitContainer2.Size = new System.Drawing.Size(363, 421);
-            this.splitContainer2.SplitterDistance = 172;
+            this.splitContainer2.SplitterDistance = 171;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel2
@@ -508,7 +496,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(363, 172);
+            this.panel2.Size = new System.Drawing.Size(363, 171);
             this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.Panel2_SizeChanged);
             // 
@@ -518,7 +506,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(363, 245);
+            this.panel3.Size = new System.Drawing.Size(363, 246);
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.Panel3_SizeChanged);
             // 
@@ -575,7 +563,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton importBtn;
         private System.Windows.Forms.ToolStripButton moveBtn;
-        private System.Windows.Forms.ToolStripButton rotateBtn;
         private System.Windows.Forms.ToolStripButton clearBtn;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -585,7 +572,7 @@
         private System.Windows.Forms.ToolStripMenuItem multiPickToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hitTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton mouseBtn;
-        private System.Windows.Forms.ToolStripButton testBtn;
+        private System.Windows.Forms.ToolStripButton sectionBtn;
         private System.Windows.Forms.ToolStripButton transOnMaxBtn;
         private System.Windows.Forms.ToolStripButton transOnSelectBtn;
         private System.Windows.Forms.SplitContainer splitContainer1;

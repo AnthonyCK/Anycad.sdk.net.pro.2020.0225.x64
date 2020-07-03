@@ -78,24 +78,29 @@ namespace AnyCAD.Basic
             if (cursorHint == "Pan")
             {
                 this.renderView.Cursor = System.Windows.Forms.Cursors.SizeAll;
+                renderViewDraw.Cursor = Cursors.SizeAll;
             }
             else if (cursorHint == "Orbit")
             {
                 this.renderView.Cursor = System.Windows.Forms.Cursors.Hand;
+                renderViewDraw.Cursor = Cursors.Hand;
             }
             else if (cursorHint == "Cross")
             {
                 this.renderView.Cursor = System.Windows.Forms.Cursors.Cross;
+                renderViewDraw.Cursor = Cursors.Cross;
             }
             else
             {
                 if (commandId == "Pick")
                 {
                     this.renderView.Cursor = System.Windows.Forms.Cursors.Arrow;
+                    renderViewDraw.Cursor = Cursors.Arrow;
                 }
                 else
                 {
                     this.renderView.Cursor = System.Windows.Forms.Cursors.Default;
+                    renderViewDraw.Cursor = Cursors.Default;
                 }
             }
 
@@ -130,20 +135,20 @@ namespace AnyCAD.Basic
         }
         private void Panel4_SizeChanged(object sender, EventArgs e)
         {
-            if (renderView != null)
+            if (renderViewDraw != null)
             {
                 System.Drawing.Size size = this.panel4.ClientSize;
                 renderViewDraw.Size = size;
             }
         }
 
-        private void OrbitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            renderView.ExecuteCommand("Orbit");
-        }
         private void PanToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Pan");
+            if (renderViewDraw != null)
+            {
+                renderViewDraw.ExecuteCommand("Pan"); 
+            }
         }
         private void SinglePickToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -156,13 +161,20 @@ namespace AnyCAD.Basic
         private void MouseBtn_Click(object sender, EventArgs e)
         {
             renderView.ExecuteCommand("Pick");
+            if (renderViewDraw != null)
+            {
+                renderViewDraw.ExecuteCommand("Pick"); 
+            }
         }
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             renderView.ClearScene();
             renderViewXZ.ClearScene();
             renderViewYZ.ClearScene();
-            renderViewDraw.ClearScene();
+            if (renderViewDraw != null)
+            {
+                renderViewDraw.ClearScene(); 
+            }
         }
         private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -223,7 +235,7 @@ namespace AnyCAD.Basic
 
         #endregion
 
-        private void TestBtn_Click(object sender, EventArgs e)
+        private void SectionBtn_Click(object sender, EventArgs e)
         {
             //SelectedShapeQuery context = new SelectedShapeQuery();
             //renderView.QuerySelection(context);
@@ -404,8 +416,8 @@ namespace AnyCAD.Basic
             return shape;
         }
 
-        TopoShapeGroup group = new TopoShapeGroup();
-        BendingGroup bendings = new BendingGroup();
+        private TopoShapeGroup group = new TopoShapeGroup();
+        private BendingGroup bendings = new BendingGroup();
         private void BtnDraw_Click(object sender, EventArgs e)
         {
             bendings = new BendingGroup
@@ -768,16 +780,20 @@ namespace AnyCAD.Basic
 
             #region 按四个方向分别折弯
             var groupEdge1 = from m in bends.Bendings
-                             where m.Orientation == EnumEdge.Edge_1
-                             select m;
+                             where m.Orientation == EnumEdge.Edge_1 
+                             orderby m.Index
+                             select m ;
             var groupEdge2 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_2
+                             orderby m.Index
                              select m;
             var groupEdge3 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_3
+                             orderby m.Index
                              select m;
             var groupEdge4 = from m in bends.Bendings
                              where m.Orientation == EnumEdge.Edge_4
+                             orderby m.Index
                              select m;
 
             TopoShape line = baseEdge1;
