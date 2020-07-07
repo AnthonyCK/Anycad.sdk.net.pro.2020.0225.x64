@@ -51,7 +51,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnReadXml1 = new System.Windows.Forms.Button();
             this.btnReadXml2 = new System.Windows.Forms.Button();
             this.btnExportXml = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,7 +69,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -109,7 +107,7 @@
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(565, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(526, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -323,7 +321,6 @@
             // 
             // splitContainer3.Panel2
             // 
-            this.splitContainer3.Panel2.Controls.Add(this.btnReadXml1);
             this.splitContainer3.Panel2.Controls.Add(this.btnReadXml2);
             this.splitContainer3.Panel2.Controls.Add(this.btnExportXml);
             this.splitContainer3.Panel2.Controls.Add(this.label3);
@@ -350,25 +347,15 @@
             this.panel4.TabIndex = 0;
             this.panel4.SizeChanged += new System.EventHandler(this.Panel4_SizeChanged);
             // 
-            // btnReadXml1
-            // 
-            this.btnReadXml1.Location = new System.Drawing.Point(11, 307);
-            this.btnReadXml1.Name = "btnReadXml1";
-            this.btnReadXml1.Size = new System.Drawing.Size(75, 23);
-            this.btnReadXml1.TabIndex = 13;
-            this.btnReadXml1.Text = "Read1";
-            this.btnReadXml1.UseVisualStyleBackColor = true;
-            this.btnReadXml1.Click += new System.EventHandler(this.BtnReadXml1_Click);
-            // 
             // btnReadXml2
             // 
             this.btnReadXml2.Location = new System.Drawing.Point(98, 307);
             this.btnReadXml2.Name = "btnReadXml2";
             this.btnReadXml2.Size = new System.Drawing.Size(75, 23);
             this.btnReadXml2.TabIndex = 12;
-            this.btnReadXml2.Text = "Read";
+            this.btnReadXml2.Text = "Import";
             this.btnReadXml2.UseVisualStyleBackColor = true;
-            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml2_Click);
+            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml_Click);
             // 
             // btnExportXml
             // 
@@ -512,17 +499,12 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog1_FileOk);
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog_FileOk);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1_FileOk);
-            // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.FileName = "openFileDialog1";
-            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog2_FileOk);
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
             // TestForm
             // 
@@ -600,7 +582,5 @@
         private System.Windows.Forms.Button btnExportXml;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button btnReadXml1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }

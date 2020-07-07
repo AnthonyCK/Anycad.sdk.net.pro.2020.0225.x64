@@ -48,6 +48,7 @@ namespace AnyCAD.Basic
             panel4.Controls.Add(renderViewDraw);
 
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
+            renderViewDraw.MouseClick += new MouseEventHandler(OnRenderWindow_MouseClick);
 
             GlobalInstance.EventListener.OnChangeCursorEvent += OnChangeCursor;
             GlobalInstance.EventListener.OnSelectElementEvent += OnSelectElement;
@@ -216,20 +217,18 @@ namespace AnyCAD.Basic
             if (!m_PickPoint)
                 return;
 
-            Platform.PickHelper pickHelper = renderView.PickShape(e.X, e.Y);
-
-            if (pickHelper != null)
-            {
-                // add a ball
-                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pickHelper.GetPointOnShape(), 2);
-                renderView.ShowGeometry(shape, 100);
-            }
-            // Try the grid
-            Vector3 pt = renderView.HitPointOnGrid(e.X, e.Y);
+            //PickHelper pickHelper = renderViewDraw.PickShape(e.X, e.Y);
+            //if (pickHelper != null)
+            //{
+            //    // add a ball
+            //    Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pickHelper.GetPointOnShape(), 2);
+            //    renderView.ShowGeometry(shape, 100);
+            //}
+            //// Try the grid
+            Vector3 pt = renderViewDraw.HitPointOnGrid(e.X, e.Y);
             if (pt != null)
             {
-                Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 2);
-                renderView.ShowGeometry(shape, 100);
+                
             }
         }
 
@@ -426,7 +425,6 @@ namespace AnyCAD.Basic
                 Width = Convert.ToDouble(txtW.Text)
             };
             var face = DrawRect(bendings.Length, bendings.Width);
-            bendings.Buffer = GlobalInstance.BrepTools.SaveBuffer(face);
         }
         private TopoShape DrawRect(double length, double width)
         {
@@ -491,7 +489,6 @@ namespace AnyCAD.Basic
 
             TopoShape sweep = BendUp(face, line, bending).Sweep;
 
-            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
             bendings.Add(bending);
 
             #region 渲染
@@ -564,7 +561,6 @@ namespace AnyCAD.Basic
 
             TopoShape sweep = BendDown(face, line, bending).Sweep;
 
-            bending.Buffer = GlobalInstance.BrepTools.SaveBuffer(sweep);
             bendings.Add(bending);
 
             #region 渲染
@@ -708,56 +704,20 @@ namespace AnyCAD.Basic
         {
             saveFileDialog1.ShowDialog();
         }
-        private void BtnReadXml1_Click(object sender, EventArgs e)
+        private void BtnReadXml_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
         }
-        private void BtnReadXml2_Click(object sender, EventArgs e)
-        {
-            openFileDialog2.ShowDialog();
-        }
-        private void SaveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void SaveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             ExportXml.GenerateXml(bendings,saveFileDialog1.FileName);
         }
-        private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             bendings = ExportXml.ReadXml(openFileDialog1.FileName);
             DrawBendingGroup(bendings);
         }
-        private void OpenFileDialog2_FileOk(object sender, CancelEventArgs e)
-        {
-            bendings = ExportXml.ReadXml(openFileDialog2.FileName);
-            DrawBendingGroup2(bendings);
-        }
         private void DrawBendingGroup(BendingGroup bends)
-        {
-            TopoShape face = GlobalInstance.BrepTools.LoadBuffer(bends.Buffer);
-
-            renderViewDraw.ClearScene();
-            //group.Add(face);
-            SceneManager sceneMgr = renderViewDraw.SceneManager;
-            SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
-            if (rootNode != null)
-            {
-                sceneMgr.AddNode(rootNode);
-            }
-
-            foreach (Bending bending in bends.Bendings)
-            {
-                TopoShape shape = GlobalInstance.BrepTools.LoadBuffer(bending.Buffer);
-                ElementId id = new ElementId(bending.Index);
-                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(shape, 0.1f);
-                node.SetId(id);
-                if (node != null)
-                {
-                    sceneMgr.AddNode(node);
-                }
-            }
-            renderViewDraw.FitAll();
-            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
-        }
-        private void DrawBendingGroup2(BendingGroup bends)
         {
             renderViewDraw.ClearScene();
 
@@ -907,7 +867,6 @@ namespace AnyCAD.Basic
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
 
         }
-
 
     }
 }

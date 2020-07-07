@@ -38,14 +38,15 @@ namespace AnyCAD.Basic
         public double Angle;
         public double Radius;
         public double Length;
-        public byte[] Buffer;
     }
+
     [XmlRoot("BendingGroup", IsNullable = false)]
     public class BendingGroup
     {
+        [XmlArray("Vertexes")]
+        public List<Vector3> Vertexes = new List<Vector3>();
         public double Length;
         public double Width;
-        public byte[] Buffer;
 
         [XmlArray("Bendings")]
         public List<Bending> Bendings = new List<Bending>();
