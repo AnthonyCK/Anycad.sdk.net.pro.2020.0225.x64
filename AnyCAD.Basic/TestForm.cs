@@ -174,7 +174,8 @@ namespace AnyCAD.Basic
             renderViewYZ.ClearScene();
             if (renderViewDraw != null)
             {
-                renderViewDraw.ClearScene(); 
+                renderViewDraw.ClearScene();
+                Vecs.Clear();
             }
         }
         private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -206,8 +207,9 @@ namespace AnyCAD.Basic
             renderView.ExecuteCommand("MoveNode");
         }
 
-        #region Hit Test
+        #region Draw sketch
         private bool m_PickPoint = false;
+        private List<Vector3> Vecs = new List<Vector3>();
         private void HitTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_PickPoint = !m_PickPoint;
@@ -228,7 +230,34 @@ namespace AnyCAD.Basic
             Vector3 pt = renderViewDraw.HitPointOnGrid(e.X, e.Y);
             if (pt != null)
             {
-                
+                if (Vecs.Count() == 0)
+                {
+                    Vecs.Add(pt);
+                    TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 1);
+                    renderViewDraw.ShowGeometry(shape, 100);
+                }
+                else
+                {
+                    var c = from m in Vecs
+                            where m.Distance(pt) <= 1
+                            select m;
+
+                    if (c.Count() == 0)
+                    {
+                        var pt0 = Vecs.Last();
+                        Vecs.Add(pt);
+                        TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 1);
+                        TopoShape edge = GlobalInstance.BrepTools.MakeLine(pt0, pt);
+                        renderViewDraw.ShowGeometry(shape, 100);
+                        renderViewDraw.ShowGeometry(edge, 100);
+                    }
+                    else if (Vecs.First().Equals(c.Last()))
+                    {
+                        TopoShape edge = GlobalInstance.BrepTools.MakeLine(Vecs.Last(), Vecs.First());
+                        renderViewDraw.ShowGeometry(edge, 100);
+                        m_PickPoint = !m_PickPoint;
+                    }
+                }
             }
         }
 
@@ -421,6 +450,7 @@ namespace AnyCAD.Basic
         {
             bendings = new BendingGroup
             {
+                Vertexes = Vecs,
                 Length = Convert.ToDouble(txtL.Text),
                 Width = Convert.ToDouble(txtW.Text)
             };
@@ -474,7 +504,7 @@ namespace AnyCAD.Basic
             {
                 bending.Orientation = EnumEdge.Edge_1;
             }
-            else if (dirL.Y == -1)
+            else if (dirL.Y == 1)
             {
                 bending.Orientation = EnumEdge.Edge_2;
             }
@@ -546,7 +576,7 @@ namespace AnyCAD.Basic
             {
                 bending.Orientation = EnumEdge.Edge_1;
             }
-            else if (dirL.Y == -1)
+            else if (dirL.Y == 1)
             {
                 bending.Orientation = EnumEdge.Edge_2;
             }
@@ -722,14 +752,14 @@ namespace AnyCAD.Basic
             renderViewDraw.ClearScene();
 
             #region 绘制矩形并标记四条边
-            var pt0 = new Vector3(bends.Length, 0, 0);
-            var pt1 = new Vector3(0, 0, 0);
-            var pt2 = new Vector3(0, bends.Width, 0);
-            var pt3 = new Vector3(bends.Length, bends.Width, 0);
-            TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt1, pt0);
-            TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt2, pt1);
-            TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt3, pt2);
-            TopoShape baseEdge4 = GlobalInstance.BrepTools.MakeLine(pt0, pt3);
+            var pt0 = new Vector3(0, 0, 0);
+            var pt1 = new Vector3(bends.Length, 0, 0);
+            var pt2 = new Vector3(bends.Length, bends.Width, 0);
+            var pt3 = new Vector3(0, bends.Width, 0);
+            TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt0, pt1);
+            TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt1, pt2);
+            TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt2, pt3);
+            TopoShape baseEdge4 = GlobalInstance.BrepTools.MakeLine(pt3, pt0);
             TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(bends.Length, bends.Width, 0, Coordinate3.UNIT_XYZ);
             TopoShape baseShape = GlobalInstance.BrepTools.MakeFace(rect);
 
