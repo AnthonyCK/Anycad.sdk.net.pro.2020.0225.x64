@@ -210,6 +210,7 @@ namespace AnyCAD.Basic
         #region Draw sketch
         private bool m_PickPoint = false;
         private List<Vector3> Vecs = new List<Vector3>();
+        private TopoShapeGroup EdgeG = new TopoShapeGroup();
         private void HitTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_PickPoint = !m_PickPoint;
@@ -248,12 +249,14 @@ namespace AnyCAD.Basic
                         Vecs.Add(pt);
                         TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pt, 1);
                         TopoShape edge = GlobalInstance.BrepTools.MakeLine(pt0, pt);
+                        EdgeG.Add(edge);
                         renderViewDraw.ShowGeometry(shape, 100);
                         renderViewDraw.ShowGeometry(edge, 100);
                     }
                     else if (Vecs.First().Equals(c.Last()))
                     {
                         TopoShape edge = GlobalInstance.BrepTools.MakeLine(Vecs.Last(), Vecs.First());
+                        EdgeG.Add(edge);
                         renderViewDraw.ShowGeometry(edge, 100);
                         m_PickPoint = !m_PickPoint;
                     }
@@ -444,17 +447,20 @@ namespace AnyCAD.Basic
             return shape;
         }
 
-        private TopoShapeGroup group = new TopoShapeGroup();
         private BendingGroup bendings = new BendingGroup();
         private void BtnDraw_Click(object sender, EventArgs e)
         {
-            bendings = new BendingGroup
-            {
-                Vertexes = Vecs,
-                Length = Convert.ToDouble(txtL.Text),
-                Width = Convert.ToDouble(txtW.Text)
-            };
-            var face = DrawRect(bendings.Length, bendings.Width);
+            var w = GlobalInstance.BrepTools.MakeWire(EdgeG);
+            var t = GlobalInstance.BrepTools.MakeFace(w);
+            t = GlobalInstance.BrepTools.FillFace(Vecs);
+            renderViewDraw.ShowGeometry(t, 100);
+            //bendings = new BendingGroup
+            //{
+            //    Vertexes = Vecs,
+            //    Length = Convert.ToDouble(txtL.Text),
+            //    Width = Convert.ToDouble(txtW.Text)
+            //};
+            //var face = DrawRect(bendings.Length, bendings.Width);
         }
         private TopoShape DrawRect(double length, double width)
         {
@@ -462,7 +468,6 @@ namespace AnyCAD.Basic
             TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
             
             renderViewDraw.ClearScene();
-            group.Add(face);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
             if (rootNode != null)
@@ -522,7 +527,6 @@ namespace AnyCAD.Basic
             bendings.Add(bending);
 
             #region 渲染
-            group.Add(sweep);
             ElementId faceId = new ElementId(bending.Index + shapeId);
             ElementId edgeId = new ElementId(bending.Index);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
@@ -594,7 +598,6 @@ namespace AnyCAD.Basic
             bendings.Add(bending);
 
             #region 渲染
-            group.Add(sweep);
             ElementId faceId = new ElementId(bending.Index + shapeId);
             ElementId edgeId = new ElementId(bending.Index);
             SceneManager sceneMgr = renderViewDraw.SceneManager;
