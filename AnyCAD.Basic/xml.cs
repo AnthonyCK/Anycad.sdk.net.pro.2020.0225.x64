@@ -10,12 +10,10 @@ using System.Xml.Serialization;
 
 namespace AnyCAD.Basic
 {
-    public enum EnumEdge
+    public class EdgeOri
     {
-        Edge_1 = 0,
-        Edge_2 = 1,
-        Edge_3 = 2,
-        Edge_4 = 3
+        public double Id;
+        public Vector3 Ori;
     }
     public enum EnumDir
     {
@@ -31,7 +29,7 @@ namespace AnyCAD.Basic
     public class Bending
     {
         [XmlAttribute]
-        public EnumEdge Orientation;
+        public double Orientation;
 
         public int Index;
         public EnumDir Direction;

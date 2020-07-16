@@ -19,7 +19,7 @@ namespace AnyCAD.Basic
         private Presentation.RenderWindow3d renderView;
         private Presentation.RenderWindow3d renderViewXZ;
         private Presentation.RenderWindow3d renderViewYZ;
-        public Presentation.RenderWindow3d renderViewDraw;
+        private Presentation.RenderWindow3d renderViewDraw;
         private int shapeId = 1000;
         private TopoShape topoShape = new TopoShape();
         public TestForm()
@@ -450,22 +450,28 @@ namespace AnyCAD.Basic
         private BendingGroup bendings = new BendingGroup();
         private void BtnDraw_Click(object sender, EventArgs e)
         {
-            var w = GlobalInstance.BrepTools.MakeWire(EdgeG);
-            var t = GlobalInstance.BrepTools.MakeFace(w);
-            t = GlobalInstance.BrepTools.FillFace(Vecs);
-            renderViewDraw.ShowGeometry(t, 100);
-            //bendings = new BendingGroup
-            //{
-            //    Vertexes = Vecs,
-            //    Length = Convert.ToDouble(txtL.Text),
-            //    Width = Convert.ToDouble(txtW.Text)
-            //};
-            //var face = DrawRect(bendings.Length, bendings.Width);
+            //var w = GlobalInstance.BrepTools.MakeWire(EdgeG);
+            //var t = GlobalInstance.BrepTools.MakeFace(w);
+            //t = GlobalInstance.BrepTools.FillFace(Vecs);
+            //renderViewDraw.ShowGeometry(t, 100);
+            Vecs.Clear();
+            Vecs.Add(new Vector3(0, 0, 0));
+            Vecs.Add(new Vector3(Convert.ToDouble(txtL.Text), 0, 0));
+            Vecs.Add(new Vector3(Convert.ToDouble(txtL.Text), Convert.ToDouble(txtW.Text), 0));
+            Vecs.Add(new Vector3(0, Convert.ToDouble(txtW.Text), 0));
+            bendings = new BendingGroup
+            {
+                Vertexes = Vecs,
+                Length = Convert.ToDouble(txtL.Text),
+                Width = Convert.ToDouble(txtW.Text)
+            };
+            var face = DrawRect(bendings.Length, bendings.Width, Vecs);
         }
-        private TopoShape DrawRect(double length, double width)
+        private TopoShape DrawRect(double length, double width, List<Vector3> vertex)
         {
-            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(length, width, 0, Coordinate3.UNIT_XYZ);
-            TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
+            //TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(length, width, 0, Coordinate3.UNIT_XYZ);
+            //TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
+            var face = GlobalInstance.BrepTools.FillFace(vertex);
             
             renderViewDraw.ClearScene();
             SceneManager sceneMgr = renderViewDraw.SceneManager;
@@ -505,22 +511,31 @@ namespace AnyCAD.Basic
             GeomCurve curve = new GeomCurve();
             curve.Initialize(line);
             Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
-            if (dirL.X == 1)
+            if (dirL.Y >= 0)
             {
-                bending.Orientation = EnumEdge.Edge_1;
-            }
-            else if (dirL.Y == 1)
-            {
-                bending.Orientation = EnumEdge.Edge_2;
-            }
-            else if (dirL.X == -1)
-            {
-                bending.Orientation = EnumEdge.Edge_3;
+                bending.Orientation = dirL.AngleBetween(Vector3.UNIT_X);
             }
             else
             {
-                bending.Orientation = EnumEdge.Edge_4;
+                bending.Orientation = 360 - dirL.AngleBetween(Vector3.UNIT_X);
             }
+            
+            //if (dirL.X == 1)
+            //{
+            //    bending.Orientation = 0;
+            //}
+            //else if (dirL.Y == 1)
+            //{
+            //    bending.Orientation = EnumEdge.Edge_2;
+            //}
+            //else if (dirL.X == -1)
+            //{
+            //    bending.Orientation = EnumEdge.Edge_3;
+            //}
+            //else
+            //{
+            //    bending.Orientation = EnumEdge.Edge_4;
+            //}
 
             TopoShape sweep = BendUp(face, line, bending).Sweep;
 
@@ -576,22 +591,30 @@ namespace AnyCAD.Basic
             GeomCurve curve = new GeomCurve();
             curve.Initialize(line);
             Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
-            if (dirL.X == 1)
+            if (dirL.Y >= 0)
             {
-                bending.Orientation = EnumEdge.Edge_1;
-            }
-            else if (dirL.Y == 1)
-            {
-                bending.Orientation = EnumEdge.Edge_2;
-            }
-            else if (dirL.X == -1)
-            {
-                bending.Orientation = EnumEdge.Edge_3;
+                bending.Orientation = dirL.AngleBetween(Vector3.UNIT_X);
             }
             else
             {
-                bending.Orientation = EnumEdge.Edge_4;
+                bending.Orientation = 360 - dirL.AngleBetween(Vector3.UNIT_X);
             }
+            //if (dirL.X == 1)
+            //{
+            //    bending.Orientation = EnumEdge.Edge_1;
+            //}
+            //else if (dirL.Y == 1)
+            //{
+            //    bending.Orientation = EnumEdge.Edge_2;
+            //}
+            //else if (dirL.X == -1)
+            //{
+            //    bending.Orientation = EnumEdge.Edge_3;
+            //}
+            //else
+            //{
+            //    bending.Orientation = EnumEdge.Edge_4;
+            //}
 
             TopoShape sweep = BendDown(face, line, bending).Sweep;
 
@@ -755,145 +778,185 @@ namespace AnyCAD.Basic
             renderViewDraw.ClearScene();
 
             #region 绘制矩形并标记四条边
-            var pt0 = new Vector3(0, 0, 0);
-            var pt1 = new Vector3(bends.Length, 0, 0);
-            var pt2 = new Vector3(bends.Length, bends.Width, 0);
-            var pt3 = new Vector3(0, bends.Width, 0);
-            TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt0, pt1);
-            TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt1, pt2);
-            TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt2, pt3);
-            TopoShape baseEdge4 = GlobalInstance.BrepTools.MakeLine(pt3, pt0);
-            TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(bends.Length, bends.Width, 0, Coordinate3.UNIT_XYZ);
-            TopoShape baseShape = GlobalInstance.BrepTools.MakeFace(rect);
+            //var pt0 = new Vector3(0, 0, 0);
+            //var pt1 = new Vector3(bends.Length, 0, 0);
+            //var pt2 = new Vector3(bends.Length, bends.Width, 0);
+            //var pt3 = new Vector3(0, bends.Width, 0);
+            //TopoShape baseEdge1 = GlobalInstance.BrepTools.MakeLine(pt0, pt1);
+            //TopoShape baseEdge2 = GlobalInstance.BrepTools.MakeLine(pt1, pt2);
+            //TopoShape baseEdge3 = GlobalInstance.BrepTools.MakeLine(pt2, pt3);
+            //TopoShape baseEdge4 = GlobalInstance.BrepTools.MakeLine(pt3, pt0);
+            //TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(bends.Length, bends.Width, 0, Coordinate3.UNIT_XYZ);
+            //TopoShape baseShape = GlobalInstance.BrepTools.MakeFace(rect);
+            TopoShape baseShape = GlobalInstance.BrepTools.FillFace(bends.Vertexes);
 
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode root = GlobalInstance.TopoShapeConvert.ToSceneNode(baseShape, 0.1f);
             sceneMgr.AddNode(root);
             #endregion
 
+            var oris = bends.Bendings.OrderBy(m => m.Orientation).Select(m => m.Orientation).Distinct();
+            Queue<Vector3> vertexQueue = new Queue<Vector3>(bends.Vertexes);
+            for(int i = 0; i < vertexQueue.Count(); i++)
+            {
+                var sPt = vertexQueue.Dequeue();
+                var ePt = vertexQueue.Peek();
+                vertexQueue.Enqueue(sPt);
+                var line = GlobalInstance.BrepTools.MakeLine(sPt, ePt);
+                var face = baseShape;
+                var groupEdge = from m in bends.Bendings
+                                where m.Orientation == ((ePt - sPt).Y >= 0 ? (ePt - sPt).AngleBetween(Vector3.UNIT_X) : (360 - (ePt - sPt).AngleBetween(Vector3.UNIT_X)))
+                                orderby m.Index
+                                select m;
+                foreach (var bending in groupEdge)
+                {
+                    if (face == null || line == null)
+                    {
+                        return;
+                    }
+                    if (face.GetShapeType() != EnumTopoShapeType.Topo_FACE || line.GetShapeType() != EnumTopoShapeType.Topo_EDGE)
+                    {
+                        break;
+                    }
+                    BendHelper helper = new BendHelper();
+                    if (bending.Direction.Equals(EnumDir.Edge_UP))
+                    {
+                        helper = BendUp(face, line, bending);
+                    }
+                    else
+                    {
+                        helper = BendDown(face, line, bending);
+                    }
+                    ElementId id = new ElementId(bending.Index);
+                    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+                    node.SetId(id);
+                    sceneMgr.AddNode(node);
+                    face = helper.EdFace;
+                    line = helper.EdLine;
+                }
+
+            }
             #region 按四个方向分别折弯
-            var groupEdge1 = from m in bends.Bendings
-                             where m.Orientation == EnumEdge.Edge_1 
-                             orderby m.Index
-                             select m ;
-            var groupEdge2 = from m in bends.Bendings
-                             where m.Orientation == EnumEdge.Edge_2
-                             orderby m.Index
-                             select m;
-            var groupEdge3 = from m in bends.Bendings
-                             where m.Orientation == EnumEdge.Edge_3
-                             orderby m.Index
-                             select m;
-            var groupEdge4 = from m in bends.Bendings
-                             where m.Orientation == EnumEdge.Edge_4
-                             orderby m.Index
-                             select m;
+            //var groupEdge1 = from m in bends.Bendings
+            //                 where m.Orientation == 0
+            //                 orderby m.Index
+            //                 select m ;
+            //var groupEdge2 = from m in bends.Bendings
+            //                 where m.Orientation == 1
+            //                 orderby m.Index
+            //                 select m;
+            //var groupEdge3 = from m in bends.Bendings
+            //                 where m.Orientation == 2
+            //                 orderby m.Index
+            //                 select m;
+            //var groupEdge4 = from m in bends.Bendings
+            //                 where m.Orientation == 3
+            //                 orderby m.Index
+            //                 select m;
 
-            TopoShape line = baseEdge1;
-            TopoShape face = baseShape;
-            foreach (var bending in groupEdge1)
-            {
-                if (face == null || line == null)
-                {
-                    return;
-                }
-                if (face.GetShapeType() != EnumTopoShapeType.Topo_FACE || line.GetShapeType() != EnumTopoShapeType.Topo_EDGE)
-                {
-                    break;
-                }
-                BendHelper helper = new BendHelper();
-                if (bending.Direction.Equals(EnumDir.Edge_UP))
-                {
-                    helper = BendUp(face, line, bending);
-                }
-                else
-                {
-                    helper = BendDown(face, line, bending);
-                }
-                ElementId id = new ElementId(bending.Index);
-                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
-                node.SetId(id);
-                sceneMgr.AddNode(node);
-                face = helper.EdFace;
-                line = helper.EdLine;
-                var a = face.GetShapeType();
-                var b = line.GetShapeType();
-            }
-            face = baseShape;
-            line = baseEdge2;
-            foreach (var bending in groupEdge2)
-            {
-                if (face == null)
-                {
-                    break;
-                }
-                BendHelper helper = new BendHelper();
-                if (bending.Direction.Equals(EnumDir.Edge_UP))
-                {
-                    helper = BendUp(face, line, bending);
-                }
-                else
-                {
-                    helper = BendDown(face, line, bending);
-                }
+            ////TopoShape line = baseEdge1;
+            ////TopoShape face = baseShape;
+            //foreach (var bending in groupEdge1)
+            //{
+            //    if (face == null || line == null)
+            //    {
+            //        return;
+            //    }
+            //    if (face.GetShapeType() != EnumTopoShapeType.Topo_FACE || line.GetShapeType() != EnumTopoShapeType.Topo_EDGE)
+            //    {
+            //        break;
+            //    }
+            //    BendHelper helper = new BendHelper();
+            //    if (bending.Direction.Equals(EnumDir.Edge_UP))
+            //    {
+            //        helper = BendUp(face, line, bending);
+            //    }
+            //    else
+            //    {
+            //        helper = BendDown(face, line, bending);
+            //    }
+            //    ElementId id = new ElementId(bending.Index);
+            //    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+            //    node.SetId(id);
+            //    sceneMgr.AddNode(node);
+            //    face = helper.EdFace;
+            //    line = helper.EdLine;
+            //}
+            //face = baseShape;
+            //line = baseEdge2;
+            //foreach (var bending in groupEdge2)
+            //{
+            //    if (face == null)
+            //    {
+            //        break;
+            //    }
+            //    BendHelper helper = new BendHelper();
+            //    if (bending.Direction.Equals(EnumDir.Edge_UP))
+            //    {
+            //        helper = BendUp(face, line, bending);
+            //    }
+            //    else
+            //    {
+            //        helper = BendDown(face, line, bending);
+            //    }
 
-                ElementId id = new ElementId(bending.Index);
-                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
-                node.SetId(id);
-                sceneMgr.AddNode(node);
-                face = helper.EdFace;
-                line = helper.EdLine;
-            }
-            face = baseShape;
-            line = baseEdge3;
-            foreach (var bending in groupEdge3)
-            {
-                if (face == null)
-                {
-                    break;
-                }
-                BendHelper helper = new BendHelper();
-                if (bending.Direction.Equals(EnumDir.Edge_UP))
-                {
-                    helper = BendUp(face, line, bending);
-                }
-                else
-                {
-                    helper = BendDown(face, line, bending);
-                }
+            //    ElementId id = new ElementId(bending.Index);
+            //    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+            //    node.SetId(id);
+            //    sceneMgr.AddNode(node);
+            //    face = helper.EdFace;
+            //    line = helper.EdLine;
+            //}
+            //face = baseShape;
+            //line = baseEdge3;
+            //foreach (var bending in groupEdge3)
+            //{
+            //    if (face == null)
+            //    {
+            //        break;
+            //    }
+            //    BendHelper helper = new BendHelper();
+            //    if (bending.Direction.Equals(EnumDir.Edge_UP))
+            //    {
+            //        helper = BendUp(face, line, bending);
+            //    }
+            //    else
+            //    {
+            //        helper = BendDown(face, line, bending);
+            //    }
 
-                ElementId id = new ElementId(bending.Index);
-                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
-                node.SetId(id);
-                sceneMgr.AddNode(node);
-                face = helper.EdFace;
-                line = helper.EdLine;
-            }
-            face = baseShape;
-            line = baseEdge4;
-            foreach (var bending in groupEdge4)
-            {
-                if (face == null)
-                {
-                    break;
-                }
-                BendHelper helper = new BendHelper();
-                if (bending.Direction.Equals(EnumDir.Edge_UP))
-                {
-                    helper = BendUp(face, line, bending);
-                }
-                else
-                {
-                    helper = BendDown(face, line, bending);
-                }
+            //    ElementId id = new ElementId(bending.Index);
+            //    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+            //    node.SetId(id);
+            //    sceneMgr.AddNode(node);
+            //    face = helper.EdFace;
+            //    line = helper.EdLine;
+            //}
+            //face = baseShape;
+            //line = baseEdge4;
+            //foreach (var bending in groupEdge4)
+            //{
+            //    if (face == null)
+            //    {
+            //        break;
+            //    }
+            //    BendHelper helper = new BendHelper();
+            //    if (bending.Direction.Equals(EnumDir.Edge_UP))
+            //    {
+            //        helper = BendUp(face, line, bending);
+            //    }
+            //    else
+            //    {
+            //        helper = BendDown(face, line, bending);
+            //    }
 
-                ElementId id = new ElementId(bending.Index);
-                SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
-                node.SetId(id);
-                sceneMgr.AddNode(node);
-                face = helper.EdFace;
-                line = helper.EdLine;
-            }
+            //    ElementId id = new ElementId(bending.Index);
+            //    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+            //    node.SetId(id);
+            //    sceneMgr.AddNode(node);
+            //    face = helper.EdFace;
+            //    line = helper.EdLine;
+            //}
             #endregion
 
             renderViewDraw.FitAll();
