@@ -511,11 +511,11 @@ namespace AnyCAD.Basic
             Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
             if (dirL.Y >= 0)
             {
-                bending.Orientation = dirL.AngleBetween(Vector3.UNIT_X);
+                bending.Orientation = Math.Round(dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
             else
             {
-                bending.Orientation = 360 - dirL.AngleBetween(Vector3.UNIT_X);
+                bending.Orientation = Math.Round(360 - dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
             
             //if (dirL.X == 1)
@@ -591,11 +591,11 @@ namespace AnyCAD.Basic
             Vector3 dirL = curve.DN(curve.FirstParameter(), 1);
             if (dirL.Y >= 0)
             {
-                bending.Orientation = dirL.AngleBetween(Vector3.UNIT_X);
+                bending.Orientation = Math.Round(dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
             else
             {
-                bending.Orientation = 360 - dirL.AngleBetween(Vector3.UNIT_X);
+                bending.Orientation = Math.Round(360 - dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
             //if (dirL.X == 1)
             //{
@@ -804,7 +804,7 @@ namespace AnyCAD.Basic
                 var line = GlobalInstance.BrepTools.MakeLine(sPt, ePt);
                 var face = baseShape;
                 var groupEdge = from m in bends.Bendings
-                                where m.Orientation == ((ePt - sPt).Y >= 0 ? (ePt - sPt).AngleBetween(Vector3.UNIT_X) : (360 - (ePt - sPt).AngleBetween(Vector3.UNIT_X)))
+                                where m.Orientation == Math.Round(((ePt - sPt).Y >= 0 ? (ePt - sPt).AngleBetween(Vector3.UNIT_X) : (360 - (ePt - sPt).AngleBetween(Vector3.UNIT_X))), 3)
                                 orderby m.Index
                                 select m;
                 foreach (var bending in groupEdge)
