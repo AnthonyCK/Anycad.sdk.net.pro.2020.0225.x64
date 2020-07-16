@@ -462,12 +462,10 @@ namespace AnyCAD.Basic
             bendings = new BendingGroup
             {
                 Vertexes = Vecs,
-                Length = Convert.ToDouble(txtL.Text),
-                Width = Convert.ToDouble(txtW.Text)
             };
-            var face = DrawRect(bendings.Length, bendings.Width, Vecs);
+            var face = DrawRect(Vecs);
         }
-        private TopoShape DrawRect(double length, double width, List<Vector3> vertex)
+        private TopoShape DrawRect(List<Vector3> vertex)
         {
             //TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(length, width, 0, Coordinate3.UNIT_XYZ);
             //TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
@@ -777,7 +775,7 @@ namespace AnyCAD.Basic
         {
             renderViewDraw.ClearScene();
 
-            #region 绘制矩形并标记四条边
+            #region 绘制底面
             //var pt0 = new Vector3(0, 0, 0);
             //var pt1 = new Vector3(bends.Length, 0, 0);
             //var pt2 = new Vector3(bends.Length, bends.Width, 0);
@@ -795,9 +793,10 @@ namespace AnyCAD.Basic
             sceneMgr.AddNode(root);
             #endregion
 
+            #region 按逆时针方向依次折弯
             var oris = bends.Bendings.OrderBy(m => m.Orientation).Select(m => m.Orientation).Distinct();
             Queue<Vector3> vertexQueue = new Queue<Vector3>(bends.Vertexes);
-            for(int i = 0; i < vertexQueue.Count(); i++)
+            for (int i = 0; i < vertexQueue.Count(); i++)
             {
                 var sPt = vertexQueue.Dequeue();
                 var ePt = vertexQueue.Peek();
@@ -835,7 +834,8 @@ namespace AnyCAD.Basic
                     line = helper.EdLine;
                 }
 
-            }
+            } 
+            #endregion
             #region 按四个方向分别折弯
             //var groupEdge1 = from m in bends.Bendings
             //                 where m.Orientation == 0

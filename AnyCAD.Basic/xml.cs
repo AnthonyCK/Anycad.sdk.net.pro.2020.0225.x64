@@ -43,8 +43,8 @@ namespace AnyCAD.Basic
     {
         [XmlArray("Vertexes")]
         public List<Vector3> Vertexes = new List<Vector3>();
-        public double Length;
-        public double Width;
+        //public double Length;
+        //public double Width;
 
         [XmlArray("Bendings")]
         public List<Bending> Bendings = new List<Bending>();
