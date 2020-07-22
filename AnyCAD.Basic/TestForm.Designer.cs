@@ -69,6 +69,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.btnUnfold = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -321,6 +322,7 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.btnUnfold);
             this.splitContainer3.Panel2.Controls.Add(this.btnReadXml2);
             this.splitContainer3.Panel2.Controls.Add(this.btnExportXml);
             this.splitContainer3.Panel2.Controls.Add(this.label3);
@@ -506,6 +508,16 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
+            // btnUnfold
+            // 
+            this.btnUnfold.Location = new System.Drawing.Point(98, 337);
+            this.btnUnfold.Name = "btnUnfold";
+            this.btnUnfold.Size = new System.Drawing.Size(75, 23);
+            this.btnUnfold.TabIndex = 13;
+            this.btnUnfold.Text = "Unfold";
+            this.btnUnfold.UseVisualStyleBackColor = true;
+            this.btnUnfold.Click += new System.EventHandler(this.BtnUnfold_Click);
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -582,5 +594,6 @@
         private System.Windows.Forms.Button btnExportXml;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button btnUnfold;
     }
 }

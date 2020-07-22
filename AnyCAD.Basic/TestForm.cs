@@ -679,13 +679,24 @@ namespace AnyCAD.Basic
             Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
             Vector3 edArc = center + radius2;  //圆弧终点
             TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
-            lineGroup.Add(arc);
+            if (arc != null)
+            {
+                lineGroup.Add(arc);
+            }
             Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
             arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
             lineGroup.Add(arc);
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
-            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            TopoShape sweep;
+            if (wireSketch != null)
+            {
+                sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            }
+            else
+            {
+                sweep = GlobalInstance.BrepTools.Sweep(arc, line, true);
+            }
             TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true).GetSubShape(0, 1);
             TopoShape oEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
@@ -735,13 +746,24 @@ namespace AnyCAD.Basic
             Vector3 radius2 = radius * Math.Cos(theta) + dirL.CrossProduct(radius) * Math.Sin(theta);
             Vector3 edArc = center + radius2;  //圆弧终点
             TopoShape arc = GlobalInstance.BrepTools.MakeArc(stPt, edArc, center, dirL);    //绘制圆弧
-            lineGroup.Add(arc);
+            if (arc != null)
+            {
+                lineGroup.Add(arc);
+            }
             Vector3 edLine = dirL.CrossProduct(radius2) * (bending.Length / bending.Radius) + edArc;
             arc = GlobalInstance.BrepTools.MakeLine(edArc, edLine);
             lineGroup.Add(arc);
             //扫描生成折弯
             TopoShape wireSketch = GlobalInstance.BrepTools.MakeWire(lineGroup);
-            TopoShape sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            TopoShape sweep;
+            if (wireSketch != null)
+            {
+                sweep = GlobalInstance.BrepTools.Sweep(wireSketch, line, true);
+            }
+            else
+            {
+                sweep = GlobalInstance.BrepTools.Sweep(arc, line, true);
+            }
             TopoShape oFace = GlobalInstance.BrepTools.Sweep(arc, line, true).GetSubShape(0, 1);
             TopoShape oEdge = GlobalInstance.BrepTools.MakeLine(edLine, edLine + edPt - stPt);
             #endregion
@@ -771,6 +793,10 @@ namespace AnyCAD.Basic
             bendings = ExportXml.ReadXml(openFileDialog1.FileName);
             DrawBendingGroup(bendings);
         }
+        private void BtnUnfold_Click(object sender, EventArgs e)
+        {
+            DrawUnfoldGroup(bendings);
+        }
         private void DrawBendingGroup(BendingGroup bends)
         {
             renderViewDraw.ClearScene();
@@ -794,7 +820,7 @@ namespace AnyCAD.Basic
             #endregion
 
             #region 按逆时针方向依次折弯
-            var oris = bends.Bendings.OrderBy(m => m.Orientation).Select(m => m.Orientation).Distinct();
+            //var oris = bends.Bendings.OrderBy(m => m.Orientation).Select(m => m.Orientation).Distinct();
             Queue<Vector3> vertexQueue = new Queue<Vector3>(bends.Vertexes);
             for (int i = 0; i < vertexQueue.Count(); i++)
             {
@@ -957,6 +983,60 @@ namespace AnyCAD.Basic
             //    face = helper.EdFace;
             //    line = helper.EdLine;
             //}
+            #endregion
+
+            renderViewDraw.FitAll();
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
+
+        }
+        private void DrawUnfoldGroup(BendingGroup bends)
+        {
+            renderViewDraw.ClearScene();
+
+            #region 绘制底面
+            TopoShape baseShape = GlobalInstance.BrepTools.FillFace(bends.Vertexes);
+
+            SceneManager sceneMgr = renderViewDraw.SceneManager;
+            SceneNode root = GlobalInstance.TopoShapeConvert.ToSceneNode(baseShape, 0.1f);
+            sceneMgr.AddNode(root);
+            #endregion
+
+            #region 按逆时针方向依次折弯
+            Queue<Vector3> vertexQueue = new Queue<Vector3>(bends.Vertexes);
+            for (int i = 0; i < vertexQueue.Count(); i++)
+            {
+                var sPt = vertexQueue.Dequeue();
+                var ePt = vertexQueue.Peek();
+                vertexQueue.Enqueue(sPt);
+                var line = GlobalInstance.BrepTools.MakeLine(sPt, ePt);
+                var face = baseShape;
+                var groupEdge = from m in bends.Bendings
+                                where m.Orientation == Math.Round(((ePt - sPt).Y >= 0 ? (ePt - sPt).AngleBetween(Vector3.UNIT_X) : (360 - (ePt - sPt).AngleBetween(Vector3.UNIT_X))), 3)
+                                orderby m.Index
+                                select m;
+                foreach (var bending in groupEdge)
+                {
+                    if (face == null || line == null)
+                    {
+                        return;
+                    }
+                    if (face.GetShapeType() != EnumTopoShapeType.Topo_FACE || line.GetShapeType() != EnumTopoShapeType.Topo_EDGE)
+                    {
+                        break;
+                    }
+                    BendHelper helper = new BendHelper();
+                    var temp = bending;
+                    temp.Angle = 0;
+                    helper = BendUp(face, line, temp);
+                    ElementId id = new ElementId(bending.Index);
+                    SceneNode node = GlobalInstance.TopoShapeConvert.ToSceneNode(helper.Sweep, 0.1f);
+                    node.SetId(id);
+                    sceneMgr.AddNode(node);
+                    face = helper.EdFace;
+                    line = helper.EdLine;
+                }
+
+            }
             #endregion
 
             renderViewDraw.FitAll();
