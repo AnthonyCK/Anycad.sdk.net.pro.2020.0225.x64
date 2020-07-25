@@ -176,6 +176,8 @@ namespace AnyCAD.Basic
             {
                 renderViewDraw.ClearScene();
                 Vecs.Clear();
+                posOfStep = 0;
+                stepBendings.Clear();
             }
         }
         private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -806,6 +808,7 @@ namespace AnyCAD.Basic
                 }
                 stepBendings.Add(new BendingGroup(item));
             }
+            posOfStep = stepBendings.Count();
         }
         private void DrawBendingGroup(BendingGroup bends)
         {
@@ -1036,6 +1039,7 @@ namespace AnyCAD.Basic
                     }
                     BendHelper helper = new BendHelper();
                     var temp = new Bending(bending);
+                    temp.Length += temp.Radius * temp.Angle * Math.PI / 180;
                     temp.Angle = 0;
                     helper = BendUp(face, line, temp);
                     ElementId id = new ElementId(bending.Index);
@@ -1059,6 +1063,7 @@ namespace AnyCAD.Basic
             List<Bending> temp = new List<Bending>(group.Bendings.OrderBy(m => m.Index).ToList());
             foreach(var item in temp)
             {
+                item.Length += item.Radius * item.Angle * Math.PI / 180;
                 item.Angle = 0;
                 group.Bendings = temp;
                 yield return group;
@@ -1068,20 +1073,20 @@ namespace AnyCAD.Basic
         private List<BendingGroup> stepBendings = new List<BendingGroup>();
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if (posOfStep >= stepBendings.Count())
-            {
-                return;
-            }
-            var item = stepBendings.ElementAt(posOfStep++);
-            DrawBendingGroup(item);
-        }
-        private void BtnLast_Click(object sender, EventArgs e)
-        {
             if (posOfStep <= 0)
             {
                 return;
             }
             var item = stepBendings.ElementAt(--posOfStep);
+            DrawBendingGroup(item);
+        }
+        private void BtnLast_Click(object sender, EventArgs e)
+        {
+            if (posOfStep >= stepBendings.Count())
+            {
+                return;
+            }
+            var item = stepBendings.ElementAt(posOfStep++);
             DrawBendingGroup(item);
         }
 
