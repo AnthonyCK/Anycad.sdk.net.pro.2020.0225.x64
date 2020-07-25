@@ -51,6 +51,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnUnfold = new System.Windows.Forms.Button();
             this.btnReadXml2 = new System.Windows.Forms.Button();
             this.btnExportXml = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,7 +71,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.btnUnfold = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -307,7 +309,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(421, 392);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "展开";
+            this.tabPage2.Text = "Unfold";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // splitContainer3
@@ -322,6 +324,8 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.btnLast);
+            this.splitContainer3.Panel2.Controls.Add(this.btnNext);
             this.splitContainer3.Panel2.Controls.Add(this.btnUnfold);
             this.splitContainer3.Panel2.Controls.Add(this.btnReadXml2);
             this.splitContainer3.Panel2.Controls.Add(this.btnExportXml);
@@ -348,6 +352,26 @@
             this.panel4.Size = new System.Drawing.Size(137, 386);
             this.panel4.TabIndex = 0;
             this.panel4.SizeChanged += new System.EventHandler(this.Panel4_SizeChanged);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(195, 277);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 14;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            // 
+            // btnUnfold
+            // 
+            this.btnUnfold.Location = new System.Drawing.Point(98, 337);
+            this.btnUnfold.Name = "btnUnfold";
+            this.btnUnfold.Size = new System.Drawing.Size(75, 23);
+            this.btnUnfold.TabIndex = 13;
+            this.btnUnfold.Text = "Unfold";
+            this.btnUnfold.UseVisualStyleBackColor = true;
+            this.btnUnfold.Click += new System.EventHandler(this.BtnUnfold_Click);
             // 
             // btnReadXml2
             // 
@@ -476,7 +500,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel3);
             this.splitContainer2.Size = new System.Drawing.Size(363, 421);
-            this.splitContainer2.SplitterDistance = 171;
+            this.splitContainer2.SplitterDistance = 170;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel2
@@ -485,7 +509,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(363, 171);
+            this.panel2.Size = new System.Drawing.Size(363, 170);
             this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.Panel2_SizeChanged);
             // 
@@ -495,7 +519,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(363, 246);
+            this.panel3.Size = new System.Drawing.Size(363, 247);
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.Panel3_SizeChanged);
             // 
@@ -508,15 +532,15 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
-            // btnUnfold
+            // btnLast
             // 
-            this.btnUnfold.Location = new System.Drawing.Point(98, 337);
-            this.btnUnfold.Name = "btnUnfold";
-            this.btnUnfold.Size = new System.Drawing.Size(75, 23);
-            this.btnUnfold.TabIndex = 13;
-            this.btnUnfold.Text = "Unfold";
-            this.btnUnfold.UseVisualStyleBackColor = true;
-            this.btnUnfold.Click += new System.EventHandler(this.BtnUnfold_Click);
+            this.btnLast.Location = new System.Drawing.Point(3, 277);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(75, 23);
+            this.btnLast.TabIndex = 15;
+            this.btnLast.Text = "<";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.BtnLast_Click);
             // 
             // TestForm
             // 
@@ -595,5 +619,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnUnfold;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnLast;
     }
 }

@@ -36,6 +36,17 @@ namespace AnyCAD.Basic
         public double Angle;
         public double Radius;
         public double Length;
+
+        public Bending() { }
+        public Bending(Bending previousB)
+        {
+            Orientation = previousB.Orientation;
+            Index = previousB.Index;
+            Direction = previousB.Direction;
+            Angle = previousB.Angle;
+            Radius = previousB.Radius;
+            Length = previousB.Length;
+        }
     }
 
     [XmlRoot("BendingGroup", IsNullable = false)]
@@ -49,6 +60,17 @@ namespace AnyCAD.Basic
         [XmlArray("Bendings")]
         public List<Bending> Bendings = new List<Bending>();
 
+        public BendingGroup() { }
+        public BendingGroup(BendingGroup previousBG)
+        {
+            Vertexes = new List<Vector3>(previousBG.Vertexes);
+            var temp = new List<Bending>();
+            foreach(var m in previousBG.Bendings)
+            {
+                temp.Add(new Bending(m));
+            }
+            Bendings = temp;
+        }
         public void Add (Bending bending)
         {
             #region 总体编号

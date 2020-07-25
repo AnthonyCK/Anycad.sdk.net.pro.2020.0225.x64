@@ -795,7 +795,17 @@ namespace AnyCAD.Basic
         }
         private void BtnUnfold_Click(object sender, EventArgs e)
         {
+            BendingGroup group = new BendingGroup(bendings);
+            stepBendings.Add(bendings);
             DrawUnfoldGroup(bendings);
+            foreach(var item in GetStepShapes(group))
+            {
+                if (stepBendings.Contains(item))
+                {
+                    break;
+                }
+                stepBendings.Add(new BendingGroup(item));
+            }
         }
         private void DrawBendingGroup(BendingGroup bends)
         {
@@ -1025,7 +1035,7 @@ namespace AnyCAD.Basic
                         break;
                     }
                     BendHelper helper = new BendHelper();
-                    var temp = bending;
+                    var temp = new Bending(bending);
                     temp.Angle = 0;
                     helper = BendUp(face, line, temp);
                     ElementId id = new ElementId(bending.Index);
@@ -1042,6 +1052,37 @@ namespace AnyCAD.Basic
             renderViewDraw.FitAll();
             renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
 
+        }
+        private static IEnumerable<BendingGroup> GetStepShapes(BendingGroup bends)
+        {
+            BendingGroup group = new BendingGroup(bends);
+            List<Bending> temp = new List<Bending>(group.Bendings.OrderBy(m => m.Index).ToList());
+            foreach(var item in temp)
+            {
+                item.Angle = 0;
+                group.Bendings = temp;
+                yield return group;
+            }
+        }
+        private int posOfStep = 0;
+        private List<BendingGroup> stepBendings = new List<BendingGroup>();
+        private void BtnNext_Click(object sender, EventArgs e)
+        {
+            if (posOfStep >= stepBendings.Count())
+            {
+                return;
+            }
+            var item = stepBendings.ElementAt(posOfStep++);
+            DrawBendingGroup(item);
+        }
+        private void BtnLast_Click(object sender, EventArgs e)
+        {
+            if (posOfStep <= 0)
+            {
+                return;
+            }
+            var item = stepBendings.ElementAt(--posOfStep);
+            DrawBendingGroup(item);
         }
 
     }
