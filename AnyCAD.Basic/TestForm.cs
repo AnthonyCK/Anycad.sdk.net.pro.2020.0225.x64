@@ -469,8 +469,6 @@ namespace AnyCAD.Basic
         }
         private TopoShape DrawRect(List<Vector3> vertex)
         {
-            //TopoShape rect = GlobalInstance.BrepTools.MakeRectangle(length, width, 0, Coordinate3.UNIT_XYZ);
-            //TopoShape face = GlobalInstance.BrepTools.MakeFace(rect);
             var face = GlobalInstance.BrepTools.FillFace(vertex);
             
             renderViewDraw.ClearScene();
