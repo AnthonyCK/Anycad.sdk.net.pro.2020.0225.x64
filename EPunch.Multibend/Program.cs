@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace EPunch.Multibend
@@ -14,9 +15,14 @@ namespace EPunch.Multibend
         [STAThread]
         static void Main()
         {
+            string email = ConfigurationManager.AppSettings["Email"];
+            string uuid = ConfigurationManager.AppSettings["uuid"];
+            string sn = ConfigurationManager.AppSettings["sn"];
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            AnyCAD.Platform.GlobalInstance.Application.SetLogFileName(new AnyCAD.Platform.Path("anycad.net.sdk.log"));
+            AnyCAD.Platform.GlobalInstance.RegisterSDK(email, uuid, sn);
+            Application.Run(new TestForm());
         }
     }
 }
