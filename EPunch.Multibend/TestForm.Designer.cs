@@ -41,7 +41,6 @@
             this.multiPickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hitTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sectionBtn = new System.Windows.Forms.ToolStripButton();
-            this.transOnMaxBtn = new System.Windows.Forms.ToolStripButton();
             this.transOnSelectBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -106,11 +105,10 @@
             this.moveNodeBtn,
             this.toolStripDropDownButton1,
             this.sectionBtn,
-            this.transOnMaxBtn,
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(526, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(464, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -120,7 +118,7 @@
             this.importBtn.Image = ((System.Drawing.Image)(resources.GetObject("importBtn.Image")));
             this.importBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.importBtn.Name = "importBtn";
-            this.importBtn.Size = new System.Drawing.Size(29, 28);
+            this.importBtn.Size = new System.Drawing.Size(29, 24);
             this.importBtn.Text = "Import";
             this.importBtn.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
             // 
@@ -130,7 +128,7 @@
             this.mouseBtn.Image = ((System.Drawing.Image)(resources.GetObject("mouseBtn.Image")));
             this.mouseBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mouseBtn.Name = "mouseBtn";
-            this.mouseBtn.Size = new System.Drawing.Size(29, 28);
+            this.mouseBtn.Size = new System.Drawing.Size(29, 24);
             this.mouseBtn.Text = "toolStripButton1";
             this.mouseBtn.Click += new System.EventHandler(this.MouseBtn_Click);
             // 
@@ -140,7 +138,7 @@
             this.moveBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveBtn.Image")));
             this.moveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveBtn.Name = "moveBtn";
-            this.moveBtn.Size = new System.Drawing.Size(29, 28);
+            this.moveBtn.Size = new System.Drawing.Size(29, 24);
             this.moveBtn.Text = "Move";
             this.moveBtn.Click += new System.EventHandler(this.PanToolStripMenuItem_Click);
             // 
@@ -150,14 +148,14 @@
             this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
             this.clearBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(29, 28);
+            this.clearBtn.Size = new System.Drawing.Size(29, 24);
             this.clearBtn.Text = "Clear";
             this.clearBtn.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // moveNodeBtn
             // 
@@ -165,7 +163,7 @@
             this.moveNodeBtn.Image = ((System.Drawing.Image)(resources.GetObject("moveNodeBtn.Image")));
             this.moveNodeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.moveNodeBtn.Name = "moveNodeBtn";
-            this.moveNodeBtn.Size = new System.Drawing.Size(55, 28);
+            this.moveNodeBtn.Size = new System.Drawing.Size(55, 24);
             this.moveNodeBtn.Text = "Move";
             this.moveNodeBtn.Click += new System.EventHandler(this.MoveNodeBtn_Click);
             // 
@@ -179,7 +177,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(52, 24);
             this.toolStripDropDownButton1.Text = "Pick";
             // 
             // singlePickToolStripMenuItem
@@ -209,19 +207,9 @@
             this.sectionBtn.Image = ((System.Drawing.Image)(resources.GetObject("sectionBtn.Image")));
             this.sectionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.sectionBtn.Name = "sectionBtn";
-            this.sectionBtn.Size = new System.Drawing.Size(68, 28);
+            this.sectionBtn.Size = new System.Drawing.Size(68, 24);
             this.sectionBtn.Text = "Section";
             this.sectionBtn.Click += new System.EventHandler(this.SectionBtn_Click);
-            // 
-            // transOnMaxBtn
-            // 
-            this.transOnMaxBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.transOnMaxBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnMaxBtn.Image")));
-            this.transOnMaxBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.transOnMaxBtn.Name = "transOnMaxBtn";
-            this.transOnMaxBtn.Size = new System.Drawing.Size(101, 28);
-            this.transOnMaxBtn.Text = "transOnMax";
-            this.transOnMaxBtn.Click += new System.EventHandler(this.TransOnMaxBtn_Click);
             // 
             // transOnSelectBtn
             // 
@@ -229,7 +217,7 @@
             this.transOnSelectBtn.Image = ((System.Drawing.Image)(resources.GetObject("transOnSelectBtn.Image")));
             this.transOnSelectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.transOnSelectBtn.Name = "transOnSelectBtn";
-            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 28);
+            this.transOnSelectBtn.Size = new System.Drawing.Size(115, 24);
             this.transOnSelectBtn.Text = "transOnSelect";
             this.transOnSelectBtn.Click += new System.EventHandler(this.TransOnSelectBtn_Click);
             // 
@@ -239,7 +227,7 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 419);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
@@ -265,7 +253,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 419);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 423);
             this.splitContainer1.SplitterDistance = 431;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -277,7 +265,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(429, 417);
+            this.tabControl1.Size = new System.Drawing.Size(429, 421);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -286,7 +274,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(421, 388);
+            this.tabPage1.Size = new System.Drawing.Size(421, 392);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "3D";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -297,7 +285,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 382);
+            this.panel1.Size = new System.Drawing.Size(415, 386);
             this.panel1.TabIndex = 0;
             this.panel1.SizeChanged += new System.EventHandler(this.Panel1_SizeChanged);
             // 
@@ -509,8 +497,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel3);
-            this.splitContainer2.Size = new System.Drawing.Size(363, 417);
-            this.splitContainer2.SplitterDistance = 168;
+            this.splitContainer2.Size = new System.Drawing.Size(363, 421);
+            this.splitContainer2.SplitterDistance = 169;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel2
@@ -519,7 +507,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(363, 168);
+            this.panel2.Size = new System.Drawing.Size(363, 169);
             this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.Panel2_SizeChanged);
             // 
@@ -529,7 +517,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(363, 245);
+            this.panel3.Size = new System.Drawing.Size(363, 248);
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.Panel3_SizeChanged);
             // 
@@ -591,7 +579,6 @@
         private System.Windows.Forms.ToolStripMenuItem hitTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton mouseBtn;
         private System.Windows.Forms.ToolStripButton sectionBtn;
-        private System.Windows.Forms.ToolStripButton transOnMaxBtn;
         private System.Windows.Forms.ToolStripButton transOnSelectBtn;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabControl tabControl1;

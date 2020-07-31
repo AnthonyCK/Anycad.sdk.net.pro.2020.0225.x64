@@ -20,7 +20,7 @@ namespace EPunch.Multibend
         private AnyCAD.Presentation.RenderWindow3d renderViewXZ;
         private AnyCAD.Presentation.RenderWindow3d renderViewYZ;
         private AnyCAD.Presentation.RenderWindow3d renderViewDraw;
-        private int shapeId = 1000;
+        private readonly int shapeId = 1000;
         private TopoShape topoShape = new TopoShape();
         public TestForm()
         {
@@ -183,8 +183,10 @@ namespace EPunch.Multibend
         private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "STEP (*.stp;*.step)|*.stp;*.step|STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|BREP (*.brep)|*.brep|All Files(*.*)|*.*";
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Filter = "STEP (*.stp;*.step)|*.stp;*.step|STL (*.stl)|*.stl|IGES (*.igs;*.iges)|*.igs;*.iges|BREP (*.brep)|*.brep|All Files(*.*)|*.*"
+            };
 
             if (DialogResult.OK != dlg.ShowDialog())
                 return;
@@ -222,14 +224,6 @@ namespace EPunch.Multibend
             if (!m_PickPoint)
                 return;
 
-            //PickHelper pickHelper = renderViewDraw.PickShape(e.X, e.Y);
-            //if (pickHelper != null)
-            //{
-            //    // add a ball
-            //    Platform.TopoShape shape = GlobalInstance.BrepTools.MakeSphere(pickHelper.GetPointOnShape(), 2);
-            //    renderView.ShowGeometry(shape, 100);
-            //}
-            //// Try the grid
             Vector3 pt = renderViewDraw.HitPointOnGrid(e.X, e.Y);
             if (pt != null)
             {
@@ -270,9 +264,6 @@ namespace EPunch.Multibend
 
         private void SectionBtn_Click(object sender, EventArgs e)
         {
-            //SelectedShapeQuery context = new SelectedShapeQuery();
-            //renderView.QuerySelection(context);
-            //var shape = context.GetGeometry();
             TopoShape shapeXZ = new TopoShape();
             TopoShape shapeYZ = new TopoShape();
             if (topoShape != null)
@@ -452,26 +443,31 @@ namespace EPunch.Multibend
         private BendingGroup bendings = new BendingGroup();
         private void BtnDraw_Click(object sender, EventArgs e)
         {
-            //var w = GlobalInstance.BrepTools.MakeWire(EdgeG);
-            //var t = GlobalInstance.BrepTools.MakeFace(w);
-            //t = GlobalInstance.BrepTools.FillFace(Vecs);
-            //renderViewDraw.ShowGeometry(t, 100);
+            renderViewDraw.ClearScene();
             Vecs.Clear();
+            double len, wid;
+            if(Convert.ToDouble(txtL.Text)>= Convert.ToDouble(txtW.Text))
+            {
+                len = Convert.ToDouble(txtL.Text);
+                wid = Convert.ToDouble(txtW.Text);
+            }
+            else
+            {
+                len = Convert.ToDouble(txtW.Text);
+                wid = Convert.ToDouble(txtL.Text);
+            }
+
             Vecs.Add(new Vector3(0, 0, 0));
-            Vecs.Add(new Vector3(Convert.ToDouble(txtL.Text), 0, 0));
-            Vecs.Add(new Vector3(Convert.ToDouble(txtL.Text), Convert.ToDouble(txtW.Text), 0));
-            Vecs.Add(new Vector3(0, Convert.ToDouble(txtW.Text), 0));
+            Vecs.Add(new Vector3(len, 0, 0));
+            Vecs.Add(new Vector3(len, wid, 0));
+            Vecs.Add(new Vector3(0, wid, 0));
             bendings = new BendingGroup
             {
                 Vertexes = Vecs,
             };
-            var face = DrawRect(Vecs);
-        }
-        private TopoShape DrawRect(List<Vector3> vertex)
-        {
-            var face = GlobalInstance.BrepTools.FillFace(vertex);
-            
-            renderViewDraw.ClearScene();
+            var face = GlobalInstance.BrepTools.FillFace(Vecs);
+
+            #region Render
             SceneManager sceneMgr = renderViewDraw.SceneManager;
             SceneNode rootNode = GlobalInstance.TopoShapeConvert.ToSceneNode(face, 0.1f);
             if (rootNode != null)
@@ -479,8 +475,8 @@ namespace EPunch.Multibend
                 sceneMgr.AddNode(rootNode);
             }
             renderViewDraw.FitAll();
-            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene);
-            return face;
+            renderViewDraw.RequestDraw(EnumRenderHint.RH_LoadScene); 
+            #endregion
         }
         private void BtnUp_Click(object sender, EventArgs e)
         {
@@ -518,22 +514,6 @@ namespace EPunch.Multibend
                 bending.Orientation = Math.Round(360 - dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
             
-            //if (dirL.X == 1)
-            //{
-            //    bending.Orientation = 0;
-            //}
-            //else if (dirL.Y == 1)
-            //{
-            //    bending.Orientation = EnumEdge.Edge_2;
-            //}
-            //else if (dirL.X == -1)
-            //{
-            //    bending.Orientation = EnumEdge.Edge_3;
-            //}
-            //else
-            //{
-            //    bending.Orientation = EnumEdge.Edge_4;
-            //}
 
             TopoShape sweep = BendUp(face, line, bending).Sweep;
 
@@ -597,22 +577,6 @@ namespace EPunch.Multibend
             {
                 bending.Orientation = Math.Round(360 - dirL.AngleBetween(Vector3.UNIT_X), 3);
             }
-            //if (dirL.X == 1)
-            //{
-            //    bending.Orientation = EnumEdge.Edge_1;
-            //}
-            //else if (dirL.Y == 1)
-            //{
-            //    bending.Orientation = EnumEdge.Edge_2;
-            //}
-            //else if (dirL.X == -1)
-            //{
-            //    bending.Orientation = EnumEdge.Edge_3;
-            //}
-            //else
-            //{
-            //    bending.Orientation = EnumEdge.Edge_4;
-            //}
 
             TopoShape sweep = BendDown(face, line, bending).Sweep;
 
