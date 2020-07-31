@@ -108,7 +108,7 @@
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(464, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(425, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -343,7 +343,7 @@
             // 
             // btnLast
             // 
-            this.btnLast.Location = new System.Drawing.Point(3, 277);
+            this.btnLast.Location = new System.Drawing.Point(3, 337);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(75, 23);
             this.btnLast.TabIndex = 15;
@@ -353,7 +353,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(195, 277);
+            this.btnNext.Location = new System.Drawing.Point(195, 337);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 14;

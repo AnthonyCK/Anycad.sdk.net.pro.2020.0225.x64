@@ -166,7 +166,6 @@ namespace EPunch.Multibend
             var path = new System.IO.StreamReader(file);
             BendingGroup bendings = reader.Deserialize(path) as BendingGroup;
             path.Close();
-            //MessageBox.Show("Last id: " + bendings.Bendings.Last().Index.ToString(), "输入提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return bendings;
         }
     }
