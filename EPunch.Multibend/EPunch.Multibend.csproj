@@ -51,6 +51,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AnyCAD.Exchange.Net, Version=20.0.7460.24380, Culture=neutral, PublicKeyToken=adad17ef48f32d48, processorArchitecture=AMD64">
       <HintPath>..\packages\AnyCAD.Net.Pro.2020.6.4\lib\x64\AnyCAD.Exchange.Net.dll</HintPath>

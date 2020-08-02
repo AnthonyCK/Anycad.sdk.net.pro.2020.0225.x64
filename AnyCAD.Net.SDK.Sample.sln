@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyCAD.Basic", "AnyCAD.Basi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPunch.Multibend", "EPunch.Multibend\EPunch.Multibend.csproj", "{40A0BD75-B87B-42D8-9C47-BE4038D35392}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{76377754-A4A4-4955-85E3-C759ACC92E17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,13 @@ Global
 		{40A0BD75-B87B-42D8-9C47-BE4038D35392}.Release|Win32.Build.0 = Release|Any CPU
 		{40A0BD75-B87B-42D8-9C47-BE4038D35392}.Release|x64.ActiveCfg = Release|Any CPU
 		{40A0BD75-B87B-42D8-9C47-BE4038D35392}.Release|x64.Build.0 = Release|Any CPU
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Debug|Any CPU.ActiveCfg = Debug
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Debug|Win32.ActiveCfg = Debug
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Debug|x64.ActiveCfg = Debug
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Debug|x64.Build.0 = Debug
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Release|Any CPU.ActiveCfg = Release
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Release|Win32.ActiveCfg = Release
+		{76377754-A4A4-4955-85E3-C759ACC92E17}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
