@@ -1,6 +1,7 @@
 ﻿using AnyCAD.Platform;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -71,7 +72,11 @@ namespace EPunch.Multibend
             }
             Bendings = temp;
         }
-        public void Add (Bending bending)
+        public void AddVertex(Vector3 vector)
+        {
+            Vertexes.Add(vector);
+        }
+        public void AddBending (Bending bending)
         {
             #region 总体编号
             if (Bendings.Count() == 0)
@@ -148,6 +153,40 @@ namespace EPunch.Multibend
             //}
 
             #endregion
+        }
+        public void SetBendingGroup(BendingGroup bendingGroup)
+        {
+            Vertexes = new List<Vector3>(bendingGroup.Vertexes);
+            var temp = new List<Bending>();
+            foreach (var m in bendingGroup.Bendings)
+            {
+                temp.Add(new Bending(m));
+            }
+            Bendings = temp;
+        }
+        public void SetBendingGroup(DataManage dataSet)
+        {
+            var ver = new List<Vector3>();
+            var ben = new List<Bending>();
+            foreach(DataRow item in dataSet.BendingSet.Tables["Vertexes"].Rows)
+            {
+                ver.Add(item.Field<Vector3>("Vertex"));
+            }
+            foreach(DataRow item in dataSet.BendingSet.Tables["Bendings"].Rows)
+            {
+                Bending temp = new Bending
+                {
+                    Angle = item.Field<double>("Angle"),
+                    Direction = item.Field<EnumDir>("Direction"),
+                    Index = item.Field<int>("BendingID"),
+                    Length = item.Field<double>("Length"),
+                    Orientation = item.Field<double>("Orientation"),
+                    Radius = item.Field<double>("Radius")
+                };
+                ben.Add(temp);
+            }
+            Vertexes = ver;
+            Bendings = ben;
         }
     }
     class ExportXml

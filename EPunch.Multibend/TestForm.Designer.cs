@@ -43,53 +43,66 @@
             this.sectionBtn = new System.Windows.Forms.ToolStripButton();
             this.transOnSelectBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.dgvBending = new System.Windows.Forms.DataGridView();
+            this.gbxBending = new System.Windows.Forms.GroupBox();
+            this.txtAngle = new System.Windows.Forms.TextBox();
+            this.txtRadius = new System.Windows.Forms.TextBox();
+            this.txtLength = new System.Windows.Forms.TextBox();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.gbxVertex = new System.Windows.Forms.GroupBox();
+            this.txtL = new System.Windows.Forms.TextBox();
+            this.txtW = new System.Windows.Forms.TextBox();
+            this.btnDraw = new System.Windows.Forms.Button();
+            this.dgvVertex = new System.Windows.Forms.DataGridView();
             this.btnLast = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnUnfold = new System.Windows.Forms.Button();
             this.btnReadXml2 = new System.Windows.Forms.Button();
             this.btnExportXml = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnDown = new System.Windows.Forms.Button();
-            this.btnUp = new System.Windows.Forms.Button();
-            this.txtLength = new System.Windows.Forms.TextBox();
-            this.txtRadius = new System.Windows.Forms.TextBox();
-            this.txtAngle = new System.Windows.Forms.TextBox();
-            this.btnDraw = new System.Windows.Forms.Button();
-            this.txtW = new System.Windows.Forms.TextBox();
-            this.txtL = new System.Windows.Forms.TextBox();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBending)).BeginInit();
+            this.gbxBending.SuspendLayout();
+            this.gbxVertex.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVertex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -108,7 +121,7 @@
             this.transOnSelectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(425, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(425, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -118,7 +131,7 @@
             this.importBtn.Image = ((System.Drawing.Image)(resources.GetObject("importBtn.Image")));
             this.importBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.importBtn.Name = "importBtn";
-            this.importBtn.Size = new System.Drawing.Size(29, 24);
+            this.importBtn.Size = new System.Drawing.Size(29, 28);
             this.importBtn.Text = "Import";
             this.importBtn.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
             // 
@@ -226,36 +239,18 @@
             // 
             // toolStripContainer1.ContentPanel
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(800, 423);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.tabControl1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(957, 612);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(800, 450);
+            this.toolStripContainer1.Size = new System.Drawing.Size(957, 643);
             this.toolStripContainer1.TabIndex = 3;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 423);
-            this.splitContainer1.SplitterDistance = 431;
-            this.splitContainer1.TabIndex = 1;
             // 
             // tabControl1
             // 
@@ -265,226 +260,52 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(429, 421);
+            this.tabControl1.Size = new System.Drawing.Size(957, 612);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Controls.Add(this.splitContainer1);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(421, 392);
+            this.tabPage1.Size = new System.Drawing.Size(949, 587);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "3D";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(943, 581);
+            this.splitContainer1.SplitterDistance = 599;
+            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 386);
+            this.panel1.Size = new System.Drawing.Size(595, 577);
             this.panel1.TabIndex = 0;
             this.panel1.SizeChanged += new System.EventHandler(this.Panel1_SizeChanged);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.splitContainer3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(421, 392);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Unfold";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.panel4);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.btnLast);
-            this.splitContainer3.Panel2.Controls.Add(this.btnNext);
-            this.splitContainer3.Panel2.Controls.Add(this.btnUnfold);
-            this.splitContainer3.Panel2.Controls.Add(this.btnReadXml2);
-            this.splitContainer3.Panel2.Controls.Add(this.btnExportXml);
-            this.splitContainer3.Panel2.Controls.Add(this.label3);
-            this.splitContainer3.Panel2.Controls.Add(this.label2);
-            this.splitContainer3.Panel2.Controls.Add(this.label1);
-            this.splitContainer3.Panel2.Controls.Add(this.btnDown);
-            this.splitContainer3.Panel2.Controls.Add(this.btnUp);
-            this.splitContainer3.Panel2.Controls.Add(this.txtLength);
-            this.splitContainer3.Panel2.Controls.Add(this.txtRadius);
-            this.splitContainer3.Panel2.Controls.Add(this.txtAngle);
-            this.splitContainer3.Panel2.Controls.Add(this.btnDraw);
-            this.splitContainer3.Panel2.Controls.Add(this.txtW);
-            this.splitContainer3.Panel2.Controls.Add(this.txtL);
-            this.splitContainer3.Size = new System.Drawing.Size(415, 386);
-            this.splitContainer3.SplitterDistance = 137;
-            this.splitContainer3.TabIndex = 0;
-            // 
-            // panel4
-            // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(137, 386);
-            this.panel4.TabIndex = 0;
-            this.panel4.SizeChanged += new System.EventHandler(this.Panel4_SizeChanged);
-            // 
-            // btnLast
-            // 
-            this.btnLast.Location = new System.Drawing.Point(3, 337);
-            this.btnLast.Name = "btnLast";
-            this.btnLast.Size = new System.Drawing.Size(75, 23);
-            this.btnLast.TabIndex = 15;
-            this.btnLast.Text = "<";
-            this.btnLast.UseVisualStyleBackColor = true;
-            this.btnLast.Click += new System.EventHandler(this.BtnLast_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.Location = new System.Drawing.Point(195, 337);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(75, 23);
-            this.btnNext.TabIndex = 14;
-            this.btnNext.Text = ">";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
-            // 
-            // btnUnfold
-            // 
-            this.btnUnfold.Location = new System.Drawing.Point(98, 337);
-            this.btnUnfold.Name = "btnUnfold";
-            this.btnUnfold.Size = new System.Drawing.Size(75, 23);
-            this.btnUnfold.TabIndex = 13;
-            this.btnUnfold.Text = "Unfold";
-            this.btnUnfold.UseVisualStyleBackColor = true;
-            this.btnUnfold.Click += new System.EventHandler(this.BtnUnfold_Click);
-            // 
-            // btnReadXml2
-            // 
-            this.btnReadXml2.Location = new System.Drawing.Point(98, 307);
-            this.btnReadXml2.Name = "btnReadXml2";
-            this.btnReadXml2.Size = new System.Drawing.Size(75, 23);
-            this.btnReadXml2.TabIndex = 12;
-            this.btnReadXml2.Text = "Import";
-            this.btnReadXml2.UseVisualStyleBackColor = true;
-            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml_Click);
-            // 
-            // btnExportXml
-            // 
-            this.btnExportXml.Location = new System.Drawing.Point(98, 278);
-            this.btnExportXml.Name = "btnExportXml";
-            this.btnExportXml.Size = new System.Drawing.Size(75, 23);
-            this.btnExportXml.TabIndex = 11;
-            this.btnExportXml.Text = "Export";
-            this.btnExportXml.UseVisualStyleBackColor = true;
-            this.btnExportXml.Click += new System.EventHandler(this.BtnExportXml_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 214);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(15, 15);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "L";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 183);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(15, 15);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "R";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 152);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 15);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Angle";
-            // 
-            // btnDown
-            // 
-            this.btnDown.Location = new System.Drawing.Point(195, 191);
-            this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(75, 23);
-            this.btnDown.TabIndex = 7;
-            this.btnDown.Text = "-";
-            this.btnDown.UseVisualStyleBackColor = true;
-            this.btnDown.Click += new System.EventHandler(this.BtnDown_Click);
-            // 
-            // btnUp
-            // 
-            this.btnUp.Location = new System.Drawing.Point(195, 162);
-            this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(75, 23);
-            this.btnUp.TabIndex = 6;
-            this.btnUp.Text = "+";
-            this.btnUp.UseVisualStyleBackColor = true;
-            this.btnUp.Click += new System.EventHandler(this.BtnUp_Click);
-            // 
-            // txtLength
-            // 
-            this.txtLength.Location = new System.Drawing.Point(61, 211);
-            this.txtLength.Name = "txtLength";
-            this.txtLength.Size = new System.Drawing.Size(100, 25);
-            this.txtLength.TabIndex = 5;
-            // 
-            // txtRadius
-            // 
-            this.txtRadius.Location = new System.Drawing.Point(61, 180);
-            this.txtRadius.Name = "txtRadius";
-            this.txtRadius.Size = new System.Drawing.Size(100, 25);
-            this.txtRadius.TabIndex = 4;
-            // 
-            // txtAngle
-            // 
-            this.txtAngle.Location = new System.Drawing.Point(61, 149);
-            this.txtAngle.Name = "txtAngle";
-            this.txtAngle.Size = new System.Drawing.Size(100, 25);
-            this.txtAngle.TabIndex = 3;
-            // 
-            // btnDraw
-            // 
-            this.btnDraw.Location = new System.Drawing.Point(195, 35);
-            this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(75, 23);
-            this.btnDraw.TabIndex = 2;
-            this.btnDraw.Text = "Draw";
-            this.btnDraw.UseVisualStyleBackColor = true;
-            this.btnDraw.Click += new System.EventHandler(this.BtnDraw_Click);
-            // 
-            // txtW
-            // 
-            this.txtW.Location = new System.Drawing.Point(61, 49);
-            this.txtW.Name = "txtW";
-            this.txtW.Size = new System.Drawing.Size(100, 25);
-            this.txtW.TabIndex = 1;
-            // 
-            // txtL
-            // 
-            this.txtL.Location = new System.Drawing.Point(61, 18);
-            this.txtL.Name = "txtL";
-            this.txtL.Size = new System.Drawing.Size(100, 25);
-            this.txtL.TabIndex = 0;
-            // 
             // splitContainer2
             // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
@@ -497,8 +318,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel3);
-            this.splitContainer2.Size = new System.Drawing.Size(363, 421);
-            this.splitContainer2.SplitterDistance = 169;
+            this.splitContainer2.Size = new System.Drawing.Size(343, 581);
+            this.splitContainer2.SplitterDistance = 290;
+            this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel2
@@ -507,7 +329,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(363, 169);
+            this.panel2.Size = new System.Drawing.Size(339, 286);
             this.panel2.TabIndex = 0;
             this.panel2.SizeChanged += new System.EventHandler(this.Panel2_SizeChanged);
             // 
@@ -517,9 +339,245 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(363, 248);
+            this.panel3.Size = new System.Drawing.Size(339, 286);
             this.panel3.TabIndex = 0;
             this.panel3.SizeChanged += new System.EventHandler(this.Panel3_SizeChanged);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.splitContainer3);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(949, 583);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Unfold";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.panel4);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.AutoScroll = true;
+            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
+            this.splitContainer3.Size = new System.Drawing.Size(943, 577);
+            this.splitContainer3.SplitterDistance = 343;
+            this.splitContainer3.SplitterWidth = 1;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(339, 573);
+            this.panel4.TabIndex = 0;
+            this.panel4.SizeChanged += new System.EventHandler(this.Panel4_SizeChanged);
+            // 
+            // dgvBending
+            // 
+            this.dgvBending.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvBending.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBending.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvBending.Location = new System.Drawing.Point(0, 0);
+            this.dgvBending.Name = "dgvBending";
+            this.dgvBending.RowHeadersWidth = 51;
+            this.dgvBending.RowTemplate.Height = 27;
+            this.dgvBending.Size = new System.Drawing.Size(595, 283);
+            this.dgvBending.TabIndex = 19;
+            // 
+            // gbxBending
+            // 
+            this.gbxBending.AutoSize = true;
+            this.gbxBending.Controls.Add(this.txtAngle);
+            this.gbxBending.Controls.Add(this.txtRadius);
+            this.gbxBending.Controls.Add(this.txtLength);
+            this.gbxBending.Controls.Add(this.btnUp);
+            this.gbxBending.Controls.Add(this.btnDown);
+            this.gbxBending.Controls.Add(this.label1);
+            this.gbxBending.Controls.Add(this.label2);
+            this.gbxBending.Controls.Add(this.label3);
+            this.gbxBending.Location = new System.Drawing.Point(16, 172);
+            this.gbxBending.Name = "gbxBending";
+            this.gbxBending.Size = new System.Drawing.Size(289, 135);
+            this.gbxBending.TabIndex = 18;
+            this.gbxBending.TabStop = false;
+            this.gbxBending.Text = "Bending";
+            // 
+            // txtAngle
+            // 
+            this.txtAngle.Location = new System.Drawing.Point(67, 24);
+            this.txtAngle.Name = "txtAngle";
+            this.txtAngle.Size = new System.Drawing.Size(100, 25);
+            this.txtAngle.TabIndex = 3;
+            // 
+            // txtRadius
+            // 
+            this.txtRadius.Location = new System.Drawing.Point(67, 55);
+            this.txtRadius.Name = "txtRadius";
+            this.txtRadius.Size = new System.Drawing.Size(100, 25);
+            this.txtRadius.TabIndex = 4;
+            // 
+            // txtLength
+            // 
+            this.txtLength.Location = new System.Drawing.Point(67, 86);
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(100, 25);
+            this.txtLength.TabIndex = 5;
+            // 
+            // btnUp
+            // 
+            this.btnUp.Location = new System.Drawing.Point(201, 37);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(75, 23);
+            this.btnUp.TabIndex = 6;
+            this.btnUp.Text = "+";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.BtnUp_Click);
+            // 
+            // btnDown
+            // 
+            this.btnDown.Location = new System.Drawing.Point(201, 66);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(75, 23);
+            this.btnDown.TabIndex = 7;
+            this.btnDown.Text = "-";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.BtnDown_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Angle";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 58);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 15);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "R";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 89);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 15);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "L";
+            // 
+            // gbxVertex
+            // 
+            this.gbxVertex.AutoSize = true;
+            this.gbxVertex.Controls.Add(this.txtL);
+            this.gbxVertex.Controls.Add(this.txtW);
+            this.gbxVertex.Controls.Add(this.btnDraw);
+            this.gbxVertex.Location = new System.Drawing.Point(16, 3);
+            this.gbxVertex.Name = "gbxVertex";
+            this.gbxVertex.Size = new System.Drawing.Size(289, 134);
+            this.gbxVertex.TabIndex = 17;
+            this.gbxVertex.TabStop = false;
+            this.gbxVertex.Text = "Vertex";
+            // 
+            // txtL
+            // 
+            this.txtL.Location = new System.Drawing.Point(19, 38);
+            this.txtL.Name = "txtL";
+            this.txtL.Size = new System.Drawing.Size(100, 25);
+            this.txtL.TabIndex = 0;
+            // 
+            // txtW
+            // 
+            this.txtW.Location = new System.Drawing.Point(19, 69);
+            this.txtW.Name = "txtW";
+            this.txtW.Size = new System.Drawing.Size(100, 25);
+            this.txtW.TabIndex = 1;
+            // 
+            // btnDraw
+            // 
+            this.btnDraw.Location = new System.Drawing.Point(151, 56);
+            this.btnDraw.Name = "btnDraw";
+            this.btnDraw.Size = new System.Drawing.Size(75, 23);
+            this.btnDraw.TabIndex = 2;
+            this.btnDraw.Text = "Draw";
+            this.btnDraw.UseVisualStyleBackColor = true;
+            this.btnDraw.Click += new System.EventHandler(this.BtnDraw_Click);
+            // 
+            // dgvVertex
+            // 
+            this.dgvVertex.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvVertex.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVertex.Location = new System.Drawing.Point(311, 3);
+            this.dgvVertex.Name = "dgvVertex";
+            this.dgvVertex.RowHeadersWidth = 51;
+            this.dgvVertex.RowTemplate.Height = 27;
+            this.dgvVertex.Size = new System.Drawing.Size(260, 333);
+            this.dgvVertex.TabIndex = 16;
+            // 
+            // btnLast
+            // 
+            this.btnLast.Location = new System.Drawing.Point(45, 313);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(75, 23);
+            this.btnLast.TabIndex = 15;
+            this.btnLast.Text = "<";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.BtnLast_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(207, 313);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 14;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            // 
+            // btnUnfold
+            // 
+            this.btnUnfold.Location = new System.Drawing.Point(126, 313);
+            this.btnUnfold.Name = "btnUnfold";
+            this.btnUnfold.Size = new System.Drawing.Size(75, 23);
+            this.btnUnfold.TabIndex = 13;
+            this.btnUnfold.Text = "Unfold";
+            this.btnUnfold.UseVisualStyleBackColor = true;
+            this.btnUnfold.Click += new System.EventHandler(this.BtnUnfold_Click);
+            // 
+            // btnReadXml2
+            // 
+            this.btnReadXml2.Location = new System.Drawing.Point(167, 143);
+            this.btnReadXml2.Name = "btnReadXml2";
+            this.btnReadXml2.Size = new System.Drawing.Size(75, 23);
+            this.btnReadXml2.TabIndex = 12;
+            this.btnReadXml2.Text = "Import";
+            this.btnReadXml2.UseVisualStyleBackColor = true;
+            this.btnReadXml2.Click += new System.EventHandler(this.BtnReadXml_Click);
+            // 
+            // btnExportXml
+            // 
+            this.btnExportXml.Location = new System.Drawing.Point(60, 143);
+            this.btnExportXml.Name = "btnExportXml";
+            this.btnExportXml.Size = new System.Drawing.Size(75, 23);
+            this.btnExportXml.TabIndex = 11;
+            this.btnExportXml.Text = "Export";
+            this.btnExportXml.UseVisualStyleBackColor = true;
+            this.btnExportXml.Click += new System.EventHandler(this.BtnExportXml_Click);
             // 
             // saveFileDialog1
             // 
@@ -530,11 +588,37 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.AutoScroll = true;
+            this.splitContainer4.Panel1.Controls.Add(this.gbxVertex);
+            this.splitContainer4.Panel1.Controls.Add(this.btnExportXml);
+            this.splitContainer4.Panel1.Controls.Add(this.gbxBending);
+            this.splitContainer4.Panel1.Controls.Add(this.btnReadXml2);
+            this.splitContainer4.Panel1.Controls.Add(this.btnUnfold);
+            this.splitContainer4.Panel1.Controls.Add(this.dgvVertex);
+            this.splitContainer4.Panel1.Controls.Add(this.btnNext);
+            this.splitContainer4.Panel1.Controls.Add(this.btnLast);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.dgvBending);
+            this.splitContainer4.Size = new System.Drawing.Size(595, 573);
+            this.splitContainer4.SplitterDistance = 286;
+            this.splitContainer4.TabIndex = 20;
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(957, 643);
             this.Controls.Add(this.toolStripContainer1);
             this.Name = "TestForm";
             this.Text = "TestForm";
@@ -545,22 +629,32 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            this.splitContainer3.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBending)).EndInit();
+            this.gbxBending.ResumeLayout(false);
+            this.gbxBending.PerformLayout();
+            this.gbxVertex.ResumeLayout(false);
+            this.gbxVertex.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVertex)).EndInit();
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel1.PerformLayout();
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -580,7 +674,6 @@
         private System.Windows.Forms.ToolStripButton mouseBtn;
         private System.Windows.Forms.ToolStripButton sectionBtn;
         private System.Windows.Forms.ToolStripButton transOnSelectBtn;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -608,5 +701,11 @@
         private System.Windows.Forms.Button btnUnfold;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnLast;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridView dgvVertex;
+        private System.Windows.Forms.GroupBox gbxBending;
+        private System.Windows.Forms.GroupBox gbxVertex;
+        private System.Windows.Forms.DataGridView dgvBending;
+        private System.Windows.Forms.SplitContainer splitContainer4;
     }
 }

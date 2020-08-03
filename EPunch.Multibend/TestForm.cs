@@ -15,6 +15,7 @@ namespace EPunch.Multibend
 {
     public partial class TestForm : Form
     {
+
         // Render Control
         private AnyCAD.Presentation.RenderWindow3d renderView;
         private AnyCAD.Presentation.RenderWindow3d renderViewXZ;
@@ -22,8 +23,9 @@ namespace EPunch.Multibend
         private AnyCAD.Presentation.RenderWindow3d renderViewDraw;
         private readonly int shapeId = 1000;
         private TopoShape topoShape = new TopoShape();
+        private DataManage dataManage = new DataManage();
         public TestForm()
-        {
+        {            
             InitializeComponent();
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
             this.renderViewXZ = new AnyCAD.Presentation.RenderWindow3d();
@@ -47,11 +49,21 @@ namespace EPunch.Multibend
             panel3.Controls.Add(renderViewYZ);
             panel4.Controls.Add(renderViewDraw);
 
+            dgvBending.DataSource = dataManage.BendingSet.Tables[0];
+            dgvVertex.DataSource = dataManage.BendingSet.Tables[1];
+
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
             renderViewDraw.MouseClick += new MouseEventHandler(OnRenderWindow_MouseClick);
 
             GlobalInstance.EventListener.OnChangeCursorEvent += OnChangeCursor;
             GlobalInstance.EventListener.OnSelectElementEvent += OnSelectElement;
+
+            dataManage.DataChange += new DataManage.DataChangeHandler(DataManage_DataChange);
+        }
+
+        private void DataManage_DataChange()
+        {
+            bendings.SetBendingGroup(dataManage);
         }
 
         private void OnSelectElement(SelectionChangeArgs args)
@@ -119,9 +131,17 @@ namespace EPunch.Multibend
             if (renderViewXZ != null)
             {
                 renderViewXZ.Size = panel2.ClientSize;
-                renderViewXZ.Renderer.SetStandardView(EnumStandardView.SV_Back);
-                renderViewXZ.ExecuteCommand("Pan");
-                renderViewXZ.RequestDraw();
+                //try
+                //{
+                //    renderViewXZ.Renderer.SetStandardView(EnumStandardView.SV_Back);
+                //    renderViewXZ.ExecuteCommand("Pan");
+                //    renderViewXZ.RequestDraw();
+
+                //}
+                //catch (Exception)
+                //{
+                //    throw;
+                //}
             }
         }
         private void Panel3_SizeChanged(object sender, EventArgs e)
@@ -129,9 +149,16 @@ namespace EPunch.Multibend
             if (renderViewYZ != null)
             {
                 renderViewYZ.Size = panel3.ClientSize;
-                renderViewYZ.Renderer.SetStandardView(EnumStandardView.SV_Right);
-                renderViewYZ.ExecuteCommand("Pan");
-                renderViewYZ.RequestDraw();
+                //try
+                //{
+                //    renderViewYZ.Renderer.SetStandardView(EnumStandardView.SV_Right);
+                //    renderViewYZ.ExecuteCommand("Pan");
+                //    renderViewYZ.RequestDraw();
+                //}
+                //catch (Exception)
+                //{
+                //    throw;
+                //}
             }
         }
         private void Panel4_SizeChanged(object sender, EventArgs e)
@@ -271,6 +298,12 @@ namespace EPunch.Multibend
                 shapeXZ = Section(topoShape, new Vector3(0, 1, 0));
                 shapeYZ = Section(topoShape, new Vector3(1, 0, 0));
             }
+
+            renderViewXZ.Renderer.SetStandardView(EnumStandardView.SV_Back);
+            renderViewXZ.ExecuteCommand("Pan");
+            renderViewYZ.Renderer.SetStandardView(EnumStandardView.SV_Right);
+            renderViewYZ.ExecuteCommand("Pan");
+
             #region Render
             if (topoShape != null)
             {
@@ -461,10 +494,12 @@ namespace EPunch.Multibend
             Vecs.Add(new Vector3(len, 0, 0));
             Vecs.Add(new Vector3(len, wid, 0));
             Vecs.Add(new Vector3(0, wid, 0));
-            bendings = new BendingGroup
+            foreach(var item in Vecs)
             {
-                Vertexes = Vecs,
-            };
+                dataManage.AddVertex(item);
+                //bendings.AddVertex(item);
+            }
+            dataManage.AcceptChanges();
             var face = GlobalInstance.BrepTools.FillFace(Vecs);
 
             #region Render
@@ -517,7 +552,9 @@ namespace EPunch.Multibend
 
             TopoShape sweep = BendUp(face, line, bending).Sweep;
 
-            bendings.Add(bending);
+            dataManage.AddBending(bending);
+            dataManage.AcceptChanges();
+            //bendings.AddBending(bending);
 
             #region 渲染
             ElementId faceId = new ElementId(bending.Index + shapeId);
@@ -580,7 +617,9 @@ namespace EPunch.Multibend
 
             TopoShape sweep = BendDown(face, line, bending).Sweep;
 
-            bendings.Add(bending);
+            dataManage.AddBending(bending);
+            dataManage.AcceptChanges();
+            //bendings.AddBending(bending);
 
             #region 渲染
             ElementId faceId = new ElementId(bending.Index + shapeId);
@@ -754,7 +793,9 @@ namespace EPunch.Multibend
         }
         private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            bendings = ExportXml.ReadXml(openFileDialog1.FileName);
+            dataManage.SetBendingGroup(ExportXml.ReadXml(openFileDialog1.FileName));
+            dataManage.AcceptChanges();
+            //bendings.SetBendingGroup(ExportXml.ReadXml(openFileDialog1.FileName));
             DrawBendingGroup(bendings);
         }
         private void BtnUnfold_Click(object sender, EventArgs e)

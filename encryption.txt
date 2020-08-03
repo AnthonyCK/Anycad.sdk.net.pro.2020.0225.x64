@@ -1,0 +1,2 @@
+aspnet_regiis -pdf appSettings C:\Users\11659\Desktop\EP\anycad.sdk.net.pro.2020.0225.x64\EPunch.Multibend
+aspnet_regiis -pef appSettings C:\Users\11659\Desktop\EP\anycad.sdk.net.pro.2020.0225.x64\EPunch.Multibend
