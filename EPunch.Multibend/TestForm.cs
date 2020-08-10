@@ -960,7 +960,23 @@ namespace EPunch.Multibend
             var item = stepBendings.ElementAt(posOfStep++);
             DrawBendingGroup(item);
         }
+        private void ReorderBendings(BendingGroup bends)
+        {
+            var temp = bends.Bendings.OrderBy(m => m.Orientation).ThenBy(m => m.Index).ToList();
+            int i = 0;
+            foreach(var item in temp)
+            {
+                item.Index = i++;
+            }
+            bends.Bendings = temp;
+            dataManage.SetBendingGroup(bends);
+            dataManage.AcceptChanges();
+        }
 
+        private void BtnReorder_Click(object sender, EventArgs e)
+        {
+            ReorderBendings(bendings);
+        }
     }
 }
 
