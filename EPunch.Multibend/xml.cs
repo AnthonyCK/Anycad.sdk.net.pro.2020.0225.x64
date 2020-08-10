@@ -53,10 +53,11 @@ namespace EPunch.Multibend
     [XmlRoot("BendingGroup", IsNullable = false)]
     public class BendingGroup
     {
+
+        public Vector3 Center { get; set; }
+        public double Thickness { get; set; }
         [XmlArray("Vertexes")]
         public List<Vector3> Vertexes = new List<Vector3>();
-        //public double Length;
-        //public double Width;
 
         [XmlArray("Bendings")]
         public List<Bending> Bendings = new List<Bending>();
@@ -156,6 +157,8 @@ namespace EPunch.Multibend
         }
         public void SetBendingGroup(BendingGroup bendingGroup)
         {
+            Center = bendingGroup.Center;
+            Thickness = bendingGroup.Thickness;
             Vertexes = new List<Vector3>(bendingGroup.Vertexes);
             var temp = new List<Bending>();
             foreach (var m in bendingGroup.Bendings)

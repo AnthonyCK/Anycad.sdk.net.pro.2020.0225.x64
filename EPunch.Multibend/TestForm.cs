@@ -499,6 +499,9 @@ namespace EPunch.Multibend
                 dataManage.AddVertex(item);
                 //bendings.AddVertex(item);
             }
+            Vector3 center = new Vector3(Convert.ToDouble(txtCenterX.Text), Convert.ToDouble(txtCenterY.Text), 0);
+            bendings.Center = center;
+            bendings.Thickness = Convert.ToDouble(txtThick.Text);
             dataManage.AcceptChanges();
             var face = GlobalInstance.BrepTools.FillFace(Vecs);
 
@@ -793,9 +796,10 @@ namespace EPunch.Multibend
         }
         private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            dataManage.SetBendingGroup(ExportXml.ReadXml(openFileDialog1.FileName));
+            var file = ExportXml.ReadXml(openFileDialog1.FileName);
+            bendings.SetBendingGroup(file);
+            dataManage.SetBendingGroup(file);
             dataManage.AcceptChanges();
-            //bendings.SetBendingGroup(ExportXml.ReadXml(openFileDialog1.FileName));
             DrawBendingGroup(bendings);
         }
         private void BtnUnfold_Click(object sender, EventArgs e)
@@ -977,6 +981,7 @@ namespace EPunch.Multibend
         {
             ReorderBendings(bendings);
         }
+
     }
 }
 
